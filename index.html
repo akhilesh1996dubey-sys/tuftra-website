@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuftra — Handcrafted Rugs, Delivered</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ef;--sand:#f0e8d8;--bark:#b8956a;--umber:#7a4f2d;
+  --ink:#1a1208;--muted:#8a7a6a;--white:#fff;--border:#e4d8c4;
+  --red:#b83232;--gold:#c47a18;--green:#2a6a40;--blue:#1a4f8a;--purple:#6a3a8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+.serif{font-family:'Cormorant Garamond',serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideRight{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.a1{animation:fadeUp .7s .1s ease both}.a2{animation:fadeUp .7s .25s ease both}
+.a3{animation:fadeUp .7s .4s ease both}.a4{animation:fadeUp .7s .55s ease both}
+.a5{animation:fadeUp .7s .7s ease both}
+
+/* TOPBAR */
+.topbar{background:var(--ink);color:#e8d8c0;text-align:center;padding:9px 16px;font-size:11px;letter-spacing:1.5px;font-weight:500}
+.topbar span{color:var(--bark);font-weight:700}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:500;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;box-shadow:0 2px 16px rgba(26,18,8,.06)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--ink);letter-spacing:-1px;cursor:pointer;text-decoration:none}
+.nav-logo span{color:var(--bark)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.3px;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:7px 14px;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s;display:flex;align-items:center;gap:5px}
+.nav-btn:hover{border-color:var(--bark);color:var(--umber);background:var(--sand)}
+.cart-btn{background:var(--ink);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background .2s}
+.cart-btn:hover{background:var(--umber)}
+.cart-count{background:var(--red);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:55% 45%;min-height:86vh;overflow:hidden}
+.hero-left{background:var(--ink);padding:72px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.hero-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 25% 65%,rgba(184,149,106,.2) 0%,transparent 60%)}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--bark);text-transform:uppercase;margin-bottom:18px}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:700;color:#fff;line-height:1.05;margin-bottom:20px}
+.hero-title em{color:var(--bark);font-style:italic}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.55);line-height:1.85;margin-bottom:36px;max-width:420px;font-weight:300}
+.hero-search-wrap{background:var(--white);border-radius:8px;overflow:hidden;max-width:500px;display:flex;box-shadow:0 8px 40px rgba(0,0,0,.25)}
+.hero-search-wrap input{flex:1;padding:15px 18px;border:none;font-size:13px;font-family:'Jost',sans-serif;color:var(--ink);background:transparent;outline:none}
+.hero-search-wrap input::placeholder{color:#bbb}
+.hero-search-wrap button{background:var(--bark);color:#fff;border:none;padding:15px 22px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:.5px;transition:background .2s;white-space:nowrap}
+.hero-search-wrap button:hover{background:var(--umber)}
+.hero-stats{display:flex;gap:28px;margin-top:28px}
+.hstat-val{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--bark)}
+.hstat-lbl{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.5px;margin-top:2px}
+.hero-right{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px}
+.hero-img{overflow:hidden;position:relative;cursor:pointer}
+.hero-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;transition:transform .5s ease}
+.hero-img:hover .hero-img-inner{transform:scale(1.06)}
+.hi1{background:linear-gradient(135deg,#c4763a,#8b4010)}
+.hi2{background:linear-gradient(135deg,#2c3e6b,#1a2545)}
+.hi3{background:linear-gradient(135deg,#4a7c59,#2a4f38)}
+.hi4{background:linear-gradient(135deg,#8b2020,#5a1010)}
+.hero-img-tag{position:absolute;bottom:10px;left:10px;background:rgba(26,18,8,.75);color:#e8d8c0;font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px)}
+
+/* TRUST BAR */
+.trust-bar{background:var(--sand);border-bottom:1px solid var(--border);padding:14px 40px;display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--umber)}
+
+/* MARQUEE */
+.marquee-wrap{background:var(--bark);padding:11px 0;overflow:hidden}
+.marquee-track{display:flex;animation:marquee 30s linear infinite;width:max-content}
+.mitem{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;padding:0 28px;opacity:.85}
+.mdot{color:rgba(255,255,255,.35)}
+
+/* SECTION */
+.section{padding:72px 40px}
+.sec-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;line-height:1.1}
+.sec-sub{font-size:12px;color:var(--muted);margin-top:5px}
+.see-all{font-size:12px;font-weight:600;color:var(--umber);border:none;border-bottom:1px solid var(--bark);background:none;padding-bottom:2px;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:.3px}
+
+/* CATEGORIES */
+.cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.cat-card{border-radius:10px;overflow:hidden;cursor:pointer;aspect-ratio:3/4;position:relative}
+.cat-inner{width:100%;height:100%;display:flex;align-items:flex-end;padding:18px 14px;transition:transform .4s ease}
+.cat-card:hover .cat-inner{transform:scale(1.05)}
+.cc1 .cat-inner{background:linear-gradient(160deg,#c4763a,#8b4010)}
+.cc2 .cat-inner{background:linear-gradient(160deg,#2c3e6b,#1a2545)}
+.cc3 .cat-inner{background:linear-gradient(160deg,#4a7c59,#2a4f38)}
+.cc4 .cat-inner{background:linear-gradient(160deg,#8b5e3c,#5a3a1a)}
+.cc5 .cat-inner{background:linear-gradient(160deg,#888898,#555565)}
+.cat-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#fff;line-height:1.2}
+.cat-count{font-size:10px;color:rgba(255,255,255,.55);margin-top:3px}
+.cat-icon{position:absolute;top:14px;right:14px;font-size:28px;opacity:.35}
+
+/* LOGISTICS */
+.logistics{background:var(--ink);padding:64px 40px}
+.log-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:36px}
+.log-card{background:rgba(255,255,255,.04);padding:28px 24px;border:1px solid rgba(255,255,255,.06);transition:background .25s}
+.log-card:hover{background:rgba(255,255,255,.08)}
+.log-icon{font-size:26px;margin-bottom:14px}
+.log-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:#e8d8c0;margin-bottom:7px}
+.log-text{font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;font-weight:300}
+.log-tag{display:inline-block;margin-top:10px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bark);border-bottom:1px solid var(--bark);padding-bottom:1px}
+
+/* SMART BADGES BAR */
+.badges-bar{background:var(--white);border-bottom:1px solid var(--border);padding:12px 40px;display:flex;gap:8px;align-items:center;overflow-x:auto;position:sticky;top:62px;z-index:400}
+.badges-bar::-webkit-scrollbar{height:0}
+.sbadge{background:none;border:1.5px solid var(--border);border-radius:20px;padding:6px 16px;font-size:11px;font-weight:500;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'Jost',sans-serif;flex-shrink:0}
+.sbadge:hover{border-color:var(--bark);color:var(--umber)}
+.sbadge.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.bar-divider{width:1px;height:18px;background:var(--border);flex-shrink:0}
+
+/* SHOP LAYOUT */
+.shop-wrap{display:flex;max-width:1400px;margin:0 auto;padding:0 0 80px}
+
+/* SIDEBAR */
+.sidebar{width:270px;flex-shrink:0;padding:28px 28px 28px 40px;position:sticky;top:110px;height:fit-content;max-height:calc(100vh - 120px);overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--bark);border-radius:2px}
+.sb-section{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.sb-section:last-child{border-bottom:none}
+.sb-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.sb-label button{font-size:10px;color:var(--bark);background:none;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-weight:600}
+
+/* PRICE RANGE */
+.price-slider{width:100%;accent-color:var(--ink);height:3px;cursor:pointer}
+.price-row{display:flex;gap:8px;margin-top:10px}
+.price-box{flex:1;border:1.5px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;font-family:'Jost',sans-serif;color:var(--ink);background:var(--cream);outline:none;text-align:center}
+.price-box:focus{border-color:var(--bark)}
+
+/* OPTION ROWS */
+.opt-row{display:flex;align-items:center;gap:9px;padding:4px 0;cursor:pointer;user-select:none}
+.opt-radio{width:15px;height:15px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.opt-radio.on{border-color:var(--ink);background:var(--ink)}
+.opt-radio.on::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff}
+.opt-chk{width:15px;height:15px;border-radius:3px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:9px;color:#fff}
+.opt-chk.on{border-color:var(--ink);background:var(--ink)}
+.opt-label{font-size:12px;color:var(--muted);transition:color .2s;line-height:1.3}
+.opt-row.sel .opt-label{color:var(--ink);font-weight:600}
+
+/* COLOR DOTS */
+.color-grid{display:flex;flex-wrap:wrap;gap:7px}
+.cdot{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .2s;flex-shrink:0}
+.cdot:hover{transform:scale(1.15)}
+.cdot.on{border-color:var(--ink);transform:scale(1.1)}
+
+/* SHOW MORE */
+.show-more{font-size:11px;color:var(--bark);background:none;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-weight:600;margin-top:6px;padding:0}
+
+/* TOGGLE */
+.toggle{width:36px;height:20px;border-radius:10px;background:var(--border);cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0}
+.toggle.on{background:var(--green)}
+.toggle-knob{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on .toggle-knob{left:19px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:3px 0}
+
+/* PRODUCTS AREA */
+.products-area{flex:1;padding:28px 40px 0 24px}
+.results-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.results-count{font-size:13px;color:var(--muted)}
+.results-count strong{color:var(--ink);font-weight:700}
+.sort-sel{border:1.5px solid var(--border);border-radius:6px;padding:7px 12px;font-size:12px;font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);cursor:pointer;outline:none}
+
+/* PRODUCT GRID */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.prod-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease}
+.prod-card:hover{transform:translateY(-5px);box-shadow:0 18px 48px rgba(26,18,8,.1)}
+.prod-img{height:200px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.prod-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;transition:transform .5s ease}
+.prod-card:hover .prod-img-inner{transform:scale(1.07)}
+.badge-row{position:absolute;top:10px;left:10px;display:flex;gap:5px;flex-wrap:wrap}
+.b{font-size:9px;font-weight:700;padding:2px 7px;border-radius:2px;letter-spacing:.5px;text-transform:uppercase}
+.b-sale{background:var(--red);color:#fff}
+.b-new{background:var(--green);color:#fff}
+.b-hand{background:var(--umber);color:#fff}
+.b-wash{background:var(--blue);color:#fff}
+.b-eco{background:#2a6a40;color:#fff}
+.b-pet{background:var(--gold);color:#fff}
+.b-best{background:var(--gold);color:#fff}
+.b-kid{background:var(--blue);color:#fff}
+.disc-badge{position:absolute;top:10px;right:10px;background:var(--red);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px}
+.wish-btn{position:absolute;bottom:10px;right:10px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s;backdrop-filter:blur(4px)}
+.wish-btn:hover{background:#fff;transform:scale(1.1)}
+.ship-tag{position:absolute;bottom:10px;left:10px;background:rgba(26,18,8,.72);color:#e8d8c0;font-size:9px;font-weight:600;padding:3px 9px;border-radius:20px}
+.prod-body{padding:14px}
+.prod-seller{font-size:10px;color:var(--muted);margin-bottom:3px}
+.prod-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.2}
+.prod-meta{font-size:10px;color:var(--muted);margin-bottom:8px}
+.stars{color:var(--gold);font-size:11px}
+.rating-row{display:flex;align-items:center;gap:5px;margin-bottom:10px}
+.rev-ct{font-size:10px;color:var(--muted)}
+.price-row-p{display:flex;align-items:center;justify-content:space-between}
+.price-now{font-size:18px;font-weight:700}
+.price-was{font-size:11px;color:var(--muted);text-decoration:line-through;margin-left:5px}
+.add-btn{background:var(--ink);color:#fff;border:none;padding:8px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s}
+.add-btn:hover{background:var(--umber)}
+.cmp-row{padding:9px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:7px}
+.cmp-row label{font-size:10px;color:var(--muted);cursor:pointer}
+
+/* COMPARE BAR */
+.cmp-bar{position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;padding:12px 40px;display:flex;align-items:center;gap:14px;z-index:600;transform:translateY(100%);transition:transform .3s}
+.cmp-bar.show{transform:translateY(0)}
+.cmp-bar-text{flex:1;font-size:13px;font-weight:500}
+.cmp-now{background:var(--bark);color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+.cmp-clear{background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.65);padding:8px 14px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'Jost',sans-serif}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,18,8,.78);z-index:700;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .25s ease}
+.modal-box{background:var(--white);border-radius:16px;max-height:92vh;overflow-y:auto;animation:fadeUp .3s ease}
+
+/* PRODUCT DETAIL */
+.pd-wrap{display:grid;grid-template-columns:1fr 1fr}
+.pd-img{display:flex;align-items:center;justify-content:center;font-size:88px;min-height:360px;border-radius:16px 0 0 16px}
+.pd-info{padding:28px 24px;overflow-y:auto;max-height:92vh}
+.pd-close{float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;margin-bottom:6px}
+.pd-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.pd-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;margin-bottom:3px;line-height:1.2}
+.pd-seller{font-size:11px;color:var(--muted);margin-bottom:10px}
+.pd-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:14px}
+.pd-price{font-size:28px;font-weight:700}
+.pd-was{font-size:13px;color:var(--muted);text-decoration:line-through}
+.pd-disc{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px}
+.pd-specs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}
+.pd-spec{background:var(--cream);border-radius:7px;padding:9px 11px}
+.pd-spec-lbl{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.pd-spec-val{font-size:12px;font-weight:600}
+.ship-box{background:rgba(196,122,24,.1);border:1px solid rgba(196,122,24,.22);border-radius:7px;padding:11px 13px;margin-bottom:14px;font-size:11px;line-height:1.75;color:var(--umber)}
+.pd-actions{display:flex;gap:8px;margin-bottom:10px}
+.pd-cart{flex:1;background:var(--ink);color:#fff;border:none;padding:12px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s}
+.pd-cart:hover{background:var(--umber)}
+.pd-vis{background:var(--sand);color:var(--ink);border:1.5px solid var(--border);padding:12px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;white-space:nowrap}
+.terms-r{display:flex;align-items:flex-start;gap:7px;font-size:10px;color:var(--muted);line-height:1.5}
+.tchk{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;transition:all .2s}
+.tchk.on{background:var(--green);border-color:var(--green)}
+
+/* CART DRAWER */
+.cart-overlay{position:fixed;inset:0;z-index:800;background:rgba(26,18,8,.5)}
+.cart-drawer{position:fixed;top:0;right:0;width:390px;height:100vh;background:var(--white);z-index:801;padding:24px;overflow-y:auto;animation:slideRight .3s ease;box-shadow:-4px 0 32px rgba(0,0,0,.12)}
+.cart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.cart-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700}
+.cart-close{background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.ci-img{width:58px;height:58px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.ci-info{flex:1}
+.ci-name{font-size:13px;font-weight:700;margin-bottom:2px;font-family:'Cormorant Garamond',serif}
+.ci-meta{font-size:10px;color:var(--muted);margin-bottom:3px}
+.ci-price{font-size:13px;font-weight:700}
+.ci-remove{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;align-self:flex-start;padding:2px}
+.promo-row{display:flex;gap:7px;margin:14px 0}
+.promo-in{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-family:'Jost',sans-serif;outline:none}
+.promo-in:focus{border-color:var(--bark)}
+.promo-btn{background:var(--ink);color:#fff;border:none;padding:9px 16px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+.totals-section{margin:14px 0}
+.total-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;color:var(--muted)}
+.total-row.big{font-size:15px;font-weight:700;color:var(--ink);padding:10px 0;border-top:1px solid var(--border);margin-top:5px}
+.free-ship{color:var(--green);font-weight:600}
+.place-btn{width:100%;background:var(--ink);color:#fff;border:none;padding:13px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;margin-top:10px;transition:background .2s}
+.place-btn:hover{background:var(--umber)}
+.place-btn:disabled{background:#ccc;cursor:not-allowed}
+
+/* SIZE GUIDE */
+.sg-wrap{padding:28px;max-width:500px}
+.sg-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:5px}
+.sg-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
+.sg-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.sg-field label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px}
+.sg-field input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'Jost',sans-serif;outline:none}
+.sg-field input:focus{border-color:var(--bark)}
+.sg-result{background:#eaf4ee;border:1px solid rgba(42,106,64,.25);border-radius:9px;padding:18px;text-align:center;margin-bottom:16px}
+.sg-size{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--green)}
+.sg-note{font-size:11px;color:var(--muted);margin-top:5px}
+.sg-table{width:100%;border-collapse:collapse;font-size:11px}
+.sg-table tr:nth-child(even) td{background:var(--cream)}
+.sg-table td{padding:5px 9px;border-bottom:1px solid var(--border)}
+
+/* COMPARE MODAL */
+.cmp-wrap{padding:24px;min-width:600px}
+.cmp-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:16px}
+.cmp-table th{background:var(--sand);padding:10px 14px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.cmp-table td{padding:10px 14px;border-bottom:1px solid var(--border)}
+.cmp-table tr:nth-child(even) td{background:var(--cream)}
+.cmp-feat{font-weight:600;color:var(--muted);font-size:11px}
+
+/* VIS */
+.vis-wrap{padding:24px;text-align:center;max-width:540px}
+.vis-room{background:#d4c4b0;border-radius:12px;height:280px;position:relative;overflow:hidden;margin-bottom:14px}
+.vis-wall{position:absolute;top:0;left:0;right:0;height:55%;background:linear-gradient(180deg,#c8b89a,#b8a880)}
+.vis-floor{position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(180deg,#c0a060,#a88040)}
+.vis-sofa{position:absolute;bottom:44%;left:50%;transform:translateX(-50%);width:44%;height:48px;background:#3a2a18;border-radius:7px 7px 0 0;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:1px}
+.vis-table-el{position:absolute;bottom:38%;left:50%;transform:translateX(-50%);width:20%;height:16px;background:#5a3a18;border-radius:3px}
+.vis-rug{position:absolute;bottom:23%;left:50%;transform:translateX(-50%);width:42%;height:65px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+
+/* MY ACCOUNT */
+.acct-wrap{max-width:900px;margin:0 auto;padding:40px}
+.acct-hdr{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.acct-avatar{width:64px;height:64px;border-radius:50%;background:var(--bark);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;flex-shrink:0}
+.acct-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700}
+.acct-email{font-size:13px;color:var(--muted)}
+.acct-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px}
+.acct-tab{padding:8px 18px;border-radius:20px;border:1.5px solid var(--border);background:none;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.acct-tab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.acct-section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px}
+.acct-sec-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.order-card{border:1px solid var(--border);border-radius:9px;padding:14px;margin-bottom:12px}
+.order-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.order-id{font-size:12px;font-weight:700;color:var(--blue)}
+.order-status{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px}
+.os-delivered{background:rgba(42,106,64,.15);color:var(--green)}
+.os-shipped{background:rgba(26,79,138,.15);color:var(--blue)}
+.os-processing{background:rgba(196,122,24,.15);color:var(--gold)}
+.order-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.order-meta{font-size:11px;color:var(--muted)}
+.tracking-steps{display:flex;gap:0;margin-top:10px}
+.t-step{flex:1;text-align:center;position:relative}
+.t-step::before{content:'';position:absolute;top:12px;left:50%;right:-50%;height:2px;background:var(--border);z-index:0}
+.t-step:last-child::before{display:none}
+.t-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:10px;margin:0 auto 5px;position:relative;z-index:1;transition:all .2s}
+.t-dot.done{background:var(--green);border-color:var(--green);color:#fff}
+.t-dot.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.t-label{font-size:9px;color:var(--muted);font-weight:500}
+.wishlist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.wl-card{border:1px solid var(--border);border-radius:9px;overflow:hidden;cursor:pointer;transition:transform .2s}
+.wl-card:hover{transform:translateY(-3px)}
+.wl-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:36px}
+.wl-info{padding:10px 12px}
+.wl-name{font-size:12px;font-weight:700;margin-bottom:2px;font-family:'Cormorant Garamond',serif}
+.wl-price{font-size:13px;font-weight:700;color:var(--ink)}
+.wl-alert{font-size:10px;color:var(--green);margin-top:3px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-field label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px}
+.form-field input,.form-field select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'Jost',sans-serif;color:var(--ink);background:var(--cream);outline:none}
+.form-field input:focus{border-color:var(--bark)}
+.save-btn{background:var(--ink);color:#fff;border:none;padding:10px 24px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;margin-top:14px}
+.addr-card{border:1.5px solid var(--border);border-radius:9px;padding:14px;margin-bottom:10px;font-size:12px;line-height:1.8;position:relative}
+.addr-card.default{border-color:var(--green)}
+.addr-default-tag{position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;background:rgba(42,106,64,.15);color:var(--green);padding:2px 8px;border-radius:20px}
+.addr-actions{display:flex;gap:8px;margin-top:8px}
+.addr-btn{background:none;border:1px solid var(--border);border-radius:5px;padding:4px 12px;font-size:10px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif}
+.review-card{border:1px solid var(--border);border-radius:9px;padding:14px;margin-bottom:10px}
+.review-rug{font-size:13px;font-weight:700;margin-bottom:5px}
+.review-stars{color:var(--gold);font-size:13px}
+.review-text{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.6}
+.pending-review{background:rgba(196,122,24,.08);border:1px solid rgba(196,122,24,.25);border-radius:9px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.write-review-btn{background:var(--gold);color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+.notif-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+.notif-info{font-size:13px;font-weight:500}
+.notif-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.points-box{background:linear-gradient(135deg,var(--bark),var(--umber));border-radius:12px;padding:24px;color:#fff;margin-bottom:16px;text-align:center}
+.points-val{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700}
+.points-lbl{font-size:12px;opacity:.75;margin-top:4px}
+.points-note{font-size:11px;opacity:.6;margin-top:8px}
+.danger-zone{border:1px solid rgba(184,50,50,.3);border-radius:9px;padding:14px;background:rgba(184,50,50,.04)}
+.danger-title{font-size:13px;font-weight:700;color:var(--red);margin-bottom:5px}
+.danger-text{font-size:11px;color:var(--muted);margin-bottom:10px}
+.danger-btn{background:none;border:1px solid var(--red);color:var(--red);padding:7px 16px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,.55);padding:52px 40px 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;margin-bottom:10px}
+.footer-brand span{color:var(--bark)}
+.footer-desc{font-size:12px;line-height:1.85;font-weight:300}
+.footer-col-title{font-size:10px;font-weight:700;color:#fff;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s;font-weight:300}
+.footer-links a:hover{color:var(--bark)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;align-items:center;font-size:11px}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{color:rgba(255,255,255,.35);text-decoration:none;font-size:10px}
+.footer-legal a:hover{color:rgba(255,255,255,.65)}
+
+/* TOAST */
+.toast{position:fixed;top:76px;right:18px;background:var(--ink);color:#e8d8c0;padding:11px 18px;border-radius:7px;font-size:12px;font-weight:500;z-index:9999;animation:fadeUp .3s ease;box-shadow:0 6px 20px rgba(0,0,0,.2);max-width:300px}
+
+/* EMPTY */
+.empty-state{grid-column:1/-1;text-align:center;padding:56px 0;color:var(--muted)}
+.empty-icon{font-size:38px;margin-bottom:12px}
+
+
+/* FILTER ACCORDION */
+.sb-section-body{overflow:hidden;transition:max-height .3s ease,opacity .3s ease}
+.sb-section-body.collapsed{max-height:0!important;opacity:0;pointer-events:none}
+.sb-section-body.expanded{opacity:1}
+.sb-header-row{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;padding:2px 0;margin-bottom:8px}
+.sb-toggle-arrow{font-size:13px;color:var(--muted);transition:transform .3s;flex-shrink:0}
+.sb-section.closed .sb-toggle-arrow{transform:rotate(-90deg)}
+.mobile-filter-btn{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;border:none;border-radius:30px;padding:13px 28px;font-size:13px;font-weight:700;cursor:pointer;font-family:Jost,sans-serif;z-index:400;box-shadow:0 4px 20px rgba(26,18,8,.3);align-items:center;gap:8px}
+.mobile-filter-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(26,18,8,.6)}
+.mobile-filter-overlay.show{display:block}
+.mobile-sidebar{position:fixed;bottom:0;left:0;right:0;background:var(--white);z-index:501;border-radius:20px 20px 0 0;padding:20px 20px 40px;max-height:85vh;overflow-y:auto;transform:translateY(100%);transition:transform .35s ease}
+.mobile-sidebar.show{transform:translateY(0)}
+.mobile-sb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.mobile-sb-title{font-family:Cormorant Garamond,serif;font-size:22px;font-weight:700}
+.mobile-close-btn{background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer}
+/* ── HAMBURGER NAV ── */
+.nav-hamburger{display:none;background:none;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:18px;cursor:pointer;color:var(--ink)}
+.mobile-nav-menu{display:none;position:fixed;top:56px;left:0;right:0;background:var(--white);border-bottom:2px solid var(--border);z-index:499;padding:16px 20px;flex-direction:column;gap:0;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.mobile-nav-menu.open{display:flex}
+.mobile-nav-menu a{padding:13px 0;border-bottom:1px solid var(--border);font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;display:block}
+.mobile-nav-menu a:last-child{border-bottom:none}
+
+@media(max-width:900px){
+  /* NAV */
+  nav{padding:0 16px;height:56px}
+  .nav-links{display:none}
+  .nav-hamburger{display:block}
+  .nav-btn{display:none}
+  .cart-btn{padding:7px 14px;font-size:11px}
+
+  /* TOPBAR */
+  .topbar{font-size:9px;padding:7px 10px;letter-spacing:.5px}
+
+  /* HERO — stack vertically */
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:44px 20px 36px}
+  .hero-title{font-size:42px}
+  .hero-sub{font-size:13px;max-width:100%}
+  .hero-right{grid-template-rows:140px 140px;height:280px}
+  .hero-stats{gap:16px;flex-wrap:wrap}
+  .hstat-val{font-size:20px}
+
+  /* TRUST BAR */
+  .trust-bar{gap:16px;padding:12px 16px;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap}
+  .trust-item{white-space:nowrap;flex-shrink:0}
+
+  /* CATEGORIES */
+  .section{padding:44px 16px}
+  .cat-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .cat-grid .cat-card:last-child{grid-column:1/-1}
+  .sec-title{font-size:28px}
+
+  /* LOGISTICS */
+  .logistics{padding:44px 16px}
+  .log-grid{grid-template-columns:1fr 1fr;gap:2px}
+
+  /* BADGES BAR */
+  .badges-bar{padding:10px 16px;top:56px}
+
+  /* SHOP */
+  .shop-wrap{flex-direction:column;padding:0}
+  .sidebar{display:none!important}
+  .mobile-filter-btn{display:flex!important}
+  .products-area{padding:16px 16px 80px 16px}
+  .prod-grid{grid-template-columns:repeat(2,1fr)!important;gap:12px}
+  .prod-img{height:160px}
+  .results-bar{flex-direction:column;gap:10px;align-items:flex-start}
+  .sort-sel{width:100%}
+
+  /* PRODUCT MODAL */
+  .pd-wrap{grid-template-columns:1fr;grid-template-rows:200px auto}
+  .pd-img{border-radius:16px 16px 0 0;min-height:200px}
+  .pd-info{max-height:60vh;border-radius:0 0 16px 16px}
+  .pd-specs{grid-template-columns:1fr 1fr}
+
+  /* COMPARE MODAL */
+  .cmp-wrap{min-width:unset;padding:16px}
+  .cmp-table{font-size:11px}
+
+  /* ACCOUNT */
+  .acct-wrap{padding:20px 16px}
+  .acct-tabs{gap:6px}
+  .acct-tab{padding:6px 12px;font-size:11px}
+  .wishlist-grid{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+
+  /* FOOTER */
+  footer{padding:36px 16px 20px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .footer-bottom{flex-direction:column;gap:10px;text-align:center}
+  .footer-legal{flex-wrap:wrap;justify-content:center}
+
+  /* CART DRAWER */
+  .cart-drawer{width:100vw;padding:20px 16px}
+}
+
+@media(max-width:600px){
+  .hero-title{font-size:34px}
+  .hero-right{grid-template-rows:110px 110px;height:220px}
+  .prod-grid{grid-template-columns:repeat(2,1fr)!important;gap:8px}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .log-grid{grid-template-columns:1fr}
+  .sbadge{font-size:10px;padding:5px 10px}
+  .footer-grid{grid-template-columns:1fr}
+  .acct-tabs{gap:4px}
+  .wishlist-grid{grid-template-columns:1fr}
+  .prod-name{font-size:15px}
+  .price-now{font-size:15px}
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast" style="display:none"></div>
+<div id="modal-container"></div>
+
+<!-- MOBILE FILTER BUTTON -->
+<button class="mobile-filter-btn" id="mob-filter-btn" onclick="openMobileFilter()">⚙️ Filters &amp; Sort</button>
+<div class="mobile-filter-overlay" id="mob-overlay" onclick="closeMobileFilter()"></div>
+<div class="mobile-sidebar" id="mob-sidebar">
+  <div class="mobile-sb-header">
+    <div class="mobile-sb-title serif">Filters</div>
+    <button class="mobile-close-btn" onclick="closeMobileFilter()">✕</button>
+  </div>
+  <div id="mob-filter-content"></div>
+  <div style="display:flex;gap:10px;margin-top:20px">
+    <button onclick="resetAllFilters();closeMobileFilter()" style="flex:1;background:none;border:1.5px solid var(--border);border-radius:8px;padding:11px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:Jost,sans-serif">Reset All</button>
+    <button onclick="closeMobileFilter()" style="flex:2;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:Jost,sans-serif">Show Results ✓</button>
+  </div>
+</div>
+
+<div id="cart-overlay" style="display:none" class="cart-overlay" onclick="closeCart()"></div>
+<div id="cart-drawer" style="display:none" class="cart-drawer"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">🎉 FREE SHIPPING OVER $150 &nbsp;·&nbsp; Code <span>TUFTRA15</span> = 15% off first order &nbsp;·&nbsp; 30-Day Free Returns &nbsp;·&nbsp; Secure Stripe Payments</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="tuftra-homepage-fixed.html" onclick="showView('shop')">Tuf<span>tra</span></a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showView('shop')">Shop</a></li>
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#logistics">Shipping</a></li>
+    <li><a href="tuftra-page8.html">Sell on Tuftra</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="openSizeGuide()">📏 Size Guide</button>
+    <button class="nav-btn" id="cmp-nav" style="display:none" onclick="openCompare()">⚖️ Compare (<span id="cmp-ct">0</span>)</button>
+    <button class="nav-btn" onclick="window.location='tuftra-page4.html'">👤 My Account</button>
+    <button class="cart-btn" onclick="window.location='tuftra-page6.html'">🛒 Cart <span class="cart-count" id="cart-count">0</span></button>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" id="hamburger-btn">☰</button>
+  </div>
+</nav>
+<!-- MOBILE NAV MENU -->
+<div class="mobile-nav-menu" id="mobile-nav-menu">
+  <a href="#" onclick="showView('shop');closeMobileNav()">🛍️ Shop</a>
+  <a href="#collections" onclick="closeMobileNav()">🏷️ Collections</a>
+  <a href="#logistics" onclick="closeMobileNav()">🚚 Shipping</a>
+  <a href="#" onclick="openSizeGuide();closeMobileNav()">📏 Size Guide</a>
+  <a href="tuftra-page4.html">👤 My Account</a>
+</div>
+
+<!-- SHOP VIEW -->
+<div id="view-shop">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow a1">Handcrafted · Curated · Delivered to Your Door</div>
+    <h1 class="hero-title a2">Find the Rug<br><em>Your Home</em><br>Deserves</h1>
+    <p class="hero-sub a3">Shop from verified artisan sellers. Every rug hand-picked for quality. Free shipping over $150. 30-day returns — no questions asked.</p>
+    <div class="hero-search-wrap a4">
+      <input type="text" id="search-input" placeholder="Search by style, color, pattern, material..." oninput="doFilter()">
+      <button onclick="doFilter()">Search Rugs</button>
+    </div>
+    <div class="hero-stats a5">
+      <div><div class="hstat-val">200+</div><div class="hstat-lbl">Rugs Available</div></div>
+      <div><div class="hstat-val">50+</div><div class="hstat-lbl">Verified Sellers</div></div>
+      <div><div class="hstat-val">4.8★</div><div class="hstat-lbl">Average Rating</div></div>
+      <div><div class="hstat-val">$49</div><div class="hstat-lbl">Starting From</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img" onclick="openProductById(1)"><div class="hero-img-inner hi1" style="font-size:64px;opacity:.6">◈</div><div class="hero-img-tag">Bohemian · $189</div></div>
+    <div class="hero-img" onclick="openProductById(3)"><div class="hero-img-inner hi2" style="font-size:64px;opacity:.6">✦</div><div class="hero-img-tag">Persian · $329</div></div>
+    <div class="hero-img" onclick="openProductById(6)"><div class="hero-img-inner hi3" style="font-size:64px;opacity:.6">◉</div><div class="hero-img-tag">Modern · $199</div></div>
+    <div class="hero-img" onclick="openProductById(5)"><div class="hero-img-inner hi4" style="font-size:64px;opacity:.6">◆</div><div class="hero-img-tag">Tribal · $149</div></div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust-bar">
+  <div class="trust-item">🚚 Free shipping over $150</div>
+  <div class="trust-item">🔄 30-day free returns</div>
+  <div class="trust-item">✅ Verified artisan sellers</div>
+  <div class="trust-item">🔒 Secure Stripe payments</div>
+  <div class="trust-item">📦 Careful packaging — Rolled or Folded</div>
+  <div class="trust-item">⭐ 4.8 avg rating</div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="mitem">Geometric</span><span class="mdot"> · </span><span class="mitem">Floral</span><span class="mdot"> · </span><span class="mitem">Persian</span><span class="mdot"> · </span><span class="mitem">Bohemian</span><span class="mdot"> · </span><span class="mitem">Vintage</span><span class="mdot"> · </span><span class="mitem">Handmade</span><span class="mdot"> · </span><span class="mitem">Washable</span><span class="mdot"> · </span><span class="mitem">Pet-Proof</span><span class="mdot"> · </span><span class="mitem">Eco-Friendly</span><span class="mdot"> · </span><span class="mitem">Hand Knotted</span><span class="mdot"> · </span><span class="mitem">Free Shipping $150+</span><span class="mdot"> · </span><span class="mitem">Code TUFTRA15</span><span class="mdot"> · </span>
+    <span class="mitem">Geometric</span><span class="mdot"> · </span><span class="mitem">Floral</span><span class="mdot"> · </span><span class="mitem">Persian</span><span class="mdot"> · </span><span class="mitem">Bohemian</span><span class="mdot"> · </span><span class="mitem">Vintage</span><span class="mdot"> · </span><span class="mitem">Handmade</span><span class="mdot"> · </span><span class="mitem">Washable</span><span class="mdot"> · </span><span class="mitem">Pet-Proof</span><span class="mdot"> · </span><span class="mitem">Eco-Friendly</span><span class="mdot"> · </span><span class="mitem">Hand Knotted</span><span class="mdot"> · </span><span class="mitem">Free Shipping $150+</span><span class="mdot"> · </span><span class="mitem">Code TUFTRA15</span><span class="mdot"> · </span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section" id="collections">
+  <div class="sec-hdr">
+    <div><div class="sec-title serif">Shop by Style</div><div class="sec-sub">Curated collections for every taste and room</div></div>
+    <button class="see-all" onclick="setStyleFilter('All')">View All Rugs</button>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card cc1" onclick="setStyleFilter('Bohemian')"><div class="cat-inner"><div><div class="cat-name serif">Bohemian</div><div class="cat-count">36 rugs</div></div></div><span class="cat-icon">◈</span></div>
+    <div class="cat-card cc2" onclick="setStyleFilter('Traditional')"><div class="cat-inner"><div><div class="cat-name serif">Traditional</div><div class="cat-count">28 rugs</div></div></div><span class="cat-icon">✦</span></div>
+    <div class="cat-card cc3" onclick="setStyleFilter('Modern')"><div class="cat-inner"><div><div class="cat-name serif">Modern</div><div class="cat-count">44 rugs</div></div></div><span class="cat-icon">◉</span></div>
+    <div class="cat-card cc4" onclick="setStyleFilter('Minimalist')"><div class="cat-inner"><div><div class="cat-name serif">Minimalist</div><div class="cat-count">22 rugs</div></div></div><span class="cat-icon">▭</span></div>
+    <div class="cat-card cc5" onclick="setStyleFilter('All')"><div class="cat-inner"><div><div class="cat-name serif">All Styles</div><div class="cat-count">200+ rugs</div></div></div><span class="cat-icon">✿</span></div>
+  </div>
+</section>
+
+<!-- LOGISTICS -->
+<section class="logistics" id="logistics">
+  <div style="text-align:center">
+    <div class="serif" style="font-size:38px;font-weight:700;color:#e8d8c0">How Your Rug Arrives</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.4);margin-top:8px;font-weight:300">Every order tracked from seller to your doorstep</div>
+  </div>
+  <div class="log-grid">
+    <div class="log-card"><div class="log-icon">✅</div><div class="log-title serif">Order Confirmed</div><div class="log-text">Pay securely via Stripe. Tuftra holds your payment while the seller prepares your rug.</div><div class="log-tag">Instant</div></div>
+    <div class="log-card"><div class="log-icon">📦</div><div class="log-title serif">Seller Packs</div><div class="log-text">Seller packs your rug — rolled in a protective cardboard tube 🌀 or flat-folded in a box 📦 — within 2 business days.</div><div class="log-tag">1–2 Days</div></div>
+    <div class="log-card"><div class="log-icon">🚚</div><div class="log-title serif">Ships & Tracked</div><div class="log-text">Ships via FedEx, UPS, or USPS. You get a tracking number by email. Monitor every step.</div><div class="log-tag">3–7 Days</div></div>
+    <div class="log-card"><div class="log-icon">🏠</div><div class="log-title serif">Delivered</div><div class="log-text">Arrives at your door. If rolled, let it rest flat for 24hrs. Not happy? 30-day returns, no questions.</div><div class="log-tag">Guaranteed</div></div>
+  </div>
+</section>
+
+<!-- SMART BADGES BAR -->
+<div class="badges-bar">
+  <button class="sbadge on" onclick="setBadge(this,'All')">All Rugs</button>
+  <div style="position:relative;flex-shrink:0">
+    <button class="sbadge" id="filter-dropdown-btn" onclick="toggleFilterDropdown()" style="display:flex;align-items:center;gap:6px">
+      🔽 Filters <span id="filter-active-count" style="display:none;background:var(--red);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:700;display:none;align-items:center;justify-content:center" id="fcount"></span>
+    </button>
+    <div id="filter-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);left:0;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:10px 0;min-width:180px;box-shadow:0 8px 32px rgba(26,18,8,.12);z-index:450">
+      <div style="padding:6px 16px;font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);margin-bottom:4px">Quick Filters</div>
+      ${[['On Sale','🏷️'],['Handmade','🤲'],['Washable','🫧'],['Pet-Proof','🐾'],['Kid-Safe','👶'],['Eco-Friendly','🌿'],['Bestseller','🔥'],['New','✨']].map(([b,icon])=>
+        `<div onclick="setBadgeFromDropdown('${b}')" style="padding:9px 16px;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:9px;transition:background .15s" onmouseover="this.style.background='var(--sand)'" onmouseout="this.style.background=''">${icon} ${b}</div>`
+      ).join('')}
+      <div style="border-top:1px solid var(--border);margin-top:4px;padding:9px 16px">
+        <div onclick="openSizeGuide();closeFilterDropdown()" style="font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:9px" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">📏 Size Guide</div>
+      </div>
+    </div>
+  </div>
+  <div class="bar-divider"></div>
+  <span id="active-badge-label" style="font-size:11px;color:var(--bark);font-weight:600;display:none"></span>
+</div>
+
+<!-- SHOP LAYOUT -->
+<div class="shop-wrap" id="shop">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- PRICE -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Price Range <button onclick="resetPrice()">Reset</button></div>
+      <input type="range" class="price-slider" min="49" max="2000" value="2000" id="price-slider" oninput="updatePrice(this.value)">
+      <div class="price-row">
+        <input class="price-box" value="$49" readonly>
+        <input class="price-box" id="price-max-box" value="$2,000" readonly>
+      </div>
+    </div>
+
+    <!-- AVAILABILITY -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Availability <span class="sb-toggle-arrow">⌄</span></div>
+      <div class="toggle-row"><span style="font-size:12px;color:var(--muted)">In Stock Only</span><button class="toggle" id="stock-toggle" onclick="toggleFilter('inStock',this)"><div class="toggle-knob"></div></button></div>
+      <div class="toggle-row" style="margin-top:8px"><span style="font-size:12px;color:var(--muted)">On Sale Only</span><button class="toggle" id="sale-toggle" onclick="toggleFilter('onSale',this)"><div class="toggle-knob"></div></button></div>
+    </div>
+
+    <!-- SHAPE -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Shape <span class="sb-toggle-arrow">⌄</span></div>
+      <div id="shape-opts">
+        <div class="opt-row sel" onclick="setSingle('shape','All',this,'shape-opts')"><div class="opt-radio on"></div><span class="opt-label">All Shapes</span></div>
+        <div class="opt-row" onclick="setSingle('shape','Rectangle',this,'shape-opts')"><div class="opt-radio"></div><span class="opt-label">Rectangle</span></div>
+        <div class="opt-row" onclick="setSingle('shape','Square',this,'shape-opts')"><div class="opt-radio"></div><span class="opt-label">Square</span></div>
+        <div class="opt-row" onclick="setSingle('shape','Round',this,'shape-opts')"><div class="opt-radio"></div><span class="opt-label">Round</span></div>
+        <div class="opt-row" onclick="setSingle('shape','Runner',this,'shape-opts')"><div class="opt-radio"></div><span class="opt-label">Runner</span></div>
+        <div class="opt-row" onclick="setSingle('shape','Octagon',this,'shape-opts')"><div class="opt-radio"></div><span class="opt-label">Octagon</span></div>
+      </div>
+    </div>
+
+    <!-- SIZE -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Size <span class="sb-toggle-arrow">⌄</span></div>
+      <div id="size-opts" style="max-height:200px;overflow-y:auto">
+        <div class="opt-row sel" onclick="setSingle('size','All',this,'size-opts')"><div class="opt-radio on"></div><span class="opt-label">All Sizes</span></div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:6px 0 3px;padding-left:24px">Rectangle</div>
+        <div class="opt-row" onclick="setSingle('size','2x4',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">2' × 4'</span></div>
+        <div class="opt-row" onclick="setSingle('size','3x5',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">3' × 5'</span></div>
+        <div class="opt-row" onclick="setSingle('size','4x6',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">4' × 6'</span></div>
+        <div class="opt-row" onclick="setSingle('size','5x8',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">5' × 8'</span></div>
+        <div class="opt-row" onclick="setSingle('size','6x9',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">6' × 9'</span></div>
+        <div class="opt-row" onclick="setSingle('size','8x10',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">8' × 10'</span></div>
+        <div class="opt-row" onclick="setSingle('size','9x12',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">9' × 12'</span></div>
+        <div class="opt-row" onclick="setSingle('size','10x13',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">10' × 13'</span></div>
+        <div class="opt-row" onclick="setSingle('size','10x14',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">10' × 14'</span></div>
+        <div class="opt-row" onclick="setSingle('size','10x16',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">10' × 16'</span></div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:6px 0 3px;padding-left:24px">By Size</div>
+        <div class="opt-row" onclick="setSingle('size','small',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">Small (up to 4'×6')</span></div>
+        <div class="opt-row" onclick="setSingle('size','medium',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">Medium (up to 6'×9')</span></div>
+        <div class="opt-row" onclick="setSingle('size','large',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">Large (up to 9'×12')</span></div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:6px 0 3px;padding-left:24px">Square</div>
+        <div class="opt-row" onclick="setSingle('size','4x4sq',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">4'×4' Square</span></div>
+        <div class="opt-row" onclick="setSingle('size','5x5sq',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">5'×5' Square</span></div>
+        <div class="opt-row" onclick="setSingle('size','6x6sq',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">6'×6' Square</span></div>
+        <div class="opt-row" onclick="setSingle('size','8x8sq',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">8'×8' Square</span></div>
+        <div class="opt-row" onclick="setSingle('size','10x10sq',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">10'×10' Square</span></div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:6px 0 3px;padding-left:24px">Runners</div>
+        <div class="opt-row" onclick="setSingle('size','run4',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">4–6 ft Runner</span></div>
+        <div class="opt-row" onclick="setSingle('size','run6',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">6–8 ft Runner</span></div>
+        <div class="opt-row" onclick="setSingle('size','run8',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">8–10 ft Runner</span></div>
+        <div class="opt-row" onclick="setSingle('size','run10',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">10–12 ft Runner</span></div>
+        <div class="opt-row" onclick="setSingle('size','run12',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">12–14 ft Runner</span></div>
+        <div class="opt-row" onclick="setSingle('size','run14',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">14 ft+ Runner</span></div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:6px 0 3px;padding-left:24px">Round</div>
+        <div class="opt-row" onclick="setSingle('size','4rd',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">4'×4' Round</span></div>
+        <div class="opt-row" onclick="setSingle('size','5rd',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">5'×5' Round</span></div>
+        <div class="opt-row" onclick="setSingle('size','6rd',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">6'×6' Round</span></div>
+        <div class="opt-row" onclick="setSingle('size','8rd',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">8'×8' Round</span></div>
+        <div class="opt-row" onclick="setSingle('size','10rd',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">10'×10' Round</span></div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:6px 0 3px;padding-left:24px">Octagon</div>
+        <div class="opt-row" onclick="setSingle('size','8oct',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">8'×8' Octagon</span></div>
+        <div class="opt-row" onclick="setSingle('size','10oct',this,'size-opts')"><div class="opt-radio"></div><span class="opt-label">10'×10' Octagon</span></div>
+      </div>
+    </div>
+
+    <!-- COLOR -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Color <span class="sb-toggle-arrow">⌄</span></div>
+      <div class="color-grid" id="color-dots">
+        <div class="cdot on" style="background:#d8cfc4;border:1.5px solid #ccc" title="All Colors" onclick="setColor('All',this)"></div>
+        <div class="cdot" style="background:#c0392b" title="Red" onclick="setColor('Red',this)"></div>
+        <div class="cdot" style="background:#1a5fa8" title="Blue" onclick="setColor('Blue',this)"></div>
+        <div class="cdot" style="background:#c47a18" title="Gold" onclick="setColor('Gold',this)"></div>
+        <div class="cdot" style="background:#888898" title="Grey" onclick="setColor('Grey',this)"></div>
+        <div class="cdot" style="background:#d4789a" title="Pink" onclick="setColor('Pink',this)"></div>
+        <div class="cdot" style="background:#6a3a8a" title="Purple" onclick="setColor('Purple',this)"></div>
+        <div class="cdot" style="background:#e07820" title="Orange" onclick="setColor('Orange',this)"></div>
+        <div class="cdot" style="background:#f5f0e8;border:1px solid #ddd" title="White" onclick="setColor('White',this)"></div>
+        <div class="cdot" style="background:#4a7c59" title="Green" onclick="setColor('Green',this)"></div>
+        <div class="cdot" style="background:#7a4f2d" title="Brown" onclick="setColor('Brown',this)"></div>
+        <div class="cdot" style="background:#1a1208" title="Black" onclick="setColor('Black',this)"></div>
+        <div class="cdot" style="background:#d4b896" title="Beige" onclick="setColor('Beige',this)"></div>
+        <div class="cdot" style="background:#c4763a" title="Terracotta" onclick="setColor('Terracotta',this)"></div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px" id="color-label">All Colors</div>
+    </div>
+
+    <!-- PATTERN -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Pattern <span class="sb-toggle-arrow">⌄</span></div>
+      <div id="pattern-opts">
+        <div class="opt-row sel" onclick="setSingle('pattern','All',this,'pattern-opts')"><div class="opt-radio on"></div><span class="opt-label">All Patterns</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Geometric',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Geometric</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Floral',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Floral / Botanical</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Abstract',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Abstract</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Vintage',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Vintage / Distressed</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Persian',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Persian / Oriental</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Tribal',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Tribal / Moroccan</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Solid',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Solid / Plain</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Striped',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Striped</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Medallion',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Medallion</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Shag',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Shag / High Pile</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Animal',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Animal Print</span></div>
+        <div class="opt-row" onclick="setSingle('pattern','Patchwork',this,'pattern-opts')"><div class="opt-radio"></div><span class="opt-label">Patchwork</span></div>
+      </div>
+    </div>
+
+    <!-- MATERIAL -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Material <span class="sb-toggle-arrow">⌄</span></div>
+      <div id="mat-opts">
+        <div class="opt-row sel" onclick="setSingle('material','All',this,'mat-opts')"><div class="opt-radio on"></div><span class="opt-label">All Materials</span></div>
+        <div class="opt-row" onclick="setSingle('material','Wool',this,'mat-opts')"><div class="opt-radio"></div><span class="opt-label">Wool (43)</span></div>
+        <div class="opt-row" onclick="setSingle('material','Silk',this,'mat-opts')"><div class="opt-radio"></div><span class="opt-label">Silk (63)</span></div>
+        <div class="opt-row" onclick="setSingle('material','Jute',this,'mat-opts')"><div class="opt-radio"></div><span class="opt-label">Jute (63)</span></div>
+        <div class="opt-row" onclick="setSingle('material','Polypropylene',this,'mat-opts')"><div class="opt-radio"></div><span class="opt-label">Polypropylene (25)</span></div>
+        <div class="opt-row" onclick="setSingle('material','Polyester',this,'mat-opts')"><div class="opt-radio"></div><span class="opt-label">Polyester (20)</span></div>
+        <div class="opt-row" onclick="setSingle('material','Bamboo',this,'mat-opts')"><div class="opt-radio"></div><span class="opt-label">Bamboo (3)</span></div>
+        <div class="opt-row" onclick="setSingle('material','Silk and Wool',this,'mat-opts')"><div class="opt-radio"></div><span class="opt-label">Silk & Wool (1)</span></div>
+      </div>
+    </div>
+
+    <!-- WEAVE -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Weave Type <span class="sb-toggle-arrow">⌄</span></div>
+      <div id="weave-opts">
+        <div class="opt-row sel" onclick="setSingle('weave','All',this,'weave-opts')"><div class="opt-radio on"></div><span class="opt-label">All Weaves</span></div>
+        <div class="opt-row" onclick="setSingle('weave','Hand Tufted',this,'weave-opts')"><div class="opt-radio"></div><span class="opt-label">Hand Tufted</span></div>
+        <div class="opt-row" onclick="setSingle('weave','Hand Knotted',this,'weave-opts')"><div class="opt-radio"></div><span class="opt-label">Hand Knotted</span></div>
+        <div class="opt-row" onclick="setSingle('weave','Hand Woven',this,'weave-opts')"><div class="opt-radio"></div><span class="opt-label">Hand Woven</span></div>
+        <div class="opt-row" onclick="setSingle('weave','Machine Woven',this,'weave-opts')"><div class="opt-radio"></div><span class="opt-label">Machine Woven</span></div>
+      </div>
+    </div>
+
+    <!-- STYLE -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Style <span class="sb-toggle-arrow">⌄</span></div>
+      <div id="style-opts">
+        <div class="opt-row sel" onclick="setSingle('style','All',this,'style-opts')"><div class="opt-radio on"></div><span class="opt-label">All Styles</span></div>
+        <div class="opt-row" onclick="setSingle('style','Bohemian',this,'style-opts')"><div class="opt-radio"></div><span class="opt-label">Bohemian</span></div>
+        <div class="opt-row" onclick="setSingle('style','Modern',this,'style-opts')"><div class="opt-radio"></div><span class="opt-label">Modern</span></div>
+        <div class="opt-row" onclick="setSingle('style','Traditional',this,'style-opts')"><div class="opt-radio"></div><span class="opt-label">Traditional</span></div>
+        <div class="opt-row" onclick="setSingle('style','Minimalist',this,'style-opts')"><div class="opt-radio"></div><span class="opt-label">Minimalist</span></div>
+        <div class="opt-row" onclick="setSingle('style','Scandinavian',this,'style-opts')"><div class="opt-radio"></div><span class="opt-label">Scandinavian</span></div>
+        <div class="opt-row" onclick="setSingle('style','Coastal',this,'style-opts')"><div class="opt-radio"></div><span class="opt-label">Coastal / Nautical</span></div>
+        <div class="opt-row" onclick="setSingle('style','Industrial',this,'style-opts')"><div class="opt-radio"></div><span class="opt-label">Industrial</span></div>
+      </div>
+    </div>
+
+    <!-- RATING -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Min Rating <span class="sb-toggle-arrow">⌄</span></div>
+      <div id="rating-opts">
+        <div class="opt-row sel" onclick="setSingle('rating','0',this,'rating-opts')"><div class="opt-radio on"></div><span class="opt-label">All Ratings</span></div>
+        <div class="opt-row" onclick="setSingle('rating','4',this,'rating-opts')"><div class="opt-radio"></div><span class="opt-label">★★★★ 4.0+</span></div>
+        <div class="opt-row" onclick="setSingle('rating','4.5',this,'rating-opts')"><div class="opt-radio"></div><span class="opt-label">★★★★½ 4.5+</span></div>
+        <div class="opt-row" onclick="setSingle('rating','4.7',this,'rating-opts')"><div class="opt-radio"></div><span class="opt-label">★★★★★ 4.7+</span></div>
+      </div>
+    </div>
+
+    <!-- PACKAGING -->
+    <div class="sb-section">
+      <div class="sb-label" onclick="toggleSbSection(this)" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">Packaging <span class="sb-toggle-arrow">⌄</span></div>
+      <div class="toggle-row"><span style="font-size:12px;color:var(--muted)">Rolled Only 🌀</span><button class="toggle" id="rolled-toggle" onclick="toggleFilter('rolled',this)"><div class="toggle-knob"></div></button></div>
+    </div>
+
+    <button onclick="resetAllFilters()" style="width:100%;padding:9px;border:1.5px solid var(--border);border-radius:7px;background:none;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif">↺ Reset All Filters</button>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="products-area">
+    <div class="results-bar">
+      <div class="results-count"><strong id="results-num">8</strong> rugs found</div>
+      <select class="sort-sel" onchange="setSort(this.value)">
+        <option value="default">Sort: Featured</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="rating">Highest Rated</option>
+        <option value="discount">Biggest Discount</option>
+        <option value="newest">Newest First</option>
+      </select>
+    </div>
+    <div class="prod-grid" id="prod-grid"></div>
+  </div>
+</div>
+
+<!-- COMPARE BAR -->
+<div class="cmp-bar" id="cmp-bar">
+  <div class="cmp-bar-text">Comparing: <span id="cmp-names" style="color:var(--bark)">—</span></div>
+  <button class="cmp-now" onclick="openCompare()">Compare Now ⚖️</button>
+  <button class="cmp-clear" onclick="clearCompare()">Clear</button>
+</div>
+
+</div><!-- end view-shop -->
+
+<!-- ACCOUNT VIEW -->
+<div id="view-account" style="display:none">
+  <div class="acct-wrap">
+    <div class="acct-hdr">
+      <div class="acct-avatar">JD</div>
+      <div>
+        <div class="acct-name serif">Jane Doe</div>
+        <div class="acct-email">jane.doe@email.com · Member since Jan 2025</div>
+      </div>
+      <button onclick="showView('shop')" style="margin-left:auto;background:none;border:1px solid var(--border);border-radius:7px;padding:8px 16px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif">← Back to Shop</button>
+    </div>
+
+    <div class="acct-tabs">
+      <button class="acct-tab on" onclick="setAcctTab(this,'orders')">📦 My Orders</button>
+      <button class="acct-tab" onclick="setAcctTab(this,'wishlist')">❤️ Wishlist</button>
+      <button class="acct-tab" onclick="setAcctTab(this,'profile')">👤 Profile</button>
+      <button class="acct-tab" onclick="setAcctTab(this,'addresses')">🏠 Addresses</button>
+      <button class="acct-tab" onclick="setAcctTab(this,'payment')">💳 Payment</button>
+      <button class="acct-tab" onclick="setAcctTab(this,'reviews')">⭐ My Reviews</button>
+      <button class="acct-tab" onclick="setAcctTab(this,'notifications')">🔔 Notifications</button>
+      <button class="acct-tab" onclick="setAcctTab(this,'rewards')">🎁 Rewards</button>
+      <button class="acct-tab" onclick="setAcctTab(this,'settings')">⚙️ Settings</button>
+    </div>
+
+    <div class="acct-section" id="acct-content"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="main-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Tuf<span>tra</span></div>
+      <div class="footer-desc">A curated marketplace for handcrafted rugs from verified artisan sellers across the USA. We hold your payment until delivery — shop with confidence.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Shop</div>
+      <ul class="footer-links"><li><a href="#">All Rugs</a></li><li><a href="#">Bohemian</a></li><li><a href="#">Traditional</a></li><li><a href="#">Modern</a></li><li><a href="#">On Sale</a></li><li><a href="#">New Arrivals</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links"><li><a href="#">Size Guide</a></li><li><a href="#">Shipping Info</a></li><li><a href="#">Returns</a></li><li><a href="tuftra-page3.html">Track Order</a></li><li><a href="tuftra-page9.html">Contact Us</a></li><li><a href="tuftra-page9.html">FAQ</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Sellers</div>
+      <ul class="footer-links"><li><a href="tuftra-page8.html">Sell on Tuftra</a></li><li><a href="tuftra-page4.html">Seller Dashboard</a></li><li><a href="#">Seller Terms</a></li><li><a href="#">Payout Info</a></li><li><a href="#">Buyer Terms</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Tuftra. All rights reserved.</div>
+    <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Buyer Terms</a><a href="#">Seller Terms</a><a href="#">Sitemap</a></div>
+  </div>
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────
+const RUGS=[];// Real products load honge Supabase se
+
+const BCLS={"On Sale":"b-sale","Handmade":"b-hand","Washable":"b-wash","New":"b-new","Eco-Friendly":"b-eco","Pet-Proof":"b-pet","Bestseller":"b-best","Kid-Safe":"b-kid"};
+
+// ── STATE ──────────────────────────────────────────────────────────
+let cart=[],wishlist=[],cmpList=[];
+let F={search:"",badge:"All",shape:"All",size:"All",color:"All",pattern:"All",style:"All",material:"All",weave:"All",rating:"0",maxPrice:2000,onSale:false,inStock:false,rolled:false};
+let sortMode="default";
+let promoOn=false,cartAgreed=false,cartPlaced=false;
+
+// ── VIEWS ──────────────────────────────────────────────────────────
+function showView(v){
+  document.getElementById('view-shop').style.display=v==='shop'?'block':'none';
+  document.getElementById('view-account').style.display=v==='account'?'block':'none';
+  document.getElementById('main-footer').style.display=v==='shop'?'block':'none';
+  if(v==='account') renderAcctTab('orders');
+  window.scrollTo(0,0);
+}
+
+// ── FILTER ENGINE ──────────────────────────────────────────────────
+function doFilter(){F.search=document.getElementById('search-input').value.toLowerCase();render();}
+function setSingle(key,val,el,gId){
+  F[key]=val;
+  document.querySelectorAll('#'+gId+' .opt-row').forEach(r=>{r.classList.remove('sel');r.querySelector('.opt-radio').classList.remove('on');});
+  el.classList.add('sel');el.querySelector('.opt-radio').classList.add('on');
+  render();
+}
+function setColor(color,el){
+  F.color=color;
+  document.querySelectorAll('.cdot').forEach(d=>d.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('color-label').textContent=color==='All'?'All Colors':color;
+  render();
+}
+function setBadge(el,badge){
+  F.badge=badge;
+  document.querySelectorAll('.sbadge').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');render();
+}
+function toggleFilter(key,btn){F[key]=!F[key];btn.classList.toggle('on');render();}
+function updatePrice(v){
+  F.maxPrice=parseInt(v);
+  document.getElementById('price-max-box').value='$'+parseInt(v).toLocaleString();
+  render();
+}
+
+// ── MOBILE FILTER ──────────────────────────────
+function openMobileFilter(){
+  const mob = document.getElementById('mob-sidebar');
+  const overlay = document.getElementById('mob-overlay');
+  const content = document.getElementById('mob-filter-content');
+  // Clone sidebar content into mobile drawer
+  const sidebar = document.querySelector('.sidebar');
+  if(sidebar && content) {
+    content.innerHTML = sidebar.innerHTML;
+  }
+  mob.classList.add('show');
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileFilter(){
+  document.getElementById('mob-sidebar').classList.remove('show');
+  document.getElementById('mob-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ── FILTER ACCORDION ───────────────────────────
+function toggleSbSection(el){
+  const section = el.closest('.sb-section');
+  if(!section) return;
+  section.classList.toggle('closed');
+  const body = section.querySelector('.sb-section-body');
+  if(body){
+    if(section.classList.contains('closed')){
+      body.style.maxHeight = '0';
+      body.style.opacity = '0';
+    } else {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      body.style.opacity = '1';
+    }
+  }
+}
+
+function resetPrice(){F.maxPrice=2000;document.getElementById('price-slider').value=2000;document.getElementById('price-max-box').value='$2,000';render();}
+function setSort(v){sortMode=v;render();}
+function setStyleFilter(s){F.style=s;document.getElementById('shop').scrollIntoView({behavior:'smooth'});render();}
+
+function resetAllFilters(){
+  F={search:"",badge:"All",shape:"All",size:"All",color:"All",pattern:"All",style:"All",material:"All",weave:"All",rating:"0",maxPrice:2000,onSale:false,inStock:false,rolled:false};
+  document.getElementById('search-input').value='';
+  document.getElementById('price-slider').value=2000;
+  document.getElementById('price-max-box').value='$2,000';
+  ['stock-toggle','sale-toggle','rolled-toggle'].forEach(id=>{const t=document.getElementById(id);if(t)t.classList.remove('on');});
+  document.querySelectorAll('.sbadge').forEach((b,i)=>{if(i===0)b.classList.add('on');else b.classList.remove('on');});
+  document.querySelectorAll('.cdot').forEach((d,i)=>{if(i===0)d.classList.add('on');else d.classList.remove('on');});
+  document.getElementById('color-label').textContent='All Colors';
+  ['shape-opts','size-opts','pattern-opts','mat-opts','weave-opts','style-opts','rating-opts'].forEach(id=>{
+    document.querySelectorAll('#'+id+' .opt-row').forEach((r,i)=>{
+      r.classList.toggle('sel',i===0);
+      const radio=r.querySelector('.opt-radio');
+      if(radio)radio.classList.toggle('on',i===0);
+    });
+  });
+  render();
+}
+
+function getFiltered(){
+  let rugs=[...RUGS];
+  if(F.search) rugs=rugs.filter(r=>r.name.toLowerCase().includes(F.search)||r.style.toLowerCase().includes(F.search)||r.color.toLowerCase().includes(F.search)||r.material.toLowerCase().includes(F.search)||r.pattern.toLowerCase().includes(F.search));
+  if(F.badge!=='All') rugs=rugs.filter(r=>r.badges.includes(F.badge));
+  if(F.shape!=='All') rugs=rugs.filter(r=>r.shape===F.shape);
+  if(F.size!=='All') rugs=rugs.filter(r=>r.size===F.size);
+  if(F.color!=='All') rugs=rugs.filter(r=>r.color===F.color);
+  if(F.pattern!=='All') rugs=rugs.filter(r=>r.pattern===F.pattern);
+  if(F.style!=='All') rugs=rugs.filter(r=>r.style===F.style);
+  if(F.material!=='All') rugs=rugs.filter(r=>r.material===F.material);
+  if(F.weave!=='All') rugs=rugs.filter(r=>r.weave===F.weave);
+  if(parseFloat(F.rating)>0) rugs=rugs.filter(r=>r.rating>=parseFloat(F.rating));
+  if(F.maxPrice<2000) rugs=rugs.filter(r=>r.price<=F.maxPrice);
+  if(F.onSale) rugs=rugs.filter(r=>r.was!==null);
+  if(F.inStock) rugs=rugs.filter(r=>r.inStock);
+  if(F.rolled) rugs=rugs.filter(r=>r.ship==='Rolled');
+  if(sortMode==='price-low') rugs.sort((a,b)=>a.price-b.price);
+  else if(sortMode==='price-high') rugs.sort((a,b)=>b.price-a.price);
+  else if(sortMode==='rating') rugs.sort((a,b)=>b.rating-a.rating);
+  else if(sortMode==='discount') rugs.sort((a,b)=>{const da=a.was?Math.round((1-a.price/a.was)*100):0,db=b.was?Math.round((1-b.price/b.was)*100):0;return db-da;});
+  else if(sortMode==='newest') rugs.sort((a,b)=>b.id-a.id);
+  return rugs;
+}
+
+// ── RENDER ─────────────────────────────────────────────────────────
+function render(){
+  const rugs=getFiltered();
+  document.getElementById('results-num').textContent=rugs.length;
+  const grid=document.getElementById('prod-grid');
+  if(rugs.length===0){grid.innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><div style="font-size:16px;font-weight:600;margin-bottom:6px">No rugs found</div><div style="font-size:13px">Try adjusting your filters</div><button onclick="resetAllFilters()" style="margin-top:14px;background:var(--ink);color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">Reset Filters</button></div>`;return;}
+  grid.innerHTML=rugs.map(r=>rugCard(r)).join('');
+}
+
+function rugCard(r){
+  const disc=r.was?Math.round((1-r.price/r.was)*100):null;
+  const inW=wishlist.includes(r.id);
+  const inC=!!cmpList.find(x=>x.id===r.id);
+  const stars='★'.repeat(Math.floor(r.rating))+'☆'.repeat(5-Math.floor(r.rating));
+  return `<div class="prod-card">
+    <div class="prod-img" style="background:${r.bg};cursor:pointer" onclick="openProductById(${r.id})">
+      <div class="prod-img-inner"><span style="font-size:60px;opacity:.65">${r.icon}</span></div>
+      <div class="badge-row">${r.badges.slice(0,2).map(b=>`<span class="b ${BCLS[b]||'b-hand'}">${b}</span>`).join('')}</div>
+      ${disc?`<div class="disc-badge">-${disc}%</div>`:''}
+      ${!r.inStock?`<div style="position:absolute;inset:0;background:rgba(26,18,8,.5);display:flex;align-items:center;justify-content:center"><span style="background:rgba(26,18,8,.8);color:#e8d8c0;font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px">Out of Stock</span></div>`:''}
+      <button class="wish-btn" onclick="event.stopPropagation();toggleWish(${r.id},this)">${inW?'❤️':'🤍'}</button>
+      <div class="ship-tag">${r.ship==='Rolled'?'🌀 Rolled':'📦 Folded'}</div>
+    </div>
+    <div class="prod-body">
+      <div class="prod-seller">by ${r.seller}</div>
+      <div class="prod-name">${r.name}</div>
+      <div class="prod-meta">${r.size} · ${r.material} · ${r.weave}</div>
+      <div class="rating-row"><span class="stars">${stars}</span><span style="font-size:11px;font-weight:600;margin-left:3px">${r.rating}</span><span class="rev-ct">(${r.reviews})</span></div>
+      <div class="price-row-p">
+        <div><span class="price-now">$${r.price}</span>${r.was?`<span class="price-was">$${r.was}</span>`:''}</div>
+        <button class="add-btn" onclick="event.stopPropagation();addToCart(${r.id})" ${!r.inStock?'disabled style="background:#ccc"':''}>Add to Cart</button>
+      </div>
+    </div>
+    <div class="cmp-row">
+      <input type="checkbox" id="cmp${r.id}" ${inC?'checked':''} onchange="toggleCompare(${r.id})">
+      <label for="cmp${r.id}">Compare</label>
+    </div>
+  </div>`;
+}
+
+// ── CART ───────────────────────────────────────────────────────────
+function addToCart(id){
+  const r=RUGS.find(x=>x.id===id);
+  if(!r||!r.inStock)return;
+  const existing=cart.find(x=>x.id===id);
+  if(existing){existing.qty=(existing.qty||1)+1;}
+  else{cart.push({...r,qty:1});}
+  updateCartCount();
+  showToast(`"${r.name}" added to cart! 🛒`);
+}
+function updateCartCount(){
+  const total=cart.reduce((a,x)=>a+(x.qty||1),0);
+  document.getElementById('cart-count').textContent=total;
+}
+function openCart(){document.getElementById('cart-overlay').style.display='block';document.getElementById('cart-drawer').style.display='block';renderCart();}
+function closeCart(){document.getElementById('cart-overlay').style.display='none';document.getElementById('cart-drawer').style.display='none';}
+function removeFromCart(i){cart.splice(i,1);updateCartCount();renderCart();}
+
+function renderCart(){
+  const sub=cart.reduce((a,r)=>a+r.price*(r.qty||1),0);
+  const disc=promoOn?sub*.15:0;
+  const ship=sub>=150?0:9.99;
+  const total=(sub-disc+ship).toFixed(2);
+  document.getElementById('cart-drawer').innerHTML=`
+    <div class="cart-hdr"><div class="cart-title serif">Your Cart (${cart.reduce((a,x)=>a+(x.qty||1),0)})</div><button class="cart-close" onclick="closeCart()">✕</button></div>
+    ${cart.length===0?`<div style="text-align:center;padding:56px 0;color:var(--muted);font-size:14px">Your cart is empty 🛒<br><br><button onclick="closeCart()" style="background:var(--ink);color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">Continue Shopping</button></div>`:`
+    ${cart.map((r,i)=>`<div class="cart-item">
+      <div class="ci-img" style="background:${r.bg}">${r.icon}</div>
+      <div class="ci-info">
+        <div class="ci-name">${r.name}</div>
+        <div class="ci-meta">${r.size} · ${r.ship==='Rolled'?'🌀 Rolled in tube':'📦 Flat folded'}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:5px">
+          <button onclick="changeQty(${i},-1)" style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--cream);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink)">−</button>
+          <span style="font-size:13px;font-weight:700;min-width:16px;text-align:center">${r.qty||1}</span>
+          <button onclick="changeQty(${i},1)" style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--cream);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink)">+</button>
+          <div class="ci-price">$${(r.price*(r.qty||1)).toFixed(2)}</div>
+        </div>
+      </div>
+      <button class="ci-remove" onclick="removeFromCart(${i})">✕</button>
+    </div>`).join('')}
+    <div class="promo-row">
+      <input class="promo-in" id="promo-in" placeholder="Promo code — try TUFTRA15" ${promoOn?"disabled value='TUFTRA15 ✅'":""}>
+      <button class="promo-btn" onclick="applyPromo()" ${promoOn?'disabled':''}>Apply</button>
+    </div>
+    ${promoOn?`<div style="color:var(--green);font-size:11px;font-weight:600;margin-bottom:8px">✅ 15% discount applied!</div>`:''}
+    <div class="totals-section">
+      <div class="total-row"><span>Subtotal</span><span>$${sub.toFixed(2)}</span></div>
+      ${promoOn?`<div class="total-row" style="color:var(--green)"><span>Discount (15%)</span><span>−$${disc.toFixed(2)}</span></div>`:''}
+      <div class="total-row"><span>Shipping</span><span class="${ship===0?'free-ship':''}">${ship===0?'FREE 🎉':'$'+ship.toFixed(2)}</span></div>
+      ${sub>0&&sub<150?`<div style="font-size:10px;color:var(--muted);margin-top:-3px">Add $${(150-sub).toFixed(0)} more for free shipping</div>`:''}
+      <div class="total-row big"><span>Total</span><span>$${total}</span></div>
+    </div>
+    <div class="terms-r" onclick="cartAgreed=!cartAgreed;renderCart()" style="cursor:pointer">
+      <div class="tchk ${cartAgreed?'on':''}">${cartAgreed?'✓':''}</div>
+      <span>I agree to Tuftra's <span style="color:var(--blue);text-decoration:underline">Buyer Terms & Conditions</span>. Payment processed securely via Stripe.</span>
+    </div>
+    ${cartPlaced?`<div style="background:#eaf4ee;border:1px solid rgba(42,106,64,.25);border-radius:8px;padding:16px;text-align:center;margin-top:10px"><div style="font-size:22px;margin-bottom:5px">🎉</div><div style="font-weight:700;color:var(--green)">Order Placed!</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Confirmation email sent. Track in My Account.</div></div>`
+    :`<button class="place-btn" ${cartAgreed&&cart.length>0?'':'disabled'} onclick="placeOrder()">Place Order — Secure Stripe Payment 🔒</button>`}
+    `}
+  `;
+}
+function changeQty(i,delta){
+  if(!cart[i])return;
+  cart[i].qty=(cart[i].qty||1)+delta;
+  if(cart[i].qty<=0){cart.splice(i,1);}
+  updateCartCount();renderCart();
+}
+
+function applyPromo(){const v=document.getElementById('promo-in').value.toUpperCase();if(v==='TUFTRA15'){promoOn=true;showToast('15% off applied! 🎉');renderCart();}}
+function placeOrder(){cartPlaced=true;cart=[];updateCartCount();renderCart();setTimeout(()=>{cartPlaced=false;closeCart();},3000);}
+
+// ── WISHLIST ───────────────────────────────────────────────────────
+function toggleWish(id,btn){
+  if(wishlist.includes(id)){wishlist=wishlist.filter(x=>x!==id);if(btn)btn.textContent='🤍';}
+  else{wishlist.push(id);if(btn)btn.textContent='❤️';showToast('Added to wishlist ❤️');}
+}
+
+// ── COMPARE ────────────────────────────────────────────────────────
+function toggleCompare(id){
+  const r=RUGS.find(x=>x.id===id);
+  if(cmpList.find(x=>x.id===id)){cmpList=cmpList.filter(x=>x.id!==id);}
+  else{if(cmpList.length>=3){showToast('Max 3 rugs to compare!');document.getElementById('cmp'+id).checked=false;return;}cmpList.push(r);}
+  updateCmpBar();render();
+}
+function updateCmpBar(){
+  const bar=document.getElementById('cmp-bar');
+  const navBtn=document.getElementById('cmp-nav');
+  if(cmpList.length>1){bar.classList.add('show');document.getElementById('cmp-names').textContent=cmpList.map(r=>r.name).join(' vs ');navBtn.style.display='flex';document.getElementById('cmp-ct').textContent=cmpList.length;}
+  else{bar.classList.remove('show');navBtn.style.display='none';}
+}
+function clearCompare(){cmpList=[];updateCmpBar();render();}
+function openCompare(){
+  if(cmpList.length<2){showToast('Select at least 2 rugs!');return;}
+  const rows=[['Price',r=>`<strong>$${r.price}</strong>`],['Was',r=>r.was?`<s style="color:var(--muted)">$${r.was}</s>`:'—'],['Discount',r=>r.was?`<span style="color:var(--red);font-weight:700">${Math.round((1-r.price/r.was)*100)}% off</span>`:'No discount'],['Shape',r=>r.shape],['Size',r=>r.size],['Material',r=>r.material],['Weave',r=>r.weave],['Pattern',r=>r.pattern],['Color',r=>r.color],['Style',r=>r.style],['Rating',r=>`${'★'.repeat(Math.floor(r.rating))} ${r.rating} (${r.reviews})`],['Packaging',r=>r.ship==='Rolled'?'🌀 Rolled tube':'📦 Flat folded'],['In Stock',r=>r.inStock?'✅ Yes':'❌ No']];
+  showModal(`<div class="cmp-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <div class="serif" style="font-size:24px;font-weight:700">Compare Rugs</div>
+      <button onclick="closeModal()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer">✕</button>
+    </div>
+    <table class="cmp-table">
+      <thead><tr><th>Feature</th>${cmpList.map(r=>`<th><div style="font-size:28px;margin-bottom:4px">${r.icon}</div><div style="font-size:12px;font-weight:700;color:var(--ink)">${r.name}</div><div style="font-size:10px;color:var(--muted)">by ${r.seller}</div></th>`).join('')}</tr></thead>
+      <tbody>
+        ${rows.map(([lbl,fn])=>`<tr><td class="cmp-feat">${lbl}</td>${cmpList.map(r=>`<td style="text-align:center">${fn(r)}</td>`).join('')}</tr>`).join('')}
+        <tr style="background:var(--sand)"><td></td>${cmpList.map(r=>`<td style="text-align:center;padding:12px"><button class="add-btn" onclick="addToCart(${r.id});closeModal()">Add to Cart</button></td>`).join('')}</tr>
+      </tbody>
+    </table>
+  </div>`,'820px');
+}
+
+// ── PRODUCT DETAIL ─────────────────────────────────────────────────
+function openProductById(id){
+  const r=RUGS.find(x=>x.id===id);
+  const disc=r.was?Math.round((1-r.price/r.was)*100):null;
+  const stars='★'.repeat(Math.floor(r.rating))+'☆'.repeat(5-Math.floor(r.rating));
+  showModal(`<div class="pd-wrap">
+    <div class="pd-img" style="background:${r.bg};border-radius:16px 0 0 16px"><span style="font-size:88px;opacity:.65">${r.icon}</span></div>
+    <div class="pd-info">
+      <button class="pd-close" onclick="closeModal()">✕</button>
+      <div class="pd-badges">${r.badges.map(b=>`<span class="b ${BCLS[b]||'b-hand'}">${b}</span>`).join('')}</div>
+      <div class="pd-name serif">${r.name}</div>
+      <div class="pd-seller">by ${r.seller} · <span style="font-weight:700;color:${r.inStock?'#2a6a40':'#b83232'}">${r.inStock?'✅ In Stock':'❌ Out of Stock'}</span></div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px"><span class="stars" style="font-size:13px">${stars}</span><span style="font-size:12px;font-weight:600">${r.rating}</span><span style="font-size:11px;color:var(--muted)">(${r.reviews} reviews)</span></div>
+      <div class="pd-price-row"><span class="pd-price">$${r.price}</span>${r.was?`<span class="pd-was">$${r.was}</span><span class="pd-disc">-${disc}%</span>`:''}</div>
+      <div class="pd-specs">
+        <div class="pd-spec"><div class="pd-spec-lbl">Shape</div><div class="pd-spec-val">${r.shape}</div></div>
+        <div class="pd-spec"><div class="pd-spec-lbl">Size</div><div class="pd-spec-val">${r.size}</div></div>
+        <div class="pd-spec"><div class="pd-spec-lbl">Material</div><div class="pd-spec-val">${r.material}</div></div>
+        <div class="pd-spec"><div class="pd-spec-lbl">Weave</div><div class="pd-spec-val">${r.weave}</div></div>
+        <div class="pd-spec"><div class="pd-spec-lbl">Pattern</div><div class="pd-spec-val">${r.pattern}</div></div>
+        <div class="pd-spec"><div class="pd-spec-lbl">Color</div><div class="pd-spec-val">${r.color}</div></div>
+        <div class="pd-spec"><div class="pd-spec-lbl">Style</div><div class="pd-spec-val">${r.style}</div></div>
+        <div class="pd-spec"><div class="pd-spec-lbl">Best Room</div><div class="pd-spec-val">${r.room}</div></div>
+      </div>
+      <div class="ship-box">
+        <strong>${r.ship==='Rolled'?'🌀 Ships Rolled in Protective Tube':'📦 Ships Flat-Folded in Box'}</strong><br>
+        ${r.ship==='Rolled'?'Carefully rolled and packed in a sturdy cardboard tube. Unroll and let flat for 24–48 hours before use.':'Neatly folded and packed in a reinforced box. Unfold and any creases disappear in a few days.'}
+        <div style="margin-top:6px;font-size:11px">🚚 Ships in 2–3 days via FedEx/UPS · ✅ Free returns within 30 days</div>
+      </div>
+      <div class="pd-actions">
+        <button class="pd-cart" onclick="addToCart(${r.id});closeModal()" ${!r.inStock?'disabled style="background:#ccc"':''}>Add to Cart 🛒</button>
+        <button class="pd-vis" onclick="closeModal();openVis(${r.id})">🏠 Visualize</button>
+      </div>
+      <div class="terms-r">
+        <div class="tchk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':''"></div>
+        <span>I have read the <span style="color:var(--blue);text-decoration:underline;cursor:pointer">Buyer Terms & Conditions</span></span>
+      </div>
+    </div>
+  </div>`,'720px');
+}
+
+// ── VISUALIZER ─────────────────────────────────────────────────────
+function openVis(id){
+  const r=RUGS.find(x=>x.id===id);
+  showModal(`<div class="vis-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div class="serif" style="font-size:22px;font-weight:700">🏠 Room Visualizer</div>
+      <button onclick="closeModal()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer">✕</button>
+    </div>
+    <div class="vis-room">
+      <div class="vis-wall"></div><div class="vis-floor"></div>
+      <div class="vis-sofa">S O F A</div>
+      <div class="vis-table-el"></div>
+      <div class="vis-rug" style="background:${r.bg}">${r.icon}</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Preview: <strong>${r.name}</strong> in a typical living room.</p>
+    <div style="display:flex;gap:8px;justify-content:center">
+      <button class="pd-cart" style="max-width:200px" onclick="addToCart(${r.id});closeModal()">Add to Cart 🛒</button>
+      <button class="pd-vis" onclick="closeModal()">Back to Shop</button>
+    </div>
+  </div>`,'520px');
+}
+
+// ── SIZE GUIDE ─────────────────────────────────────────────────────
+function openSizeGuide(){
+  showModal(`<div class="sg-wrap">
+    <button onclick="closeModal()" style="float:right;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer">✕</button>
+    <div class="sg-title serif">📏 Rug Size Guide</div>
+    <div class="sg-sub">Enter your room size to find the perfect rug.</div>
+    <div class="sg-inputs">
+      <div class="sg-field"><label>Room Width (ft)</label><input type="number" id="sg-w" placeholder="e.g. 14" oninput="calcSize()"></div>
+      <div class="sg-field"><label>Room Length (ft)</label><input type="number" id="sg-l" placeholder="e.g. 16" oninput="calcSize()"></div>
+    </div>
+    <div id="sg-res" style="display:none" class="sg-result">
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Recommended</div>
+      <div class="sg-size" id="sg-sz">—</div>
+      <div class="sg-note" id="sg-nt">—</div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;margin-top:16px">Quick Reference</div>
+    <table class="sg-table">
+      ${[['2\'×4\'','Bathroom, entryway mat'],['3\'×5\'','Small accent, bedside'],['4\'×6\'','Small bedroom, under coffee table'],['5\'×8\'','Standard living room'],['6\'×9\'','Large living room'],['8\'×10\'','Open plan, dining room'],['9\'×12\'','Grand living room'],['10\'×14\'+','Master suite, great room'],['Runner','Hallway, kitchen, stairway']].map(([s,u],i)=>`<tr><td style="font-weight:600">${s}</td><td style="color:var(--muted)">${u}</td></tr>`).join('')}
+    </table>
+    <div style="background:var(--cream);border-radius:7px;padding:11px 14px;margin-top:14px;font-size:11px;color:var(--muted);line-height:1.7">💡 <strong style="color:var(--ink)">Pro tip:</strong> Leave 18–24 inches of bare floor on all sides. In dining rooms, extend 24" beyond table edge so chairs stay on rug.</div>
+  </div>`,'500px');
+}
+function calcSize(){
+  const w=parseFloat(document.getElementById('sg-w').value),l=parseFloat(document.getElementById('sg-l').value);
+  if(!w||!l)return;
+  let size,note;
+  if(w<=10&&l<=12){size="3'×5' or 4'×6'";note="Accent rug — perfect for small spaces";}
+  else if(w<=13&&l<=15){size="5'×7' or 5'×8'";note="Great for medium rooms";}
+  else if(w<=16&&l<=18){size="6'×9' or 8'×10'";note="Ideal for large living rooms";}
+  else{size="9'×12' or larger";note="Go big — anchors the room beautifully";}
+  document.getElementById('sg-res').style.display='block';
+  document.getElementById('sg-sz').textContent=size;
+  document.getElementById('sg-nt').textContent=note;
+}
+
+// ── MY ACCOUNT ─────────────────────────────────────────────────────
+function setAcctTab(el,tab){
+  document.querySelectorAll('.acct-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  renderAcctTab(tab);
+}
+
+function renderAcctTab(tab){
+  const c=document.getElementById('acct-content');
+  if(tab==='orders') c.innerHTML=`
+    <div class="acct-sec-title">My Orders <span style="font-size:12px;color:var(--muted);font-weight:400">5 orders</span></div>
+    ${[{id:'',name:'',date:'Apr 23, 2025',amount:189,status:'delivered',steps:[1,1,1,1],ship:'🌀 Rolled'},
+       {id:'',name:'',date:'Apr 22, 2025',amount:329,status:'shipped',steps:[1,1,1,0],ship:'🌀 Rolled'},
+       {id:'',name:'',date:'Apr 22, 2025',amount:159,status:'processing',steps:[1,1,0,0],ship:'📦 Folded'}].map(o=>`
+    <div class="order-card">
+      <div class="order-top">
+        <div><span class="order-id">${o.id}</span> · <span style="font-size:11px;color:var(--muted)">${o.date}</span></div>
+        <span class="order-status os-${o.status}">${o.status}</span>
+      </div>
+      <div class="order-name">${o.name}</div>
+      <div class="order-meta">$${o.amount} · Packaging: ${o.ship}</div>
+      <div class="tracking-steps">
+        ${['Confirmed','Packed','Shipped','Delivered'].map((s,i)=>`<div class="t-step"><div class="t-dot ${o.steps[i]===1?(i===o.steps.lastIndexOf(1)&&o.status!=='delivered'?'active':'done'):''}">${o.steps[i]===1?'✓':'·'}</div><div class="t-label">${s}</div></div>`).join('')}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif">Track Order</button>
+        ${o.status==='delivered'?`<button style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif">Return Item</button>`:''}
+        <button style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif">Download Invoice</button>
+      </div>
+    </div>`).join('')}`;
+  else if(tab==='wishlist') c.innerHTML=`
+    <div class="acct-sec-title">My Wishlist <span style="font-size:12px;color:var(--muted);font-weight:400">${wishlist.length} items</span></div>
+    ${wishlist.length===0?`<div style="text-align:center;padding:40px;color:var(--muted);font-size:14px">No saved rugs yet. Click the ❤️ on any rug to save it here.<br><br><button onclick="showView('shop')" style="background:var(--ink);color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">Browse Rugs</button></div>`:`
+    <div class="wishlist-grid">
+      ${RUGS.filter(r=>wishlist.includes(r.id)).map(r=>`<div class="wl-card" onclick="openProductById(${r.id});showView('shop')">
+        <div class="wl-img" style="background:${r.bg}">${r.icon}</div>
+        <div class="wl-info">
+          <div class="wl-name">${r.name}</div>
+          <div class="wl-price">$${r.price}${r.was?` <span style="font-size:10px;color:var(--muted);text-decoration:line-through">$${r.was}</span>`:''}</div>
+          ${r.was?`<div class="wl-alert">🔥 ${Math.round((1-r.price/r.was)*100)}% off — limited time!</div>`:''}
+        </div>
+      </div>`).join('')}
+    </div>`}`;
+  else if(tab==='profile') c.innerHTML=`
+    <div class="acct-sec-title">My Profile</div>
+    <div class="form-grid">
+      <div class="form-field"><label>First Name</label><input value="Jane"></div>
+      <div class="form-field"><label>Last Name</label><input value="Doe"></div>
+      <div class="form-field"><label>Email Address</label><input value="jane.doe@email.com"></div>
+      <div class="form-field"><label>Phone Number</label><input value="+1 555 234 5678"></div>
+      <div class="form-field"><label>Date of Birth</label><input type="date" value="1990-05-14"></div>
+      <div class="form-field"><label>Gender</label><select><option>Prefer not to say</option><option>Female</option><option>Male</option></select></div>
+    </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+      <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Change Password</div>
+      <div class="form-grid">
+        <div class="form-field"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
+        <div class="form-field"><label>New Password</label><input type="password" placeholder="••••••••"></div>
+      </div>
+    </div>
+    <button class="save-btn" onclick="showToast('Profile saved! ✅')">Save Changes</button>`;
+  else if(tab==='addresses') c.innerHTML=`
+    <div class="acct-sec-title">Saved Addresses <button onclick="showToast('Address form coming soon!')" style="background:var(--ink);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">+ Add New</button></div>
+    <div class="addr-card default">
+      <div class="addr-default-tag">Default</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px">Jane Doe</div>
+      <div style="font-size:12px;color:var(--muted)">123 Maple Street, Apt 4B<br>Austin, TX 78701<br>United States<br>+1 555 234 5678</div>
+      <div class="addr-actions"><button class="addr-btn">Edit</button><button class="addr-btn">Delete</button></div>
+    </div>
+    <div class="addr-card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px">Jane Doe (Office)</div>
+      <div style="font-size:12px;color:var(--muted)">456 Commerce Blvd, Suite 200<br>Austin, TX 78702<br>United States</div>
+      <div class="addr-actions"><button class="addr-btn">Edit</button><button class="addr-btn">Set Default</button><button class="addr-btn">Delete</button></div>
+    </div>`;
+  else if(tab==='payment') c.innerHTML=`
+    <div class="acct-sec-title">Payment Methods <button onclick="showToast('Add card via Stripe!')" style="background:var(--ink);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">+ Add Card</button></div>
+    <div class="addr-card default" style="display:flex;align-items:center;gap:14px">
+      <div style="font-size:28px">💳</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">Visa ending in 4242</div><div style="font-size:11px;color:var(--muted)">Expires 08/27 · Default card</div></div>
+      <div class="addr-default-tag">Default</div>
+    </div>
+    <div class="addr-card" style="display:flex;align-items:center;gap:14px">
+      <div style="font-size:28px">💳</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">Mastercard ending in 8888</div><div style="font-size:11px;color:var(--muted)">Expires 03/26</div></div>
+      <button class="addr-btn">Set Default</button>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:var(--muted);background:var(--cream);padding:11px 14px;border-radius:7px">🔒 Your card details are stored securely by Stripe. Tuftra never stores your full card number.</div>`;
+  else if(tab==='reviews') c.innerHTML=`
+    <div class="acct-sec-title">My Reviews</div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Pending Reviews</div>
+    <div class="pending-review"><div><div style="font-size:13px;font-weight:700"></div><div style="font-size:11px;color:var(--muted)">Delivered Apr 22 · Share your experience!</div></div><button class="write-review-btn" onclick="showToast('Review form opening...')">Write Review ⭐</button></div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:16px 0 10px">Published Reviews</div>
+    <div class="review-card"><div class="review-rug"></div><div class="review-stars">★★★★★</div><div class="review-text">"Absolutely gorgeous rug! The colors are vibrant and exactly as shown. Arrived rolled in a protective tube — perfect condition. My living room looks amazing now."</div><div style="font-size:10px;color:var(--muted);margin-top:6px">Posted Apr 24, 2025 · Verified Purchase</div></div>`;
+  else if(tab==='notifications') c.innerHTML=`
+    <div class="acct-sec-title">Notification Preferences</div>
+    ${[['Order Updates','Shipping, delivery, and return confirmations',true],['Price Drop Alerts','Get notified when wishlist items go on sale',true],['New Arrivals','Be first to know about new rugs',false],['Promotions & Offers','Sales, discount codes, and special events',true],['Seller Messages','Direct messages from sellers',true],['Review Reminders','Reminder to review delivered items',false]].map(([title,sub,on])=>`
+    <div class="notif-row">
+      <div><div class="notif-info">${title}</div><div class="notif-sub">${sub}</div></div>
+      <button class="toggle ${on?'on':''}" onclick="this.classList.toggle('on');showToast('Preference saved!')"><div class="toggle-knob"></div></button>
+    </div>`).join('')}`;
+  else if(tab==='rewards') c.innerHTML=`
+    <div class="acct-sec-title">Tuftra Rewards</div>
+    <div class="points-box">
+      <div class="points-val">1,240</div>
+      <div class="points-lbl">Reward Points</div>
+      <div class="points-note">Worth $12.40 · Redeem on your next order</div>
+    </div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">How to Earn</div>
+    ${[['Every $1 spent','1 point'],['Write a review','50 points'],['Refer a friend','200 points'],['First order','100 points bonus']].map(([a,b])=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px"><span>${a}</span><span style="font-weight:700;color:var(--bark)">${b}</span></div>`).join('')}
+    <button class="save-btn" style="margin-top:14px" onclick="showToast('Redeem feature coming soon!')">Redeem Points</button>`;
+  else if(tab==='settings') c.innerHTML=`
+    <div class="acct-sec-title">Account Settings</div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Preferences</div>
+    ${[['Currency','USD — US Dollar'],['Language','English'],['Size Units','Feet & Inches']].map(([l,v])=>`<div class="notif-row"><div><div class="notif-info">${l}</div><div class="notif-sub">${v}</div></div><button class="addr-btn">Change</button></div>`).join('')}
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+      <div class="danger-zone">
+        <div class="danger-title">⚠️ Danger Zone</div>
+        <div class="danger-text">Once you delete your account, all your data including orders, wishlist, and reviews will be permanently removed. This action cannot be undone.</div>
+        <button class="danger-btn" onclick="showToast('Please contact support to delete account.')">Delete My Account</button>
+      </div>
+    </div>`;
+}
+
+// ── MOBILE NAV ─────────────────────────────────────────────────────
+function toggleMobileNav(){
+  const menu=document.getElementById('mobile-nav-menu');
+  const btn=document.getElementById('hamburger-btn');
+  menu.classList.toggle('open');
+  btn.textContent=menu.classList.contains('open')?'✕':'☰';
+}
+function closeMobileNav(){
+  const menu=document.getElementById('mobile-nav-menu');
+  const btn=document.getElementById('hamburger-btn');
+  menu.classList.remove('open');
+  btn.textContent='☰';
+}
+
+// ── FILTER DROPDOWN ────────────────────────────────────────────────
+function toggleFilterDropdown(){
+  const dd=document.getElementById('filter-dropdown');
+  const isOpen=dd.style.display==='block';
+  dd.style.display=isOpen?'none':'block';
+  if(!isOpen){
+    // close on outside click
+    setTimeout(()=>document.addEventListener('click',closeFilterDropdownOutside),0);
+  }
+}
+function closeFilterDropdown(){
+  document.getElementById('filter-dropdown').style.display='none';
+  document.removeEventListener('click',closeFilterDropdownOutside);
+}
+function closeFilterDropdownOutside(e){
+  if(!e.target.closest('#filter-dropdown')&&!e.target.closest('#filter-dropdown-btn')){
+    closeFilterDropdown();
+  }
+}
+function setBadgeFromDropdown(badge){
+  F.badge=badge;
+  // update All Rugs button state
+  document.querySelectorAll('.sbadge').forEach(b=>b.classList.remove('on'));
+  // show active label
+  const lbl=document.getElementById('active-badge-label');
+  if(lbl){lbl.textContent='Active: '+badge;lbl.style.display='inline';}
+  render();
+  closeFilterDropdown();
+  showToast('Filtered: '+badge);
+}
+
+// override setBadge to also reset label
+const _origSetBadge=setBadge;
+function setBadge(el,badge){
+  _origSetBadge(el,badge);
+  const lbl=document.getElementById('active-badge-label');
+  if(lbl){if(badge==='All'){lbl.style.display='none';}else{lbl.textContent='Active: '+badge;lbl.style.display='inline';}}
+}
+
+// ── MODAL ──────────────────────────────────────────────────────────
+function showModal(html,maxW='720px'){document.getElementById('modal-container').innerHTML=`<div class="modal-overlay" onclick="closeModal()"><div class="modal-box" style="max-width:${maxW};width:100%" onclick="event.stopPropagation()">${html}</div></div>`;}
+function closeModal(){document.getElementById('modal-container').innerHTML='';}
+
+// ── TOAST ──────────────────────────────────────────────────────────
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',2600);}
+
+// ── INIT ───────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>

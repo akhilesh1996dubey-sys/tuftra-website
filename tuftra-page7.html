@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuftra — Email Templates Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ef;--sand:#f0e8d8;--bark:#b8956a;--umber:#7a4f2d;
+  --ink:#1a1208;--muted:#8a7a6a;--white:#fff;--border:#e4d8c4;
+  --red:#b83232;--gold:#c47a18;--green:#2a6a40;--blue:#1a4f8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Jost',sans-serif;background:#f0ebe2;color:var(--ink)}
+.serif{font-family:'Cormorant Garamond',serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .5s ease both}
+.a2{animation:fadeUp .5s .1s ease both}
+
+/* PREVIEW UI */
+.preview-nav{background:var(--ink);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.pn-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-1px}
+.pn-logo span{color:var(--bark)}
+.pn-title{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:2px}
+.pn-tabs{display:flex;gap:6px}
+.pn-tab{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.15);background:none;font-size:11px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.pn-tab:hover{border-color:rgba(184,149,106,.5);color:var(--bark)}
+.pn-tab.on{background:var(--bark);border-color:var(--bark);color:#fff}
+.preview-wrap{max-width:680px;margin:40px auto;padding:0 20px 80px}
+.preview-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.preview-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.email-shadow{box-shadow:0 8px 40px rgba(26,18,8,.12);border-radius:8px;overflow:hidden;margin-bottom:40px}
+.copy-btn{background:var(--bark);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;margin-left:auto}
+
+
+/* DUAL EMAIL VIEW */
+.dual-email-wrap{display:flex;gap:24px;align-items:flex-start}
+.dual-email-col{flex:1;min-width:0}
+.dual-email-label{display:inline-block;background:var(--bark);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:4px 4px 0 0;margin-bottom:0}
+.dual-email-label.seller{background:#2a6a40}
+.dual-email-divider{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.dual-email-divider::before,.dual-email-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── EMAIL STYLES (inline-safe) ── */
+.em-wrap{background:#f5f0e8;font-family:'Jost',sans-serif;padding:32px 20px}
+.em-inner{max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden}
+.em-header{background:#1a1208;padding:28px 36px;text-align:center;position:relative}
+.em-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:-1px}
+.em-logo-span{color:#b8956a}
+.em-header-sub{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+.em-hero{padding:36px 36px 28px;text-align:center}
+.em-icon{font-size:48px;margin-bottom:14px}
+.em-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:#1a1208;margin-bottom:8px;line-height:1.2}
+.em-sub{font-size:14px;color:#8a7a6a;line-height:1.8;margin-bottom:0}
+.em-divider{height:1px;background:#e4d8c4;margin:0 36px}
+.em-section{padding:24px 36px}
+.em-section-title{font-size:10px;font-weight:700;color:#8a7a6a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+.em-order-box{background:#faf6ef;border:1px solid #e4d8c4;border-radius:8px;padding:16px 18px;margin-bottom:16px}
+.em-order-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #e4d8c4}
+.em-order-row:last-child{border-bottom:none}
+.em-order-label{color:#8a7a6a}
+.em-order-val{font-weight:700;color:#1a1208}
+.em-product-row{display:flex;align-items:center;gap:14px;padding:14px;background:#faf6ef;border:1px solid #e4d8c4;border-radius:8px;margin-bottom:10px}
+.em-prod-img{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.em-prod-name{font-size:13px;font-weight:700;color:#1a1208;margin-bottom:2px}
+.em-prod-meta{font-size:11px;color:#8a7a6a;line-height:1.6}
+.em-prod-price{font-size:14px;font-weight:800;color:#1a1208;margin-left:auto;white-space:nowrap}
+.em-tracking-steps{display:flex;align-items:center;gap:0;padding:20px 36px;background:#faf6ef}
+.em-ts{flex:1;text-align:center;position:relative}
+.em-ts:not(:last-child)::after{content:'';position:absolute;top:14px;left:60%;right:-40%;height:2px;background:#e4d8c4}
+.em-ts.done::after{background:#2a6a40}
+.em-ts-dot{width:28px;height:28px;border-radius:50%;border:2px solid #e4d8c4;background:#f5f0e8;display:flex;align-items:center;justify-content:center;font-size:11px;margin:0 auto 6px;position:relative;z-index:1}
+.em-ts.done .em-ts-dot{background:#2a6a40;border-color:#2a6a40;color:#fff}
+.em-ts.active .em-ts-dot{background:#1a4f8a;border-color:#1a4f8a;color:#fff;box-shadow:0 0 0 3px rgba(26,79,138,.15)}
+.em-ts-label{font-size:9px;color:#8a7a6a;font-weight:500}
+.em-pkg-box{background:rgba(184,149,106,.08);border:1px solid rgba(184,149,106,.25);border-radius:8px;padding:14px 16px;margin-bottom:0}
+.em-pkg-title{font-size:11px;font-weight:700;color:#7a4f2d;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.em-pkg-text{font-size:12px;color:#8a7a6a;line-height:1.8}
+.em-btn{display:block;background:#1a1208;color:#fff;text-align:center;padding:14px 28px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;margin:20px auto;max-width:260px;font-family:'Jost',sans-serif;letter-spacing:.3px}
+.em-btn-green{background:#2a6a40}
+.em-btn-blue{background:#1a4f8a}
+.em-trust-row{display:flex;gap:0;border-top:1px solid #e4d8c4;border-bottom:1px solid #e4d8c4}
+.em-trust-item{flex:1;padding:14px 10px;text-align:center;border-right:1px solid #e4d8c4;font-size:11px;color:#8a7a6a}
+.em-trust-item:last-child{border-right:none}
+.em-trust-icon{font-size:18px;display:block;margin-bottom:4px}
+.em-footer{background:#1a1208;padding:24px 36px;text-align:center}
+.em-footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
+.em-footer-logo span{color:#b8956a}
+.em-footer-text{font-size:11px;color:rgba(255,255,255,.35);line-height:1.8}
+.em-footer-links{display:flex;justify-content:center;gap:16px;margin-top:12px}
+.em-footer-link{font-size:10px;color:rgba(255,255,255,.4);text-decoration:none}
+.em-alert-box{background:rgba(184,50,50,.08);border:1px solid rgba(184,50,50,.2);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.em-alert-title{font-size:13px;font-weight:700;color:#b83232;margin-bottom:4px}
+.em-alert-text{font-size:12px;color:#8a7a6a;line-height:1.7}
+.em-success-box{background:rgba(42,106,64,.08);border:1px solid rgba(42,106,64,.2);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.em-success-title{font-size:13px;font-weight:700;color:#2a6a40;margin-bottom:4px}
+.em-success-text{font-size:12px;color:#8a7a6a;line-height:1.7}
+.em-total-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px}
+.em-total-row.grand{font-size:16px;font-weight:800;border-top:2px solid #e4d8c4;padding-top:12px;margin-top:6px}
+.em-review-stars{font-size:28px;letter-spacing:4px;margin:12px 0}
+.em-review-btn{display:inline-block;background:#c47a18;color:#fff;padding:10px 24px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;font-family:'Jost',sans-serif}
+
+/* SELLER EMAILS */
+.em-seller-header{background:linear-gradient(135deg,#b8956a,#7a4f2d);padding:28px 36px;text-align:center}
+.em-seller-header-logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;margin-bottom:4px}
+.em-seller-badge{display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.em-urgent{background:rgba(184,50,50,.1);border:2px solid rgba(184,50,50,.3);border-radius:8px;padding:16px;margin-bottom:16px;text-align:center}
+.em-urgent-icon{font-size:32px;margin-bottom:8px}
+.em-urgent-title{font-size:14px;font-weight:700;color:#b83232;margin-bottom:4px}
+.em-urgent-text{font-size:12px;color:#8a7a6a;line-height:1.7}
+.em-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.em-action-card{background:#faf6ef;border:1px solid #e4d8c4;border-radius:8px;padding:14px;text-align:center}
+.em-action-icon{font-size:22px;margin-bottom:6px}
+.em-action-title{font-size:11px;font-weight:700;color:#1a1208;margin-bottom:2px}
+.em-action-text{font-size:10px;color:#8a7a6a}
+.em-penalty-box{background:rgba(184,50,50,.06);border:1px solid rgba(184,50,50,.2);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.em-penalty-title{font-size:12px;font-weight:700;color:#b83232;margin-bottom:6px}
+.em-penalty-text{font-size:11px;color:#8a7a6a;line-height:1.7}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:700px){
+  .preview-nav{flex-direction:column;gap:10px;padding:12px 14px}
+  .pn-tabs{flex-wrap:wrap;gap:5px;justify-content:center}
+  .pn-tab{font-size:10px;padding:5px 10px}
+  .preview-wrap{padding:0 8px 60px;margin:20px auto}
+
+  /* Email inner layout */
+  .em-wrap{padding:16px 6px}
+  .em-header,.em-seller-header{padding:20px 16px}
+  .em-hero{padding:24px 16px 18px}
+  .em-title{font-size:24px}
+  .em-section{padding:16px}
+  .em-section-title{font-size:9px}
+  .em-order-box{padding:12px 10px}
+  .em-order-row{font-size:12px;flex-direction:column;gap:2px;padding:8px 0}
+  .em-order-label{font-size:10px}
+  .em-order-val{font-size:12px}
+  .em-product-row{flex-wrap:wrap;gap:8px;padding:10px}
+  .em-prod-price{margin-left:0}
+  .em-tracking-steps{padding:14px 8px}
+  .em-ts-label{font-size:8px}
+  .em-trust-row{flex-wrap:wrap}
+  .em-trust-item{min-width:48%;border-right:none;border-bottom:1px solid #e4d8c4;padding:10px 8px;font-size:10px}
+  .em-footer{padding:18px 16px}
+  .em-footer-links{flex-wrap:wrap;gap:10px}
+  .em-action-grid{grid-template-columns:1fr 1fr}
+  .em-btn{font-size:13px;padding:12px 20px;max-width:100%}
+  .em-pkg-box{padding:12px}
+
+  /* Dual email view */
+  .dual-email-wrap{flex-direction:column;gap:16px}
+  .dual-email-col{min-width:0}
+  .dual-email-label{font-size:10px;padding:6px 12px}
+}
+
+@media(max-width:400px){
+  .em-order-row{font-size:11px}
+  .pn-tab{font-size:9px;padding:4px 8px}
+  .em-action-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- PREVIEW NAVIGATION -->
+<div class="preview-nav">
+  <div>
+    <div class="pn-logo">Tuf<span>tra</span></div>
+    <div class="pn-title">Email Templates Preview</div>
+  </div>
+  <div class="pn-tabs">
+    <button class="pn-tab on" onclick="showEmail('order-confirm',this)">✅ Order Confirmed</button>
+    <button class="pn-tab" onclick="showEmail('order-shipped',this)">🚚 Shipped</button>
+    <button class="pn-tab" onclick="showEmail('order-delivered',this)">🏠 Delivered</button>
+    <button class="pn-tab" onclick="showEmail('return-request',this)">🔄 Return</button>
+    <button class="pn-tab" onclick="showEmail('seller-new-order',this)">🏪 Seller: New Order</button>
+    <button class="pn-tab" onclick="showEmail('seller-payout',this)">💰 Seller: Payout</button>
+    <button class="pn-tab" onclick="showEmail('seller-penalty',this)">⚠️ Seller: Penalty</button>
+  </div>
+</div>
+
+<div class="preview-wrap">
+  <div id="email-preview"></div>
+</div>
+
+<script>
+const ORDER = {
+  id: '',
+  date: 'April 23, 2025',
+  buyer: 'Jane Doe',
+  email: 'jane.doe@email.com',
+  product: '',
+  size: "5' × 8'",
+  color: 'Terracotta',
+  material: 'Hand-knotted Wool',
+  pkg: '🌀 Rolled in Tube',
+  seller: '',
+  price: 189,
+  shipping: 0,
+  total: 189,
+  address: '123 Maple Street, Apt 4B, Austin, TX 78701',
+  tracking: '1Z999AA10123456784',
+  carrier: 'FedEx',
+  delivery: 'April 28–30, 2025',
+  icon: '◈',
+  bg: 'linear-gradient(135deg,#c4763a,#8b4010)',
+};
+
+const EMAILS = {
+
+// ── 1. ORDER CONFIRMED ────────────────────────────
+'order-confirm': `
+<div class="em-wrap">
+<div class="em-inner">
+  <!-- HEADER -->
+  <div class="em-header">
+    <div class="em-logo">Tuf<span class="em-logo-span">tra</span></div>
+    <div class="em-header-sub">Order Confirmation</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="em-hero">
+    <div class="em-icon">✅</div>
+    <div class="em-title" style="font-family:'Georgia',serif">Order Confirmed!</div>
+    <p class="em-sub">Thank you, <strong>${ORDER.buyer}</strong>! Your order has been placed and payment received. We've notified your seller and they'll ship within 1–2 business days.</p>
+  </div>
+
+  <div class="em-divider"></div>
+
+  <!-- TRACKING STEPS -->
+  <div class="em-tracking-steps">
+    <div class="em-ts done"><div class="em-ts-dot">✓</div><div class="em-ts-label">Confirmed</div></div>
+    <div class="em-ts active"><div class="em-ts-dot">📦</div><div class="em-ts-label">Packing</div></div>
+    <div class="em-ts"><div class="em-ts-dot">🚚</div><div class="em-ts-label">Shipped</div></div>
+    <div class="em-ts"><div class="em-ts-dot">🏠</div><div class="em-ts-label">Delivered</div></div>
+  </div>
+
+  <!-- ORDER DETAILS -->
+  <div class="em-section">
+    <div class="em-section-title">Order Details</div>
+    <div class="em-order-box">
+      <div class="em-order-row"><span class="em-order-label">Order ID</span><span class="em-order-val" style="color:#1a4f8a">${ORDER.id}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Order Date</span><span class="em-order-val">${ORDER.date}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Seller</span><span class="em-order-val">${ORDER.seller}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Shipping To</span><span class="em-order-val">${ORDER.address}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Est. Delivery</span><span class="em-order-val" style="color:#2a6a40">${ORDER.delivery}</span></div>
+    </div>
+
+    <!-- PRODUCT -->
+    <div class="em-section-title">Your Item</div>
+    <div class="em-product-row">
+      <div class="em-prod-img" style="background:${ORDER.bg}">${ORDER.icon}</div>
+      <div>
+        <div class="em-prod-name">${ORDER.product}</div>
+        <div class="em-prod-meta">${ORDER.size} · ${ORDER.color}<br>${ORDER.material}<br>${ORDER.pkg}</div>
+      </div>
+      <div class="em-prod-price">$${ORDER.price}</div>
+    </div>
+
+    <!-- TOTALS -->
+    <div class="em-order-box" style="margin-top:10px">
+      <div class="em-total-row"><span style="color:#8a7a6a">Subtotal</span><span>$${ORDER.price}</span></div>
+      <div class="em-total-row"><span style="color:#2a6a40;font-weight:600">Shipping</span><span style="color:#2a6a40;font-weight:600">FREE 🎉</span></div>
+      <div class="em-total-row grand"><span>Total Paid</span><span style="color:#2a6a40">$${ORDER.total}</span></div>
+    </div>
+
+    <!-- PACKAGING INFO -->
+    <div class="em-pkg-box" style="margin-top:14px">
+      <div class="em-pkg-title">📦 Your Rug Will Arrive Rolled</div>
+      <div class="em-pkg-text">
+        Your rug will be carefully rolled in a <strong>protective cardboard tube</strong> and shipped via ${ORDER.carrier}. Upon arrival:<br>
+        • Unroll gently on your floor<br>
+        • Let it rest flat for <strong>24–48 hours</strong><br>
+        • Place heavy books on corners to speed flattening
+      </div>
+    </div>
+  </div>
+
+  <div class="em-divider"></div>
+
+  <!-- CTA -->
+  <div style="padding:24px 36px;text-align:center">
+    <a href="#" class="em-btn">Track Your Order →</a>
+    <p style="font-size:11px;color:#8a7a6a;margin-top:8px">Questions? Reply to this email or contact <strong>support@tuftra.com</strong></p>
+  </div>
+
+  <!-- TRUST ROW -->
+  <div class="em-trust-row">
+    <div class="em-trust-item"><span class="em-trust-icon">🔒</span>Payment Secured</div>
+    <div class="em-trust-item"><span class="em-trust-icon">🚚</span>Free Shipping</div>
+    <div class="em-trust-item"><span class="em-trust-icon">🔄</span>30-Day Returns</div>
+    <div class="em-trust-item"><span class="em-trust-icon">✅</span>Verified Seller</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="em-footer">
+    <div class="em-footer-logo">Tuf<span>tra</span></div>
+    <div class="em-footer-text">Artisan Rugs. Curated. Delivered.<br>© 2025 Tuftra · support@tuftra.com</div>
+    <div class="em-footer-links">
+      <a href="#" class="em-footer-link">Track Order</a>
+      <a href="#" class="em-footer-link">My Account</a>
+      <a href="#" class="em-footer-link">Return Policy</a>
+      <a href="#" class="em-footer-link">Unsubscribe</a>
+    </div>
+  </div>
+</div>
+</div>`,
+
+
+// ── 8. SELLER: ORDER CONFIRMED (sent instantly with buyer confirm) ──
+'seller-order-confirm': `
+<div class="em-wrap">
+<div class="em-inner">
+  <div class="em-seller-header">
+    <div class="em-seller-header-logo">Tuftra Seller Portal</div>
+    <div class="em-seller-badge">🛒 New Order — Ship Now!</div>
+  </div>
+  <div class="em-hero">
+    <div class="em-icon">🎉</div>
+    <div class="em-title" style="font-family:'Georgia',serif">Order Confirmed — Action Required</div>
+    <p class="em-sub">A buyer just placed an order. Payment is secured by Tuftra. Please prepare and ship within <strong>48 hours</strong>.</p>
+  </div>
+  <div class="em-section">
+    <div class="em-urgent">
+      <div class="em-urgent-icon">⏰</div>
+      <div class="em-urgent-title">Ship within 48 hours!</div>
+      <div class="em-urgent-text">Your performance score and payout depend on timely shipping. Late = warning + score drop.</div>
+    </div>
+    <div class="em-section-title">Order Details</div>
+    <div class="em-order-box">
+      <div class="em-order-row"><span class="em-order-label">Order ID</span><span class="em-order-val" style="color:#1a4f8a">\${ORDER.id}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Order Date</span><span class="em-order-val">\${ORDER.date}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Buyer</span><span class="em-order-val">\${ORDER.buyer}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Product</span><span class="em-order-val">\${ORDER.product}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Size / Color</span><span class="em-order-val">\${ORDER.size} · \${ORDER.color}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Packaging</span><span class="em-order-val">\${ORDER.pkg}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Ship To</span><span class="em-order-val">\${ORDER.address}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Your Payout</span><span class="em-order-val" style="color:#2a6a40">$\${ORDER.price} (🆓 Zero commission)</span></div>
+    </div>
+    <div class="em-success-box">
+      <div class="em-success-title">✅ Payment Secured by Tuftra</div>
+      <div class="em-success-text">The buyer's payment is held safely by Tuftra and will be released to you after confirmed delivery. You are guaranteed your payout as long as you ship correctly.</div>
+    </div>
+    <div class="em-penalty-box">
+      <div class="em-penalty-title">⚠️ Ship the Correct Item — Always</div>
+      <div class="em-penalty-text">Wrong delivery = <strong>10% payout deduction</strong>, automatically. Double-check product, size, and color before sealing the package.</div>
+    </div>
+    <a href="#" class="em-btn em-btn-green">Confirm & Add Tracking →</a>
+  </div>
+  <div class="em-footer">
+    <div class="em-footer-logo">Tuf<span>tra</span></div>
+    <div class="em-footer-text">Seller Portal · seller@tuftra.com · Paid every 5 days</div>
+    <div class="em-footer-links">
+      <a href="#" class="em-footer-link">Dashboard</a>
+      <a href="#" class="em-footer-link">My Orders</a>
+      <a href="#" class="em-footer-link">Seller Policy</a>
+    </div>
+  </div>
+</div>
+</div>`,
+
+// ── 2. ORDER SHIPPED ──────────────────────────────
+'order-shipped': `
+<div class="em-wrap">
+<div class="em-inner">
+  <div class="em-header">
+    <div class="em-logo">Tuf<span class="em-logo-span">tra</span></div>
+    <div class="em-header-sub">Your Rug is on its Way!</div>
+  </div>
+  <div class="em-hero">
+    <div class="em-icon">🚚</div>
+    <div class="em-title" style="font-family:'Georgia',serif">Your Rug is Shipped!</div>
+    <p class="em-sub">Great news, <strong>${ORDER.buyer}</strong>! Your rug has been packed and dispatched by ${ORDER.seller}. Track your package below.</p>
+  </div>
+  <div class="em-tracking-steps">
+    <div class="em-ts done"><div class="em-ts-dot">✓</div><div class="em-ts-label">Confirmed</div></div>
+    <div class="em-ts done"><div class="em-ts-dot">✓</div><div class="em-ts-label">Packed</div></div>
+    <div class="em-ts active"><div class="em-ts-dot">🚚</div><div class="em-ts-label">In Transit</div></div>
+    <div class="em-ts"><div class="em-ts-dot">🏠</div><div class="em-ts-label">Delivered</div></div>
+  </div>
+  <div class="em-section">
+    <div class="em-section-title">Tracking Information</div>
+    <div class="em-order-box">
+      <div class="em-order-row"><span class="em-order-label">Order ID</span><span class="em-order-val" style="color:#1a4f8a">${ORDER.id}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Carrier</span><span class="em-order-val">${ORDER.carrier}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Tracking Number</span><span class="em-order-val" style="color:#1a4f8a;font-size:12px">${ORDER.tracking}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Est. Delivery</span><span class="em-order-val" style="color:#2a6a40">${ORDER.delivery}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Packaging</span><span class="em-order-val">${ORDER.pkg}</span></div>
+    </div>
+    <a href="#" class="em-btn em-btn-blue">Track on ${ORDER.carrier} →</a>
+    <div class="em-pkg-box" style="margin-top:16px">
+      <div class="em-pkg-title">🌀 Arriving Rolled — What to Expect</div>
+      <div class="em-pkg-text">
+        Your <strong>${ORDER.product}</strong> is rolled in a protective tube.<br>
+        When it arrives: unroll carefully, let it rest flat for 24–48 hours. Any curl will naturally flatten.
+      </div>
+    </div>
+  </div>
+  <div class="em-trust-row">
+    <div class="em-trust-item"><span class="em-trust-icon">📍</span>Live Tracking</div>
+    <div class="em-trust-item"><span class="em-trust-icon">🔄</span>30-Day Returns</div>
+    <div class="em-trust-item"><span class="em-trust-icon">📧</span>24hr Support</div>
+    <div class="em-trust-item"><span class="em-trust-icon">✅</span>Protected Payment</div>
+  </div>
+  <div class="em-footer">
+    <div class="em-footer-logo">Tuf<span>tra</span></div>
+    <div class="em-footer-text">support@tuftra.com · tuftra.com</div>
+    <div class="em-footer-links">
+      <a href="#" class="em-footer-link">Track Order</a>
+      <a href="#" class="em-footer-link">Contact Support</a>
+      <a href="#" class="em-footer-link">Unsubscribe</a>
+    </div>
+  </div>
+</div>
+</div>`,
+
+// ── 3. ORDER DELIVERED ────────────────────────────
+'order-delivered': `
+<div class="em-wrap">
+<div class="em-inner">
+  <div class="em-header">
+    <div class="em-logo">Tuf<span class="em-logo-span">tra</span></div>
+    <div class="em-header-sub">Your Order has Arrived!</div>
+  </div>
+  <div class="em-hero">
+    <div class="em-icon">🏠</div>
+    <div class="em-title" style="font-family:'Georgia',serif">Your Rug has Arrived!</div>
+    <p class="em-sub">We hope you love your new <strong>${ORDER.product}</strong>! Your payment has been released to the seller. Please let us know how everything went.</p>
+  </div>
+  <div class="em-tracking-steps">
+    <div class="em-ts done"><div class="em-ts-dot">✓</div><div class="em-ts-label">Confirmed</div></div>
+    <div class="em-ts done"><div class="em-ts-dot">✓</div><div class="em-ts-label">Packed</div></div>
+    <div class="em-ts done"><div class="em-ts-dot">✓</div><div class="em-ts-label">Shipped</div></div>
+    <div class="em-ts done"><div class="em-ts-dot">✓</div><div class="em-ts-label">Delivered</div></div>
+  </div>
+  <div class="em-section">
+    <div class="em-success-box">
+      <div class="em-success-title">✅ Payment Released to Seller</div>
+      <div class="em-success-text">Your payment of <strong>$${ORDER.total}</strong> has been released to ${ORDER.seller} now that your order is confirmed delivered. If you have any issues, you still have <strong>30 days to request a return</strong>.</div>
+    </div>
+
+    <!-- REVIEW REQUEST -->
+    <div style="background:#faf6ef;border:1px solid #e4d8c4;border-radius:8px;padding:20px;text-align:center;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:700;color:#1a1208;margin-bottom:6px">How was your experience?</div>
+      <div style="font-size:11px;color:#8a7a6a;margin-bottom:10px">Your review helps other buyers and supports our sellers</div>
+      <div class="em-review-stars">★★★★★</div>
+      <a href="#" class="em-review-btn">Write a Review ⭐</a>
+    </div>
+
+    <!-- WRONG PRODUCT REPORT -->
+    <div class="em-alert-box">
+      <div class="em-alert-title">❌ Received the wrong item?</div>
+      <div class="em-alert-text">If you received the wrong product, wrong color, or wrong size — please report it immediately. We'll resolve it and the seller will be penalized. You are fully protected.</div>
+      <a href="#" style="display:inline-block;margin-top:10px;background:#b83232;color:#fff;padding:8px 18px;border-radius:6px;font-size:11px;font-weight:700;text-decoration:none;font-family:'Jost',sans-serif">❌ Report Wrong Product</a>
+    </div>
+
+    <div class="em-pkg-box">
+      <div class="em-pkg-title">🎉 Tips for Your New Rug</div>
+      <div class="em-pkg-text">
+        • Place a <strong>non-slip rug pad</strong> underneath for safety and longevity<br>
+        • Vacuum regularly with low suction to keep fibers fresh<br>
+        • Rotate your rug every 6 months for even wear<br>
+        • Spot clean spills immediately with mild soap and cold water
+      </div>
+    </div>
+  </div>
+  <div style="padding:16px 36px;text-align:center">
+    <a href="#" class="em-btn">View My Orders →</a>
+  </div>
+  <div class="em-trust-row">
+    <div class="em-trust-item"><span class="em-trust-icon">🔄</span>30-Day Returns</div>
+    <div class="em-trust-item"><span class="em-trust-icon">⭐</span>Leave a Review</div>
+    <div class="em-trust-item"><span class="em-trust-icon">🛍️</span>Shop Again</div>
+    <div class="em-trust-item"><span class="em-trust-icon">📧</span>24hr Support</div>
+  </div>
+  <div class="em-footer">
+    <div class="em-footer-logo">Tuf<span>tra</span></div>
+    <div class="em-footer-text">Thank you for shopping with Tuftra!<br>support@tuftra.com · tuftra.com</div>
+    <div class="em-footer-links">
+      <a href="#" class="em-footer-link">My Account</a>
+      <a href="#" class="em-footer-link">Return Item</a>
+      <a href="#" class="em-footer-link">Unsubscribe</a>
+    </div>
+  </div>
+</div>
+</div>`,
+
+// ── 4. RETURN REQUESTED ───────────────────────────
+'return-request': `
+<div class="em-wrap">
+<div class="em-inner">
+  <div class="em-header">
+    <div class="em-logo">Tuf<span class="em-logo-span">tra</span></div>
+    <div class="em-header-sub">Return Request Received</div>
+  </div>
+  <div class="em-hero">
+    <div class="em-icon">🔄</div>
+    <div class="em-title" style="font-family:'Georgia',serif">Return Request Received</div>
+    <p class="em-sub">We've received your return request for <strong>${ORDER.product}</strong> (${ORDER.id}). Our team will review it and get back to you within <strong>24 hours</strong>.</p>
+  </div>
+  <div class="em-section">
+    <div class="em-section-title">Return Request Details</div>
+    <div class="em-order-box">
+      <div class="em-order-row"><span class="em-order-label">Order ID</span><span class="em-order-val" style="color:#1a4f8a">${ORDER.id}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Product</span><span class="em-order-val">${ORDER.product}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Reason</span><span class="em-order-val" style="color:#b83232">Wrong product received</span></div>
+      <div class="em-order-row"><span class="em-order-label">Status</span><span class="em-order-val" style="color:#c47a18">⏳ Under Review</span></div>
+      <div class="em-order-row"><span class="em-order-label">Refund Amount</span><span class="em-order-val" style="color:#2a6a40">$${ORDER.total} (pending)</span></div>
+    </div>
+    <div class="em-section-title">What Happens Next?</div>
+    <div class="em-action-grid">
+      <div class="em-action-card"><div class="em-action-icon">🔍</div><div class="em-action-title">Review (24hrs)</div><div class="em-action-text">Tuftra reviews your case and photos</div></div>
+      <div class="em-action-card"><div class="em-action-icon">✅</div><div class="em-action-title">Approved</div><div class="em-action-text">Return label or replacement arranged</div></div>
+      <div class="em-action-card"><div class="em-action-icon">📦</div><div class="em-action-title">Ship Back</div><div class="em-action-text">Return item in original packaging</div></div>
+      <div class="em-action-card"><div class="em-action-icon">💰</div><div class="em-action-title">Refund (5–7 days)</div><div class="em-action-text">Full refund to original payment method</div></div>
+    </div>
+    <div class="em-alert-box">
+      <div class="em-alert-title">⚠️ Important — Please Keep the Item Safe</div>
+      <div class="em-alert-text">Do not use or wash the rug during the return process. Keep it in its original packaging if possible. Photos of the issue help speed up approval.</div>
+    </div>
+  </div>
+  <div style="padding:16px 36px;text-align:center">
+    <a href="#" class="em-btn" style="background:#b83232">View Return Status →</a>
+    <p style="font-size:11px;color:#8a7a6a;margin-top:8px">Need help? Contact <strong>support@tuftra.com</strong></p>
+  </div>
+  <div class="em-footer">
+    <div class="em-footer-logo">Tuf<span>tra</span></div>
+    <div class="em-footer-text">We're here to make it right. support@tuftra.com</div>
+    <div class="em-footer-links">
+      <a href="#" class="em-footer-link">Track Return</a>
+      <a href="#" class="em-footer-link">Contact Support</a>
+      <a href="#" class="em-footer-link">Unsubscribe</a>
+    </div>
+  </div>
+</div>
+</div>`,
+
+// ── 5. SELLER: NEW ORDER ──────────────────────────
+'seller-new-order': `
+<div class="em-wrap">
+<div class="em-inner">
+  <div class="em-seller-header">
+    <div class="em-seller-header-logo">Tuftra Seller Portal</div>
+    <div class="em-seller-badge">New Order Alert</div>
+  </div>
+  <div class="em-hero">
+    <div class="em-icon">🛒</div>
+    <div class="em-title" style="font-family:'Georgia',serif">New Order Received!</div>
+    <p class="em-sub">You have a new order on Tuftra. Please ship within <strong>48 hours</strong> to maintain your performance score.</p>
+  </div>
+  <div class="em-section">
+    <div class="em-urgent">
+      <div class="em-urgent-icon">⏰</div>
+      <div class="em-urgent-title">Ship within 48 hours!</div>
+      <div class="em-urgent-text">Late shipments result in a warning and performance score drop. 3 late shipments = payout hold.</div>
+    </div>
+    <div class="em-section-title">Order Details</div>
+    <div class="em-order-box">
+      <div class="em-order-row"><span class="em-order-label">Order ID</span><span class="em-order-val" style="color:#1a4f8a">${ORDER.id}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Order Date</span><span class="em-order-val">${ORDER.date}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Product</span><span class="em-order-val">${ORDER.product}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Size / Color</span><span class="em-order-val">${ORDER.size} · ${ORDER.color}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Packaging</span><span class="em-order-val">${ORDER.pkg}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Ship To</span><span class="em-order-val">${ORDER.address}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Order Value</span><span class="em-order-val" style="color:#2a6a40">$${ORDER.price}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Your Payout</span><span class="em-order-val" style="color:#2a6a40">$${ORDER.price} (🆓 Zero commission)</span></div>
+    </div>
+    <div class="em-penalty-box">
+      <div class="em-penalty-title">⚠️ Wrong Delivery Reminder</div>
+      <div class="em-penalty-text">Please double-check you are shipping the <strong>correct product, size, and color</strong>. Wrong delivery = <strong>10% payout deduction</strong> applied automatically. Ship the right item — always.</div>
+    </div>
+    <a href="#" class="em-btn em-btn-green">Update Shipping & Tracking →</a>
+  </div>
+  <div class="em-footer">
+    <div class="em-footer-logo">Tuf<span>tra</span></div>
+    <div class="em-footer-text">Seller Portal · seller@tuftra.com</div>
+    <div class="em-footer-links">
+      <a href="#" class="em-footer-link">Dashboard</a>
+      <a href="#" class="em-footer-link">My Orders</a>
+      <a href="#" class="em-footer-link">Unsubscribe</a>
+    </div>
+  </div>
+</div>
+</div>`,
+
+// ── 6. SELLER: PAYOUT ─────────────────────────────
+'seller-payout': `
+<div class="em-wrap">
+<div class="em-inner">
+  <div class="em-seller-header">
+    <div class="em-seller-header-logo">Tuftra Seller Portal</div>
+    <div class="em-seller-badge">Payout Processed</div>
+  </div>
+  <div class="em-hero">
+    <div class="em-icon">💰</div>
+    <div class="em-title" style="font-family:'Georgia',serif">Your Payout is Sent!</div>
+    <p class="em-sub">Your earnings for this cycle have been transferred to your bank account. Here's your payout breakdown.</p>
+  </div>
+  <div class="em-section">
+    <div class="em-success-box">
+      <div class="em-success-title">✅ $1,821.10 Transferred to Chase ••4242</div>
+      <div class="em-success-text">Transfer initiated on May 1, 2025. Allow 2–3 business days to appear in your bank account.</div>
+    </div>
+    <div class="em-section-title">Payout Breakdown</div>
+    <div class="em-order-box">
+      <div class="em-order-row"><span class="em-order-label">Cycle</span><span class="em-order-val">Apr 26 — May 1, 2025</span></div>
+      <div class="em-order-row"><span class="em-order-label">Orders Paid</span><span class="em-order-val">11 orders</span></div>
+      <div class="em-order-row"><span class="em-order-label">Gross Sales</span><span class="em-order-val">$1,840.00</span></div>
+      <div class="em-order-row"><span class="em-order-label">Commission</span><span class="em-order-val" style="color:#2a6a40">$0.00 🆓 FREE</span></div>
+      <div class="em-order-row"><span class="em-order-label">Penalty (wrong delivery )</span><span class="em-order-val" style="color:#b83232">−$18.90</span></div>
+      <div class="em-order-row" style="font-weight:700;font-size:14px"><span>Net Payout</span><span style="color:#2a6a40">$1,821.10</span></div>
+    </div>
+    <div class="em-section-title">Next Payout</div>
+    <div class="em-order-box">
+      <div class="em-order-row"><span class="em-order-label">Next Payout Date</span><span class="em-order-val" style="color:#c47a18">May 6, 2025</span></div>
+      <div class="em-order-row"><span class="em-order-label">Pending Orders</span><span class="em-order-val">5 orders</span></div>
+      <div class="em-order-row"><span class="em-order-label">Est. Amount</span><span class="em-order-val" style="color:#2a6a40">~$890.00</span></div>
+    </div>
+    <a href="#" class="em-btn">View Full Payout History →</a>
+  </div>
+  <div class="em-footer">
+    <div class="em-footer-logo">Tuf<span>tra</span></div>
+    <div class="em-footer-text">Paid every 5 days automatically · seller@tuftra.com</div>
+    <div class="em-footer-links">
+      <a href="#" class="em-footer-link">Dashboard</a>
+      <a href="#" class="em-footer-link">Earnings</a>
+      <a href="#" class="em-footer-link">Unsubscribe</a>
+    </div>
+  </div>
+</div>
+</div>`,
+
+// ── 7. SELLER: PENALTY ────────────────────────────
+'seller-penalty': `
+<div class="em-wrap">
+<div class="em-inner">
+  <div class="em-header" style="background:#8a1a1a">
+    <div class="em-logo">Tuf<span class="em-logo-span">tra</span></div>
+    <div class="em-header-sub">Penalty Notice</div>
+  </div>
+  <div class="em-hero">
+    <div class="em-icon">⚠️</div>
+    <div class="em-title" style="font-family:'Georgia',serif;color:#b83232">Penalty Applied</div>
+    <p class="em-sub">A penalty has been applied to your account for <strong>Order ${ORDER.id}</strong>. Please read the details below carefully.</p>
+  </div>
+  <div class="em-section">
+    <div class="em-alert-box" style="border-width:2px">
+      <div class="em-alert-title">❌ Wrong Delivery — 10% Payout Deduction</div>
+      <div class="em-alert-text">Customer reported receiving the wrong product. After review, Tuftra has confirmed this and applied a <strong>10% penalty ($18.90)</strong> deducted from your next payout. Customer has received a full refund or replacement.</div>
+    </div>
+    <div class="em-section-title">Penalty Details</div>
+    <div class="em-order-box">
+      <div class="em-order-row"><span class="em-order-label">Order ID</span><span class="em-order-val" style="color:#1a4f8a">${ORDER.id}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Violation</span><span class="em-order-val" style="color:#b83232">Wrong Delivery</span></div>
+      <div class="em-order-row"><span class="em-order-label">Order Amount</span><span class="em-order-val">$${ORDER.price}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Penalty (10%)</span><span class="em-order-val" style="color:#b83232">−$${(ORDER.price*0.1).toFixed(2)}</span></div>
+      <div class="em-order-row"><span class="em-order-label">Deducted From</span><span class="em-order-val">Next payout (May 1, 2025)</span></div>
+      <div class="em-order-row"><span class="em-order-label">Performance Score</span><span class="em-order-val" style="color:#c47a18">87/100 (−5 points)</span></div>
+    </div>
+    <div class="em-section-title">Penalty Policy — Quick Reference</div>
+    <div class="em-order-box">
+      ${[['Wrong Delivery','10% payout cut'],['Late Shipment (1st)','Warning + score −5'],['Late Shipment (3x)','Payout hold'],['Fake Tracking','Account suspended'],['Counterfeit Product','Permanent ban']].map(([v,p])=>`
+      <div class="em-order-row"><span class="em-order-label">${v}</span><span class="em-order-val" style="color:#b83232">${p}</span></div>`).join('')}
+    </div>
+    <div class="em-success-box">
+      <div class="em-success-title">✅ How to Avoid Future Penalties</div>
+      <div class="em-success-text">• Always double-check product, size, and color before shipping<br>• Ship within 48 hours of order<br>• Provide valid tracking numbers<br>• Respond to customer issues within 24 hours</div>
+    </div>
+    <a href="#" class="em-btn" style="background:#b83232">View Case Details →</a>
+    <p style="font-size:11px;color:#8a7a6a;text-align:center;margin-top:8px">To dispute this penalty, contact <strong>support@tuftra.com</strong> within 48 hours with evidence.</p>
+  </div>
+  <div class="em-footer">
+    <div class="em-footer-logo">Tuf<span>tra</span></div>
+    <div class="em-footer-text">Tuftra Seller Policy · seller@tuftra.com</div>
+    <div class="em-footer-links">
+      <a href="#" class="em-footer-link">Dashboard</a>
+      <a href="#" class="em-footer-link">Dispute Case</a>
+      <a href="#" class="em-footer-link">Seller Policy</a>
+    </div>
+  </div>
+</div>
+</div>`,
+
+};
+
+// ── SHOW EMAIL ─────────────────────────────────────
+function showEmail(type, el){
+  document.querySelectorAll('.pn-tab').forEach(t=>t.classList.remove('on'));
+  if(el) el.classList.add('on');
+  const preview = document.getElementById('email-preview');
+  const labels = {
+    'order-confirm':'📧 Order Confirmed — Both Emails Sent Simultaneously',
+    'order-shipped':'📧 Buyer Email — Order Shipped',
+    'order-delivered':'📧 Buyer Email — Order Delivered',
+    'return-request':'📧 Buyer Email — Return Requested',
+    'seller-new-order':'📧 Seller Email — New Order Alert',
+    'seller-payout':'📧 Seller Email — Payout Processed',
+    'seller-penalty':'📧 Seller Email — Penalty Notice',
+  };
+
+  // Order Confirmed: show buyer + seller emails side by side
+  if(type === 'order-confirm'){
+    preview.innerHTML = `
+      <div class="preview-label a1">
+        ${labels[type]}
+        <button class="copy-btn" onclick="showToast('Both email templates copied! Integrate with Resend / SendGrid.')">📋 Copy Both</button>
+      </div>
+      <div style="background:rgba(26,18,8,.06);border:1px solid var(--border);border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px" class="a1">
+        ⚡ <strong style="color:var(--ink)">Simultaneous Send:</strong>&nbsp;When a buyer places an order, both emails below are triggered instantly — buyer gets confirmation, seller gets action alert.
+      </div>
+      <div class="dual-email-wrap a2">
+        <div class="dual-email-col">
+          <div class="dual-email-label">📧 Buyer Receives</div>
+          <div class="email-shadow">${EMAILS['order-confirm']}</div>
+        </div>
+        <div class="dual-email-col">
+          <div class="dual-email-label seller">🏪 Seller Receives</div>
+          <div class="email-shadow">${EMAILS['seller-order-confirm']}</div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  preview.innerHTML = `
+    <div class="preview-label a1">
+      ${labels[type]||type}
+      <button class="copy-btn" onclick="showToast('Email HTML copied! Paste into your email service (Resend, SendGrid, Mailchimp)')">📋 Copy HTML</button>
+    </div>
+    <div class="email-shadow a2">${EMAILS[type]||'<p>Email not found</p>'}</div>
+  `;
+}
+
+function showToast(msg){
+  let t=document.getElementById('toast-el');
+  if(!t){t=document.createElement('div');t.id='toast-el';t.style.cssText='position:fixed;top:70px;right:16px;background:#1a1208;color:#e8d8c0;padding:10px 16px;border-radius:7px;font-size:12px;font-weight:600;z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,.2);max-width:300px';document.body.appendChild(t);}
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._tt);window._tt=setTimeout(()=>t.style.display='none',3000);
+}
+
+// Init
+showEmail('order-confirm', document.querySelector('.pn-tab'));
+</script>
+</body>
+</html>

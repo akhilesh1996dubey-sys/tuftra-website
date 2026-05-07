@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuftra — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ef;--sand:#f0e8d8;--bark:#b8956a;--umber:#7a4f2d;
+  --ink:#1a1208;--muted:#8a7a6a;--white:#fff;--border:#e4d8c4;
+  --red:#b83232;--gold:#c47a18;--green:#2a6a40;--blue:#1a4f8a;
+  --sidebar:#0d0b08;--purple:#6a3a8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:#0f0d0a;color:#e8d8c0;min-height:100vh}
+.serif{font-family:'Cormorant Garamond',serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .4s .05s ease both}
+.a2{animation:fadeUp .4s .1s ease both}
+.a3{animation:fadeUp .4s .15s ease both}
+.a4{animation:fadeUp .4s .2s ease both}
+
+/* ── LOGIN ────────────────────────────────────── */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0a0806;position:relative;overflow:hidden}
+.login-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(184,149,106,.08) 0%,transparent 65%)}
+.login-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:44px 40px;width:100%;max-width:400px;position:relative;z-index:1;backdrop-filter:blur(10px)}
+.login-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff;text-align:center;margin-bottom:4px}
+.login-logo span{color:var(--bark)}
+.login-subtitle{font-size:11px;color:rgba(255,255,255,.3);text-align:center;margin-bottom:28px;letter-spacing:1px;text-transform:uppercase}
+.login-field label{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px}
+.login-field input{width:100%;padding:12px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;color:#fff;outline:none;margin-bottom:14px;transition:border .2s}
+.login-field input:focus{border-color:rgba(184,149,106,.5)}
+.login-field input::placeholder{color:rgba(255,255,255,.2)}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--bark),var(--umber));color:#fff;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:opacity .2s;margin-top:4px}
+.login-btn:hover{opacity:.85}
+.login-badge{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:16px;font-size:10px;color:rgba(255,255,255,.25)}
+.demo-link{text-align:center;margin-top:12px;font-size:11px;color:rgba(255,255,255,.3);cursor:pointer}
+.demo-link span{color:var(--bark);font-weight:600}
+
+/* ── LAYOUT ───────────────────────────────────── */
+.admin-wrap{display:flex;min-height:100vh}
+.sidebar{width:220px;background:var(--sidebar);flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,.05)}
+.sb-brand{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.05)}
+.sb-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-1px}
+.sb-logo span{color:var(--bark)}
+.sb-role{font-size:9px;color:rgba(255,255,255,.2);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
+.sb-admin-info{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.05)}
+.sb-avatar{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--red),#8a1818);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;margin-bottom:7px}
+.sb-name{font-size:12px;font-weight:700;color:#e8d8c0}
+.sb-email{font-size:9px;color:rgba(255,255,255,.3);margin-top:1px}
+.sb-nav{padding:10px 8px;flex:1;overflow-y:auto}
+.sb-nav::-webkit-scrollbar{width:3px}
+.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08)}
+.sb-section{font-size:8px;font-weight:700;color:rgba(255,255,255,.2);letter-spacing:2px;text-transform:uppercase;padding:10px 10px 5px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer;transition:all .2s;margin-bottom:1px;border-left:2px solid transparent}
+.sb-item:hover{background:rgba(255,255,255,.05)}
+.sb-item.on{background:rgba(184,149,106,.12);border-left-color:var(--bark)}
+.sb-item.on .si-icon{color:var(--bark)}
+.sb-item.on .si-label{color:#e8d8c0;font-weight:600}
+.si-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.si-label{font-size:11px;color:rgba(255,255,255,.45);font-weight:400}
+.si-badge{margin-left:auto;font-size:8px;font-weight:700;padding:1px 6px;border-radius:10px;background:var(--red);color:#fff}
+.si-badge-gold{background:var(--gold)}
+.sb-bottom{padding:12px 18px;border-top:1px solid rgba(255,255,255,.05)}
+.sb-logout{width:100%;background:none;border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.3);border-radius:6px;padding:7px;font-size:10px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.sb-logout:hover{border-color:var(--red);color:var(--red)}
+
+/* ── MAIN ─────────────────────────────────────── */
+.admin-main{margin-left:220px;flex:1}
+.admin-topbar{background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:50;backdrop-filter:blur(10px)}
+.atp-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#e8d8c0}
+.atp-right{display:flex;align-items:center;gap:8px}
+.atp-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.atp-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.notif-btn{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;position:relative}
+.notif-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #0f0d0a}
+.admin-content{padding:24px 28px 60px}
+
+/* ── CARDS ────────────────────────────────────── */
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px;margin-bottom:18px}
+.card-dark{background:#0a0806;border:1px solid rgba(255,255,255,.05)}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:700;color:#e8d8c0}
+.card-action{font-size:10px;font-weight:600;color:var(--bark);cursor:pointer;background:none;border:none;font-family:'Jost',sans-serif}
+
+/* ── STAT CARDS ───────────────────────────────── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stats-row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px 20px;transition:transform .2s}
+.stat:hover{transform:translateY(-2px)}
+.stat-icon{font-size:20px;margin-bottom:10px}
+.stat-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#e8d8c0;line-height:1}
+.stat-sub{font-size:10px;color:rgba(255,255,255,.3);margin-top:4px}
+.stat-trend{font-size:9px;font-weight:700;margin-top:5px}
+.tu{color:var(--green)}.td{color:var(--red)}
+
+/* ── REVENUE HIGHLIGHT ────────────────────────── */
+.revenue-card{background:linear-gradient(135deg,#1a0a04,#2a1208);border:1px solid rgba(184,149,106,.2);border-radius:12px;padding:22px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.rc-left{}
+.rc-label{font-size:9px;font-weight:700;color:rgba(184,149,106,.6);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.rc-amount{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:var(--bark);line-height:1}
+.rc-sub{font-size:11px;color:rgba(255,255,255,.3);margin-top:6px;line-height:1.7}
+.rc-right{text-align:right}
+.rc-commission{background:rgba(42,106,64,.15);border:1px solid rgba(42,106,64,.25);border-radius:10px;padding:16px 20px;margin-bottom:10px}
+.rc-comm-lbl{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.rc-comm-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--green)}
+.rc-comm-sub{font-size:9px;color:rgba(255,255,255,.25);margin-top:2px}
+
+/* ── PAYOUT CONTROL ───────────────────────────── */
+.payout-control{background:linear-gradient(135deg,#0a1a12,#0a1e15);border:1px solid rgba(42,106,64,.25);border-radius:12px;padding:22px;margin-bottom:20px}
+.pc-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#c8e8d0;margin-bottom:4px}
+.pc-sub{font-size:11px;color:rgba(255,255,255,.3);margin-bottom:18px}
+.pc-sellers{display:flex;flex-direction:column;gap:0}
+.pc-seller-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.pc-seller-row:last-child{border-bottom:none}
+.pc-seller-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--bark),var(--umber));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.pc-seller-name{flex:1;font-size:12px;font-weight:600;color:#e8d8c0}
+.pc-seller-sub{font-size:9px;color:rgba(255,255,255,.3);margin-top:1px}
+.pc-seller-amount{font-size:14px;font-weight:800;color:var(--green);margin-right:8px}
+.pc-hold-btn{background:none;border:1px solid rgba(184,50,50,.3);color:rgba(184,50,50,.7);border-radius:5px;padding:4px 10px;font-size:9px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s;margin-right:6px}
+.pc-hold-btn:hover{background:rgba(184,50,50,.15);color:var(--red)}
+.pc-pay-btn{background:rgba(42,106,64,.2);border:1px solid rgba(42,106,64,.3);color:rgba(100,220,140,.8);border-radius:5px;padding:4px 10px;font-size:9px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.pc-pay-btn:hover{background:rgba(42,106,64,.35)}
+.pay-all-btn{width:100%;background:linear-gradient(135deg,var(--green),#1a5a30);color:#fff;border:none;border-radius:8px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;margin-top:14px;transition:opacity .2s}
+.pay-all-btn:hover{opacity:.85}
+
+/* ── TABLES ───────────────────────────────────── */
+.tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tbl th{padding:8px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);font-size:9px;font-weight:700;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.tbl td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;color:rgba(255,255,255,.7)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,.03)}
+.tbtn{background:none;border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:3px 9px;font-size:9px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s;white-space:nowrap}
+.tbtn:hover{border-color:var(--bark);color:var(--bark)}
+.tbtn-green{background:rgba(42,106,64,.2);border-color:rgba(42,106,64,.3);color:rgba(100,220,140,.8)}
+.tbtn-red{background:rgba(184,50,50,.15);border-color:rgba(184,50,50,.3);color:rgba(220,100,100,.8)}
+.tbtn-gold{background:rgba(196,122,24,.15);border-color:rgba(196,122,24,.3);color:rgba(220,160,60,.8)}
+
+/* ── BADGES ───────────────────────────────────── */
+.bdg{font-size:8px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;display:inline-block}
+.bdg-green{background:rgba(42,106,64,.2);color:rgba(100,220,140,.9)}
+.bdg-red{background:rgba(184,50,50,.2);color:rgba(220,100,100,.9)}
+.bdg-gold{background:rgba(196,122,24,.2);color:rgba(220,170,60,.9)}
+.bdg-blue{background:rgba(26,79,138,.2);color:rgba(100,150,240,.9)}
+.bdg-muted{background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)}
+.bdg-purple{background:rgba(106,58,138,.2);color:rgba(180,120,220,.9)}
+
+/* ── ALERT BANNERS ────────────────────────────── */
+.alert{border-radius:8px;padding:11px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;font-size:11px;line-height:1.6}
+.alert-red{background:rgba(184,50,50,.08);border:1px solid rgba(184,50,50,.2)}
+.alert-gold{background:rgba(196,122,24,.08);border:1px solid rgba(196,122,24,.2)}
+.alert-green{background:rgba(42,106,64,.08);border:1px solid rgba(42,106,64,.2)}
+.alert-icon{font-size:16px;flex-shrink:0;margin-top:-1px}
+.alert-title{font-weight:700;margin-bottom:1px}
+.ared .alert-title{color:var(--red)}
+.agold .alert-title{color:var(--gold)}
+.agreen .alert-title{color:#6adc8a}
+.alert-text{color:rgba(255,255,255,.45)}
+.alert-act{margin-left:auto;flex-shrink:0;border:none;border-radius:4px;padding:4px 10px;font-size:9px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+.act-red{background:var(--red);color:#fff}
+.act-gold{background:var(--gold);color:#fff}
+.act-green{background:var(--green);color:#fff}
+
+/* ── FORMS ────────────────────────────────────── */
+.fg{margin-bottom:14px}
+.fg label{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:5px}
+.fg input,.fg select,.fg textarea{width:100%;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;font-size:12px;font-family:'Jost',sans-serif;color:#e8d8c0;outline:none;transition:border .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(184,149,106,.5)}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.2)}
+.fg select option{background:#1a1208;color:#e8d8c0}
+.fgrid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fgrid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.fgrid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}
+.btn-primary{background:linear-gradient(135deg,var(--bark),var(--umber));color:#fff;border:none;border-radius:7px;padding:10px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:opacity .2s}
+.btn-primary:hover{opacity:.85}
+.btn-outline{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);border-radius:7px;padding:9px 18px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.btn-outline:hover{border-color:var(--bark);color:var(--bark)}
+.btn-danger{background:none;border:1px solid rgba(184,50,50,.35);color:rgba(220,100,100,.8);border-radius:7px;padding:9px 18px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.btn-danger:hover{background:rgba(184,50,50,.15)}
+
+/* ── PERMISSION TOGGLES ───────────────────────── */
+.perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.perm-item{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px 12px}
+.perm-label{font-size:11px;font-weight:600;color:#e8d8c0}
+.perm-sub{font-size:9px;color:rgba(255,255,255,.3);margin-top:1px}
+.toggle{width:36px;height:19px;border-radius:10px;background:rgba(255,255,255,.1);cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0}
+.toggle.on{background:var(--green)}
+.toggle-knob{position:absolute;top:2.5px;left:2.5px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.toggle.on .toggle-knob{left:19.5px}
+
+/* ── CHARTS ───────────────────────────────────── */
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:100px;padding:10px 0}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.chart-bar{width:100%;border-radius:3px 3px 0 0;transition:height .5s ease;cursor:pointer;min-height:4px}
+.chart-bar:hover{opacity:.8}
+.chart-label{font-size:8px;color:rgba(255,255,255,.3);white-space:nowrap}
+.chart-val{font-size:8px;color:rgba(255,255,255,.5);font-weight:600}
+
+/* ── PROMO ────────────────────────────────────── */
+.promo-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.promo-code{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--bark);letter-spacing:2px}
+.promo-info{flex:1}
+.promo-details{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;line-height:1.6}
+.promo-actions{display:flex;gap:6px}
+
+/* ── SETTINGS ─────────────────────────────────── */
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.setting-row:last-child{border-bottom:none}
+.setting-lbl{font-size:12px;font-weight:600;color:#e8d8c0}
+.setting-sub{font-size:10px;color:rgba(255,255,255,.3);margin-top:2px}
+.setting-val{font-size:12px;color:var(--bark);font-weight:700;margin-right:8px}
+.setting-edit{background:none;border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:4px 10px;font-size:9px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.setting-edit:hover{border-color:var(--bark);color:var(--bark)}
+
+/* ── SUPPORT CARDS ────────────────────────────── */
+.support-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px;margin-bottom:10px}
+.support-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.support-id{font-size:11px;color:rgba(100,150,240,.8);font-weight:700}
+.support-title{font-size:12px;font-weight:700;color:#e8d8c0;margin-bottom:3px}
+.support-text{font-size:11px;color:rgba(255,255,255,.4);line-height:1.6}
+.support-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+
+/* ── SUB-ADMIN ────────────────────────────────── */
+.sub-admin-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:16px;margin-bottom:12px}
+.sa-hdr{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sa-avatar{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0}
+.sa-name{font-size:13px;font-weight:700;color:#e8d8c0}
+.sa-email{font-size:10px;color:rgba(255,255,255,.3);margin-top:1px}
+.sa-permissions{font-size:9px;font-weight:700;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+
+/* ── MODAL ────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:700;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease}
+.modal-box{background:#1a1208;border:1px solid rgba(255,255,255,.1);border-radius:14px;max-height:90vh;overflow-y:auto;animation:fadeUp .3s ease;width:100%;padding:28px}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#e8d8c0;margin-bottom:4px}
+.modal-sub{font-size:11px;color:rgba(255,255,255,.3);margin-bottom:20px}
+.modal-close{float:right;background:none;border:none;font-size:18px;color:rgba(255,255,255,.3);cursor:pointer;margin-bottom:6px}
+
+/* ── TOAST ────────────────────────────────────── */
+.toast{position:fixed;top:62px;right:16px;background:#e8d8c0;color:var(--ink);padding:10px 16px;border-radius:7px;font-size:12px;font-weight:600;z-index:9999;animation:fadeUp .3s ease;box-shadow:0 6px 20px rgba(0,0,0,.4);max-width:300px}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast" style="display:none"></div>
+<div id="modal-container"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- LOGIN -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="screen-login">
+<div class="login-wrap">
+  <div class="login-box">
+    <div class="login-logo">Tuf<span>tra</span></div>
+    <div class="login-subtitle">Admin Control Panel</div>
+    <div class="login-field">
+      <label>Admin Email</label>
+      <input type="email" placeholder="admin@tuftra.com" id="admin-email">
+      <label>Password</label>
+      <input type="password" placeholder="••••••••" id="admin-pass">
+      <label>Phone Number (for OTP)</label>
+      <input type="tel" placeholder="+1 234 567 8900" id="admin-phone">
+    </div>
+    <button class="login-btn" onclick="doAdminLogin()">Sign In to Admin Panel →</button>
+    <div class="login-badge">🔒 Secure Admin Access · 2FA Protected</div>
+    <div class="demo-link" onclick="showDashboard()">or <span>preview demo dashboard →</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- DASHBOARD -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="screen-dashboard" style="display:none">
+<div class="admin-wrap">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">Tuf<span>tra</span></div>
+      <div class="sb-role">Super Admin Panel</div>
+    </div>
+    <div class="sb-admin-info">
+      <div class="sb-avatar">SA</div>
+      <div class="sb-name">Super Admin</div>
+      <div class="sb-email">admin@tuftra.com</div>
+    </div>
+    <div class="sb-nav">
+      <div class="sb-section">Main</div>
+      <div class="sb-item on" onclick="setTab('overview',this)"><div class="si-icon">📊</div><div class="si-label">Overview</div></div>
+      <div class="sb-item" onclick="setTab('sellers',this)"><div class="si-icon">👥</div><div class="si-label">Sellers</div><div class="si-badge">1</div></div>
+      <div class="sb-item" onclick="setTab('orders',this)"><div class="si-icon">🛒</div><div class="si-label">Orders</div><div class="si-badge">3</div></div>
+      <div class="sb-section">Finance</div>
+      <div class="sb-item" onclick="setTab('payments',this)"><div class="si-icon">💰</div><div class="si-label">Payment Control</div></div>
+      <div class="sb-item" onclick="setTab('penalties',this)"><div class="si-icon">⚠️</div><div class="si-label">Penalties</div><div class="si-badge">2</div></div>
+      <div class="sb-section">Catalog</div>
+      <div class="sb-item" onclick="setTab('products',this)"><div class="si-icon">🏷️</div><div class="si-label">Products</div><div class="si-badge si-badge-gold">3</div></div>
+      <div class="sb-item" onclick="setTab('returns',this)"><div class="si-icon">🔄</div><div class="si-label">Returns & Refunds</div><div class="si-badge">2</div></div>
+      <div class="sb-section">Tools</div>
+      <div class="sb-item" onclick="setTab('analytics',this)"><div class="si-icon">📈</div><div class="si-label">Analytics</div></div>
+      <div class="sb-item" onclick="setTab('promo',this)"><div class="si-icon">🎟️</div><div class="si-label">Promo Codes</div></div>
+      <div class="sb-item" onclick="setTab('support',this)"><div class="si-icon">📧</div><div class="si-label">Customer Support</div><div class="si-badge">4</div></div>
+      <div class="sb-section">Admin</div>
+      <div class="sb-item" onclick="setTab('subadmin',this)"><div class="si-icon">👤</div><div class="si-label">Sub-Admins</div></div>
+      <div class="sb-item" onclick="setTab('settings',this)"><div class="si-icon">⚙️</div><div class="si-label">Platform Settings</div></div>
+    </div>
+    <div class="sb-bottom">
+      <button class="sb-logout" onclick="showLogin()">← Sign Out</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div class="atp-title serif" id="page-title">Overview</div>
+      <div class="atp-right">
+        <div class="notif-btn" onclick="setTab('support',null)">🔔<div class="notif-dot"></div></div>
+        <div class="atp-btn" onclick="setTab('settings',null)">⚙️ Settings</div>
+        <div style="display:flex;align-items:center;gap:7px;padding:5px 10px;background:rgba(255,255,255,.05);border-radius:6px;cursor:pointer">
+          <div style="width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--red),#8a1818);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">SA</div>
+          <span style="font-size:11px;color:rgba(255,255,255,.5)">Super Admin</span>
+        </div>
+      </div>
+    </div>
+    <div class="admin-content" id="admin-content"></div>
+  </div>
+</div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────
+const SELLERS=[];// Real sellers load honge Supabase se
+
+const ORDERS_DATA=[];// Real orders load honge
+
+const PRODUCTS_REVIEW=[];
+
+const RETURNS_DATA=[];
+
+const SUPPORT_TICKETS=[];
+
+const SUB_ADMINS=[
+  {id:1,name:'Sarah Johnson',email:'sarah@tuftra.com',role:'Operations',avatar:'SJ',color:'linear-gradient(135deg,#6a3a8a,#4a2060)',active:true,
+   perms:{sellers:true,orders:true,payments:false,penalties:true,products:true,returns:true,analytics:true,promo:false,support:true,settings:false,subadmin:false}},
+  {id:2,name:'Ahmed Malik',email:'ahmed@tuftra.com',role:'Support',avatar:'AM',color:'linear-gradient(135deg,#1a4f8a,#0a2a5a)',active:true,
+   perms:{sellers:false,orders:true,payments:false,penalties:false,products:false,returns:true,analytics:false,promo:false,support:true,settings:false,subadmin:false}},
+];
+
+const PERM_LABELS={
+  sellers:'Manage Sellers',orders:'View Orders',payments:'Payment Control',
+  penalties:'Apply Penalties',products:'Approve Products',returns:'Handle Returns',
+  analytics:'View Analytics',promo:'Promo Codes',support:'Customer Support',
+  settings:'Platform Settings',subadmin:'Add Sub-Admins'
+};
+
+// ── LOGIN ─────────────────────────────────────────
+function doAdminLogin(){
+  const e=document.getElementById('admin-email').value;
+  const p=document.getElementById('admin-pass').value;
+  const ph=document.getElementById('admin-phone').value;
+  if(!e||!p){showToast('Please enter email and password');return;}
+  if(!ph){showToast('Please enter your phone number for OTP');return;}
+  showToast('📱 Sending OTP to '+ph+'...');
+  setTimeout(()=>{
+    showOTPModal(ph,()=>{
+      showToast('✅ Welcome back, Admin!');
+      setTimeout(showDashboard,400);
+    });
+  },600);
+}
+function showDashboard(){
+  document.getElementById('screen-login').style.display='none';
+  document.getElementById('screen-dashboard').style.display='block';
+  renderTab('overview');
+}
+function showLogin(){
+  document.getElementById('screen-login').style.display='block';
+  document.getElementById('screen-dashboard').style.display='none';
+}
+
+// ── TABS ──────────────────────────────────────────
+function setTab(tab,el){
+  if(el){
+    document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('on'));
+    el.classList.add('on');
+  }
+  const titles={overview:'Dashboard Overview',sellers:'Sellers Management',orders:'Orders Control',payments:'Payment Control Center',penalties:'Penalties & Violations',products:'Products Review',returns:'Returns & Refunds',analytics:'Analytics & Reports',promo:'Promo Codes',support:'Customer Support',subadmin:'Sub-Admin Management',settings:'Platform Settings'};
+  document.getElementById('page-title').textContent=titles[tab]||tab;
+  renderTab(tab);
+}
+
+function renderTab(tab){
+  const c=document.getElementById('admin-content');
+  const tabs={overview:renderOverview,sellers:renderSellers,orders:renderOrders,payments:renderPayments,penalties:renderPenalties,products:renderProducts,returns:renderReturns,analytics:renderAnalytics,promo:renderPromo,support:renderSupport,subadmin:renderSubAdmin,settings:renderSettings};
+  if(tabs[tab]) c.innerHTML=tabs[tab]();
+}
+
+// ── OVERVIEW ──────────────────────────────────────
+function renderOverview(){
+  const totalRev=SELLERS.reduce((a,s)=>a+s.gross,0);
+  const totalComm=totalRev*0.08;
+  const pendingPay=SELLERS.filter(s=>s.status==='active').reduce((a,s)=>a+s.pending,0);
+  return `
+  <div class="alert alert-red ared a1"><div class="alert-icon">🚨</div><div><div class="alert-title">3 Late Shipments Need Action</div><div class="alert-text">Orders ,  not shipped. Sellers  &  have exceeded 48hr limit.</div></div><button class="alert-act act-red" onclick="setTab('orders',null)">View Orders</button></div>
+  <div class="alert alert-gold agold a1"><div class="alert-icon">⏳</div><div><div class="alert-title">1 Seller Pending Approval — </div><div class="alert-text">New seller application submitted April 28. Review and approve to get them listing.</div></div><button class="alert-act act-gold" onclick="setTab('sellers',null)">Review</button></div>
+  <div class="alert alert-gold agold a1"><div class="alert-icon">🏷️</div><div><div class="alert-title">3 Products Waiting Approval</div><div class="alert-text">New product listings from , ,  need review.</div></div><button class="alert-act act-gold" onclick="setTab('products',null)">Approve</button></div>
+
+  <div class="revenue-card a2">
+    <div class="rc-left">
+      <div class="rc-label">Total Platform Revenue</div>
+      <div class="rc-amount">$${totalRev.toLocaleString()}</div>
+      <div class="rc-sub">All time · 4 active sellers · ${ORDERS_DATA.length} orders this week<br>Pending payouts to sellers: <span style="color:rgba(220,170,60,.8);font-weight:700">$${pendingPay.toLocaleString()}</span></div>
+    </div>
+    <div class="rc-right">
+      <div class="rc-commission">
+        <div class="rc-comm-lbl">Your Commission Earned</div>
+        <div class="rc-comm-val">$${totalComm.toLocaleString()}</div>
+        <div class="rc-comm-sub">8% of $${totalRev.toLocaleString()} · Transferred to your bank</div>
+      </div>
+      <div style="text-align:right;font-size:10px;color:rgba(255,255,255,.25)">Next auto-payout to sellers: <span style="color:rgba(220,170,60,.8)">May 1, 2025</span></div>
+    </div>
+  </div>
+
+  <div class="stats-row a3">
+    <div class="stat"><div class="stat-icon">🛒</div><div class="stat-lbl">Total Orders</div><div class="stat-val">847</div><div class="stat-sub">127 this month</div><div class="stat-trend tu">↑ 14%</div></div>
+    <div class="stat"><div class="stat-icon">👥</div><div class="stat-lbl">Active Sellers</div><div class="stat-val">4</div><div class="stat-sub">1 pending approval</div><div class="stat-trend tu">↑ 1 new</div></div>
+    <div class="stat"><div class="stat-icon">🔄</div><div class="stat-lbl">Return Rate</div><div class="stat-val">2.1%</div><div class="stat-sub">Below industry avg</div><div class="stat-trend tu">↓ Improved</div></div>
+    <div class="stat"><div class="stat-icon">⚠️</div><div class="stat-lbl">Penalties Applied</div><div class="stat-val">$18.90</div><div class="stat-sub">1 wrong delivery</div><div class="stat-trend td">Wrong delivery</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" class="a4">
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Top Sellers This Month</div><button class="card-action" onclick="setTab('sellers',null)">View All →</button></div>
+      ${SELLERS.filter(s=>s.status==='active').sort((a,b)=>b.gross-a.gross).map((s,i)=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+        <div style="width:28px;height:28px;border-radius:7px;background:${s.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">${s.avatar}</div>
+        <div style="flex:1"><div style="font-size:11px;font-weight:700;color:#e8d8c0">${s.name}</div><div style="font-size:9px;color:rgba(255,255,255,.3)">${s.score}/100 score</div></div>
+        <div style="text-align:right"><div style="font-size:13px;font-weight:700;color:rgba(100,220,140,.8)">$${s.gross.toLocaleString()}</div><div style="font-size:9px;color:rgba(255,255,255,.3)">${s.orders} orders</div></div>
+      </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Recent Activity</div></div>
+      ${[
+        {icon:'🛒',text:'New order  —  · $149',time:'2h ago',color:'rgba(26,79,138,.3)'},
+        {icon:'⚠️',text:'Penalty applied —  wrong delivery · −$18.90',time:'3h ago',color:'rgba(184,50,50,.2)'},
+        {icon:'💰',text:'Payout processed —  · $2,100',time:'1d ago',color:'rgba(42,106,64,.2)'},
+        {icon:'👥',text:'New seller application — ',time:'2d ago',color:'rgba(196,122,24,.2)'},
+        {icon:'🔄',text:'Return request —  · Order ',time:'3d ago',color:'rgba(106,58,138,.2)'},
+      ].map(a=>`
+      <div style="display:flex;gap:9px;padding:8px;border-radius:6px;margin-bottom:5px;background:${a.color}">
+        <span style="font-size:14px">${a.icon}</span>
+        <div style="flex:1"><div style="font-size:11px;color:rgba(255,255,255,.65)">${a.text}</div><div style="font-size:9px;color:rgba(255,255,255,.25);margin-top:1px">${a.time}</div></div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── SELLERS ───────────────────────────────────────
+function renderSellers(){
+  // Empty state check
+  if(SELLERS.length===0){
+    return `<div style="text-align:center;padding:80px 20px;color:rgba(255,255,255,.3)">
+      <div style="font-size:48px;margin-bottom:16px">🏪</div>
+      <div style="font-size:18px;font-weight:600;margin-bottom:8px;color:rgba(255,255,255,.5)">No Sellers Yet</div>
+      <div style="font-size:13px">Sellers will appear here once they register on Tuftra</div>
+    </div>`;
+  }
+  return `
+  <div class="card a1">
+    <div class="card-hdr"><div class="card-title">All Sellers (${SELLERS.length})</div><button class="btn-primary" onclick="showToast('Seller invite sent!')">+ Invite Seller</button></div>
+    <table class="tbl">
+      <thead><tr><th>Seller</th><th>Status</th><th>Score</th><th>Products</th><th>Orders</th><th>Gross Revenue</th><th>Commission</th><th>Pending Payout</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${SELLERS.map(s=>`<tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;border-radius:7px;background:${s.color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">${s.avatar}</div>
+              <div><div style="font-weight:700;color:#e8d8c0">${s.name}</div><div style="font-size:9px;color:rgba(255,255,255,.3)">${s.email}</div></div>
+            </div>
+          </td>
+          <td><span class="bdg ${s.status==='active'?'bdg-green':s.status==='pending'?'bdg-gold':'bdg-red'}">${s.status}</span></td>
+          <td><span style="font-weight:700;color:${s.score>=90?'rgba(100,220,140,.8)':s.score>=70?'rgba(220,170,60,.8)':'rgba(220,100,100,.8)'}">${s.score>0?s.score+'/100':'—'}</span></td>
+          <td>${s.products}</td>
+          <td>${s.orders}</td>
+          <td style="font-weight:700;color:rgba(100,220,140,.7)">$${s.gross.toLocaleString()}</td>
+          <td style="color:rgba(220,170,60,.8)">$${(s.gross*0.08).toFixed(0)}</td>
+          <td style="font-weight:700;color:#e8d8c0">$${s.pending.toLocaleString()}</td>
+          <td>
+            <div style="display:flex;gap:4px;flex-wrap:wrap">
+              ${s.status==='pending'
+                ?`<button class="tbtn tbtn-green" onclick="approveSeller('${s.name}')">Approve</button><button class="tbtn tbtn-red" onclick="showToast('Seller rejected.')">Reject</button>`
+                :`<button class="tbtn" onclick="editCommission(${s.id})">Commission</button><button class="tbtn tbtn-red" onclick="showToast('${s.name} suspended!')">Suspend</button>`}
+            </div>
+          </td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── ORDERS ────────────────────────────────────────
+function renderOrders(){
+  if(ORDERS_DATA.length===0){
+    return `<div style="text-align:center;padding:80px 20px;color:rgba(255,255,255,.3)">
+      <div style="font-size:48px;margin-bottom:16px">📦</div>
+      <div style="font-size:18px;font-weight:600;margin-bottom:8px;color:rgba(255,255,255,.5)">No Orders Yet</div>
+      <div style="font-size:13px">Orders will appear here once buyers start purchasing</div>
+    </div>`;
+  }
+  return `
+  <div class="alert alert-red ared a1"><div class="alert-icon">⏰</div><div><div class="alert-title">2 Late Shipments — Action Required</div><div class="alert-text">Orders  (3 days) and  (4 days) not shipped. Sellers notified.</div></div><button class="alert-act act-red" onclick="showToast('Warnings sent to both sellers!')">Send Warnings</button></div>
+  <div class="card a2">
+    <div class="card-hdr">
+      <div class="card-title">All Orders <span style="font-size:10px;color:rgba(255,255,255,.3);font-weight:400">${ORDERS_DATA.length} total</span></div>
+      <button class="tbtn" onclick="showToast('CSV downloading...')">📥 Export CSV</button>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Order</th><th>Buyer</th><th>Seller</th><th>Product</th><th>Amount</th><th>Packaging</th><th>Status</th><th>Days</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${ORDERS_DATA.map(o=>`<tr style="${o.status==='late'?'background:rgba(184,50,50,.04)':''}">
+          <td style="color:rgba(100,150,240,.8);font-weight:700">${o.id}</td>
+          <td style="color:rgba(255,255,255,.7)">${o.buyer}</td>
+          <td style="color:rgba(255,255,255,.5)">${o.seller}</td>
+          <td style="color:rgba(255,255,255,.7)">${o.product}</td>
+          <td style="font-weight:700;color:#e8d8c0">$${o.amt}</td>
+          <td style="font-size:10px">${o.pkg==='Rolled'?'🌀 Rolled':'📦 Folded'}</td>
+          <td><span class="bdg ${o.status==='delivered'?'bdg-green':o.status==='shipped'?'bdg-blue':o.status==='late'?'bdg-red':o.status==='return'?'bdg-purple':'bdg-gold'}">${o.status==='late'?'⚠️ Late':o.status}</span></td>
+          <td style="color:${o.days>2?'rgba(220,100,100,.8)':'rgba(255,255,255,.3)'};font-weight:${o.days>2?700:400}">${o.days}d${o.days>2?' ⚠️':''}</td>
+          <td>
+            <div style="display:flex;gap:4px">
+              <button class="tbtn" onclick="showToast('Opening ${o.id}...')">View</button>
+              ${o.status==='late'?`<button class="tbtn tbtn-red" onclick="showToast('Warning sent!')">Warn</button>`:''}
+              ${o.status==='return'?`<button class="tbtn tbtn-gold" onclick="showToast('Processing refund...')">Refund</button>`:''}
+            </div>
+          </td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── PAYMENTS ──────────────────────────────────────
+function renderPayments(){
+  const totalGross=SELLERS.reduce((a,s)=>a+s.gross,0);
+  const totalPending=SELLERS.filter(s=>s.status==='active').reduce((a,s)=>a+s.pending,0);
+  const commOn=COMMISSION_STATE.globalOn;
+  const commPct=COMMISSION_STATE.pct;
+  const yourComm=commOn?totalGross*(commPct/100):0;
+
+  return `
+  <!-- ── GLOBAL COMMISSION CONTROL ── -->
+  <div style="background:${commOn?'linear-gradient(135deg,#0a1a12,#0a2016)':'linear-gradient(135deg,#1a0a04,#200a0a)'};border:2px solid ${commOn?'rgba(42,106,64,.4)':'rgba(184,50,50,.3)'};border-radius:14px;padding:24px;margin-bottom:20px" class="a1">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:${commOn?'rgba(100,220,140,.9)':'rgba(220,100,100,.9)'};margin-bottom:4px">
+          ${commOn?'✅ Commission Active':'🆓 FREE Mode — No Commission'}
+        </div>
+        <div style="font-size:11px;color:rgba(255,255,255,.35);line-height:1.6">
+          ${commOn
+            ?`Sellers are paying ${commPct}% commission on every sale. Auto-deducted from each payout.`
+            :'Sellers keep 100% of their sales. Commission is OFF — use this to attract new sellers.'}
+        </div>
+      </div>
+      <!-- BIG ONE-CLICK TOGGLE -->
+      <div style="text-align:center">
+        <button id="global-comm-toggle" onclick="toggleGlobalCommission()" style="width:80px;height:80px;border-radius:50%;border:3px solid ${commOn?'rgba(42,106,64,.5)':'rgba(184,50,50,.4)'};background:${commOn?'rgba(42,106,64,.2)':'rgba(184,50,50,.15)'};cursor:pointer;font-size:28px;transition:all .3s;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px">
+          <span>${commOn?'✅':'🆓'}</span>
+          <span style="font-size:9px;color:rgba(255,255,255,.5);font-family:'Jost',sans-serif;font-weight:700">${commOn?'ON':'OFF'}</span>
+        </button>
+        <div style="font-size:9px;color:rgba(255,255,255,.25);margin-top:6px;letter-spacing:1px;text-transform:uppercase">One Click</div>
+      </div>
+    </div>
+
+    <!-- COMMISSION RATE + AUTO SETTINGS -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+      <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px">
+        <div style="font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Commission Rate</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <input id="comm-pct-input" type="number" value="${commPct}" min="0" max="30" style="width:52px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:5px;padding:5px 8px;color:#e8d8c0;font-size:16px;font-weight:700;font-family:'Jost',sans-serif;outline:none;text-align:center">
+          <span style="color:rgba(255,255,255,.5);font-size:16px;font-weight:700">%</span>
+          <button onclick="updateCommPct()" style="background:var(--bark);color:#fff;border:none;border-radius:5px;padding:5px 8px;font-size:9px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">Set</button>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px">
+        <div style="font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Auto Deduction</div>
+        <div style="font-size:13px;font-weight:700;color:${commOn?'rgba(100,220,140,.8)':'rgba(220,100,100,.7)'}">
+          ${commOn?'✅ Active':'❌ Off'}
+        </div>
+        <div style="font-size:9px;color:rgba(255,255,255,.25);margin-top:2px">${commOn?'Every payout cycle':'No deduction happening'}</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px">
+        <div style="font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Your Earnings</div>
+        <div style="font-size:18px;font-weight:700;color:${commOn?'rgba(100,220,140,.8)':'rgba(255,255,255,.25)'}">
+          ${commOn?`$${yourComm.toFixed(0)}`:'$0'}
+        </div>
+        <div style="font-size:9px;color:rgba(255,255,255,.25);margin-top:2px">${commOn?`${commPct}% of $${totalGross.toLocaleString()}`:'Commission is OFF'}</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px">
+        <div style="font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Mode</div>
+        <div style="font-size:12px;font-weight:700;color:${commOn?'rgba(100,220,140,.8)':'rgba(184,149,106,.8)'}">
+          ${commOn?'Standard':'🆓 Free for Sellers'}
+        </div>
+        <div style="font-size:9px;color:rgba(255,255,255,.25);margin-top:2px">${commOn?'Sellers pay commission':'Growth mode — attract sellers'}</div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE AUTO ON/OFF -->
+    <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;border:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">⏰ Schedule Auto Commission</div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <div style="font-size:11px;color:rgba(255,255,255,.4)">Turn ON commission automatically on:</div>
+        <input type="date" id="auto-on-date" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:5px 10px;color:#e8d8c0;font-size:11px;font-family:'Jost',sans-serif;outline:none">
+        <input type="number" id="auto-on-pct" placeholder="%" min="1" max="30" style="width:60px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:5px 8px;color:#e8d8c0;font-size:11px;font-family:'Jost',sans-serif;outline:none;text-align:center">
+        <span style="font-size:11px;color:rgba(255,255,255,.3)">%</span>
+        <button onclick="scheduleCommission()" style="background:rgba(184,149,106,.2);border:1px solid rgba(184,149,106,.3);color:var(--bark);border-radius:5px;padding:6px 14px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">Set Schedule</button>
+        <div id="schedule-status" style="font-size:10px;color:rgba(100,220,140,.7);display:none">✅ Scheduled!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STATS ── -->
+  <div class="stats-row a2">
+    <div class="stat"><div class="stat-icon">🏦</div><div class="stat-lbl">All Buyer Payments</div><div class="stat-val">$${totalGross.toLocaleString()}</div><div class="stat-sub">Held by Tuftra</div></div>
+    <div class="stat" style="border-color:rgba(42,106,64,.2)"><div class="stat-icon">💰</div><div class="stat-lbl">Your Commission</div><div class="stat-val" style="color:${commOn?'rgba(100,220,140,.8)':'rgba(255,255,255,.2)'}">$${yourComm.toFixed(0)}</div><div class="stat-sub">${commOn?`${commPct}% auto deduction`:'Commission is OFF'}</div></div>
+    <div class="stat" style="border-color:rgba(196,122,24,.2)"><div class="stat-icon">⏳</div><div class="stat-lbl">Pending to Sellers</div><div class="stat-val" style="color:rgba(220,170,60,.8)">$${totalPending.toLocaleString()}</div><div class="stat-sub">Next: May 1, 2025</div></div>
+    <div class="stat" style="border-color:rgba(184,50,50,.2)"><div class="stat-icon">⚠️</div><div class="stat-lbl">Penalties Collected</div><div class="stat-val" style="color:rgba(220,100,100,.8)">$18.90</div><div class="stat-sub">Wrong delivery</div></div>
+  </div>
+
+  <!-- ── YOUR BANK ACCOUNT ── -->
+  <div class="card a3" style="border-color:rgba(42,106,64,.2);background:rgba(42,106,64,.03)">
+    <div class="card-hdr">
+      <div>
+        <div class="card-title" style="color:rgba(100,220,140,.8)">💳 Your Bank Account — Commission Deposits</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:2px">Your commission is auto-transferred here every payout cycle</div>
+      </div>
+      <button class="tbtn" onclick="openBankModal()">Edit Account</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px"><div style="font-size:9px;color:rgba(255,255,255,.3);margin-bottom:3px;text-transform:uppercase;letter-spacing:1px">Bank</div><div style="font-size:13px;font-weight:700;color:#e8d8c0">Chase Bank</div></div>
+      <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px"><div style="font-size:9px;color:rgba(255,255,255,.3);margin-bottom:3px;text-transform:uppercase;letter-spacing:1px">Account</div><div style="font-size:13px;font-weight:700;color:#e8d8c0">••••4242</div></div>
+      <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px"><div style="font-size:9px;color:rgba(255,255,255,.3);margin-bottom:3px;text-transform:uppercase;letter-spacing:1px">Last Transfer</div><div style="font-size:13px;font-weight:700;color:rgba(100,220,140,.8)">$${commOn?yourComm.toFixed(2):'$0 — Commission OFF'} · Apr 26</div></div>
+    </div>
+  </div>
+
+  <!-- ── PER SELLER COMMISSION ── -->
+  <div class="card a3">
+    <div class="card-hdr">
+      <div>
+        <div class="card-title">Per Seller Commission Control</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:2px">Override global setting for individual sellers. Global: <span style="color:${commOn?'rgba(100,220,140,.8)':'rgba(220,100,100,.7)'};">${commOn?commPct+'% ON':'FREE (OFF)'}</span></div>
+      </div>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Seller</th><th>Global Setting</th><th>Override</th><th>Custom Rate</th><th>Status</th><th>Manual Payout</th></tr></thead>
+      <tbody id="per-seller-commission-body"></tbody>
+    </table>
+    <div style="margin-top:12px;font-size:10px;color:rgba(255,255,255,.25);line-height:1.7;background:rgba(255,255,255,.03);padding:10px 12px;border-radius:7px">
+      💡 <strong style="color:rgba(255,255,255,.4)">Override:</strong> If you set a seller to FREE, they won't be charged commission even if global is ON. Perfect for new sellers or special deals.
+    </div>
+  </div>
+
+  <!-- ── PAYOUT CONTROL ── -->
+  <div class="payout-control a4">
+    <div class="pc-title serif">Seller Payouts — Next Cycle: May 1, 2025</div>
+    <div class="pc-sub">Auto-payout every 5 days via Stripe. Hold or release individual sellers anytime.</div>
+    <div class="pc-sellers" id="payout-sellers-list"></div>
+    <button class="pay-all-btn" onclick="processAllPayouts()">⚡ Process All Payouts Now — $${totalPending.toLocaleString()}</button>
+  </div>
+
+  <!-- ── PAYOUT HISTORY ── -->
+  <div class="card a4">
+    <div class="card-hdr"><div class="card-title">Payout History</div><button class="tbtn" onclick="showToast('CSV downloading...')">📥 Export</button></div>
+    <table class="tbl">
+      <thead><tr><th>Date</th><th>Seller</th><th>Gross</th><th>Commission</th><th>Penalty</th><th>Net Paid</th><th>Commission Mode</th><th>Status</th></tr></thead>
+      <tbody>
+        ${[
+          {date:'Apr 26',seller:'',gross:2280,comm:182.4,pen:0,net:2097.6,mode:'8%',status:'paid'},
+          {date:'Apr 26',seller:'',gross:1840,comm:147.2,pen:18.9,net:1673.9,mode:'8%',status:'paid'},
+          {date:'Apr 21',seller:'',gross:1200,comm:0,pen:0,net:1200,mode:'FREE',status:'paid'},
+          {date:'Apr 21',seller:'',gross:1980,comm:158.4,pen:0,net:1821.6,mode:'8%',status:'paid'},
+          {date:'Apr 16',seller:'',gross:2100,comm:168,pen:0,net:1932,mode:'8%',status:'paid'},
+        ].map(p=>`<tr>
+          <td>${p.date}</td>
+          <td style="color:#e8d8c0;font-weight:600">${p.seller}</td>
+          <td>$${p.gross.toLocaleString()}</td>
+          <td style="color:${p.comm===0?'rgba(100,220,140,.6)':'rgba(220,170,60,.7)'}">
+            ${p.comm===0?'None (FREE)':'−$'+p.comm.toFixed(2)}
+          </td>
+          <td style="color:${p.pen>0?'rgba(220,100,100,.8)':'rgba(100,220,140,.6)'}">
+            ${p.pen>0?`−$${p.pen.toFixed(2)}`:'None ✅'}
+          </td>
+          <td style="font-weight:700;color:rgba(100,220,140,.8);font-size:13px">$${p.net.toFixed(2)}</td>
+          <td><span class="bdg ${p.mode==='FREE'?'bdg-green':'bdg-gold'}">${p.mode}</span></td>
+          <td><span class="bdg bdg-green">${p.status}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── PENALTIES ─────────────────────────────────────
+function renderPenalties(){
+  return `
+  <div class="card a1">
+    <div class="card-hdr"><div class="card-title">Penalty Rules — Editable</div><button class="btn-primary" onclick="showToast('Rules saved!')">Save Changes</button></div>
+    <table class="tbl">
+      <thead><tr><th>Violation</th><th>Penalty</th><th>Current Value</th><th>Edit</th><th>Auto-Apply</th></tr></thead>
+      <tbody>
+        ${[
+          ['Wrong Delivery','% Payout Cut','10%','penalty-wrong'],
+          ['Late Shipment (48hrs+)','Performance Score Drop','−5 points','penalty-late'],
+          ['Late Shipment (3x)','Payout Hold','Full hold','penalty-late3'],
+          ['Damaged Item (seller fault)','Full Refund Deducted','100% of order','penalty-damaged'],
+          ['Fake Tracking Number','Account Suspended','Immediate','penalty-fake'],
+          ['5+ Complaints','Account Warning','Auto warning','penalty-complaints'],
+          ['Counterfeit Product','Permanent Ban','Permanent','penalty-counterfeit'],
+        ].map(([v,type,val,id])=>`<tr>
+          <td style="font-weight:600;color:#e8d8c0">${v}</td>
+          <td style="color:rgba(255,255,255,.45)">${type}</td>
+          <td><input style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:4px 8px;color:#e8d8c0;font-size:11px;width:100px;font-family:'Jost',sans-serif;outline:none" value="${val}" id="${id}"></td>
+          <td><button class="tbtn tbtn-gold" onclick="showToast('Penalty updated!')">Save</button></td>
+          <td><button class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-knob"></div></button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card a2">
+    <div class="card-hdr"><div class="card-title">Active Violations</div></div>
+    <table class="tbl">
+      <thead><tr><th>Seller</th><th>Violation</th><th>Order</th><th>Penalty Applied</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700;color:#e8d8c0"></td>
+          <td style="color:rgba(220,100,100,.8)">Wrong Delivery</td>
+          <td style="color:rgba(100,150,240,.8)"></td>
+          <td style="color:rgba(220,100,100,.8);font-weight:700">−$18.90 (10%)</td>
+          <td style="color:rgba(255,255,255,.35)">Apr 25</td>
+          <td><span class="bdg bdg-gold">Deducted</span></td>
+          <td><button class="tbtn" onclick="showToast('Case details opened...')">View</button></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#e8d8c0"></td>
+          <td style="color:rgba(220,170,60,.8)">Late Shipment</td>
+          <td style="color:rgba(100,150,240,.8)"></td>
+          <td style="color:rgba(220,170,60,.8)">Warning Issued</td>
+          <td style="color:rgba(255,255,255,.35)">Apr 28</td>
+          <td><span class="bdg bdg-gold">Warning</span></td>
+          <td><button class="tbtn tbtn-red" onclick="showToast('Escalated to payout hold!')">Escalate</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card a3" onclick="openApplyPenaltyModal()" style="cursor:pointer;border-style:dashed;text-align:center;padding:16px">
+    <div style="font-size:20px;margin-bottom:6px">⚠️</div>
+    <div style="font-size:13px;font-weight:700;color:#e8d8c0;margin-bottom:2px">Apply Manual Penalty</div>
+    <div style="font-size:10px;color:rgba(255,255,255,.3)">Apply custom penalty to any seller</div>
+  </div>`;
+}
+
+// ── PRODUCTS ──────────────────────────────────────
+function renderProducts(){
+  return `
+  <div class="card a1">
+    <div class="card-hdr"><div class="card-title">Awaiting Approval (${PRODUCTS_REVIEW.length})</div></div>
+    ${PRODUCTS_REVIEW.map(p=>`
+    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:14px">
+      <div style="width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--bark),var(--umber));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">◈</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:#e8d8c0;margin-bottom:2px">${p.name}</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.35)">${p.seller} · ${p.size} · ${p.material} · $${p.price} · Submitted ${p.submitted}</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="tbtn tbtn-green" onclick="showToast('${p.name} approved! Now live.')">✅ Approve</button>
+        <button class="tbtn tbtn-red" onclick="openRejectModal('${p.name}')">❌ Reject</button>
+        <button class="tbtn" onclick="showToast('Opening preview...')">👁 Preview</button>
+      </div>
+    </div>`).join('')}
+  </div>
+
+  <div class="card a2">
+    <div class="card-hdr"><div class="card-title">All Live Products</div><button class="tbtn" onclick="showToast('CSV downloading...')">📥 Export</button></div>
+    <table class="tbl">
+      <thead><tr><th>Product</th><th>Seller</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${[
+          {name:'',seller:'',price:189,stock:12,status:'live'},
+          {name:'',seller:'',price:329,stock:5,status:'live'},
+          {name:'',seller:'',price:159,stock:18,status:'live'},
+          {name:'',seller:'',price:149,stock:0,status:'out'},
+          {name:'',seller:'',price:119,stock:8,status:'live'},
+        ].map(p=>`<tr>
+          <td style="font-weight:700;color:#e8d8c0">${p.name}</td>
+          <td style="color:rgba(255,255,255,.5)">${p.seller}</td>
+          <td style="font-weight:600">$${p.price}</td>
+          <td style="color:${p.stock===0?'rgba(220,100,100,.8)':p.stock<=5?'rgba(220,170,60,.8)':'rgba(100,220,140,.8)'};font-weight:700">${p.stock}</td>
+          <td><span class="bdg ${p.status==='live'?'bdg-green':'bdg-red'}">${p.status==='live'?'Live':'Out of Stock'}</span></td>
+          <td><div style="display:flex;gap:4px"><button class="tbtn" onclick="showToast('Editing...')">Edit</button><button class="tbtn tbtn-red" onclick="showToast('Product removed!')">Remove</button></div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── RETURNS ───────────────────────────────────────
+function renderReturns(){
+  return `
+  <div class="card a1">
+    <div class="card-hdr"><div class="card-title">Return & Refund Requests</div></div>
+    ${RETURNS_DATA.map(r=>`
+    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px;margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <div style="font-size:11px;color:rgba(100,150,240,.8);font-weight:700;margin-bottom:2px">${r.id} · ${r.buyer}</div>
+          <div style="font-size:12px;font-weight:700;color:#e8d8c0">${r.product} · $${r.amt}</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px">Seller: ${r.seller} · Reason: ${r.reason} · ${r.days} days ago</div>
+        </div>
+        <span class="bdg ${r.status==='pending'?'bdg-gold':'bdg-green'}">${r.status}</span>
+      </div>
+      ${r.status==='pending'?`
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="tbtn tbtn-green" onclick="showToast('Refund of $${r.amt} processed to ${r.buyer}!')">✅ Approve Refund</button>
+        <button class="tbtn tbtn-gold" onclick="showToast('Exchange initiated for ${r.buyer}.')">🔄 Exchange</button>
+        <button class="tbtn tbtn-red" onclick="showToast('Return rejected. Email sent.')">❌ Reject</button>
+        <button class="tbtn" onclick="showToast('Deducting $${r.amt} from ${r.seller} payout.')">⚠️ Charge Seller</button>
+      </div>`:`<span style="font-size:10px;color:rgba(100,220,140,.7)">✅ Resolved</span>`}
+    </div>`).join('')}
+  </div>`;
+}
+
+// ── ANALYTICS ─────────────────────────────────────
+function renderAnalytics(){
+  const days=['Apr 1','Apr 7','Apr 14','Apr 21','Apr 28'];
+  const vals=[4200,5800,4900,7200,6840];
+  const maxVal=Math.max(...vals);
+  return `
+  <div class="stats-row a1">
+    <div class="stat"><div class="stat-icon">📈</div><div class="stat-lbl">This Month Revenue</div><div class="stat-val">$${vals[vals.length-1].toLocaleString()}</div><div class="stat-trend tu">↑ 8% vs last month</div></div>
+    <div class="stat"><div class="stat-icon">🛒</div><div class="stat-lbl">Orders This Month</div><div class="stat-val">127</div><div class="stat-trend tu">↑ 14%</div></div>
+    <div class="stat"><div class="stat-icon">👥</div><div class="stat-lbl">New Customers</div><div class="stat-val">84</div><div class="stat-trend tu">↑ 22%</div></div>
+    <div class="stat"><div class="stat-icon">💰</div><div class="stat-lbl">Avg Order Value</div><div class="stat-val">$214</div><div class="stat-trend tu">↑ $18</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:18px" class="a2">
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Revenue — Last 30 Days</div><button class="tbtn" onclick="showToast('PDF downloading...')">📥 Export PDF</button></div>
+      <div class="chart-bars">
+        ${vals.map((v,i)=>`
+        <div class="chart-bar-wrap">
+          <div class="chart-val">$${(v/1000).toFixed(1)}k</div>
+          <div class="chart-bar" style="height:${Math.round((v/maxVal)*80)+10}px;background:linear-gradient(to top,var(--bark),rgba(184,149,106,.4))"></div>
+          <div class="chart-label">${days[i]}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Revenue by Seller</div></div>
+      ${SELLERS.filter(s=>s.gross>0).map(s=>`
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px">
+          <span style="color:rgba(255,255,255,.6);font-weight:600">${s.name}</span>
+          <span style="color:rgba(100,220,140,.8);font-weight:700">$${s.gross.toLocaleString()}</span>
+        </div>
+        <div style="height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden">
+          <div style="height:100%;width:${Math.round((s.gross/22100)*100)}%;background:linear-gradient(to right,var(--bark),rgba(184,149,106,.4));border-radius:3px"></div>
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px" class="a3">
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Top Products</div></div>
+      ${[['','',329,41],['','',189,28],['','ModernFloor',289,22],['','',599,12]].map(([name,seller,price,sales])=>`
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:11px">
+        <div><div style="font-weight:600;color:#e8d8c0">${name}</div><div style="font-size:9px;color:rgba(255,255,255,.3)">${seller}</div></div>
+        <div style="text-align:right"><div style="font-weight:700;color:rgba(100,220,140,.8)">$${price}</div><div style="font-size:9px;color:rgba(255,255,255,.3)">${sales} sold</div></div>
+      </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Orders by Status</div></div>
+      ${[['Delivered','rgba(100,220,140,.8)',68],['Shipped','rgba(100,150,240,.8)',24],['Processing','rgba(220,170,60,.8)',18],['Returns','rgba(220,100,100,.8)',5],['Late','rgba(220,100,100,.6)',3]].map(([label,color,count])=>`
+      <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+        <div style="width:8px;height:8px;border-radius:50%;background:${color};flex-shrink:0"></div>
+        <span style="font-size:11px;color:rgba(255,255,255,.55);flex:1">${label}</span>
+        <span style="font-size:12px;font-weight:700;color:${color}">${count}</span>
+      </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Customer Locations</div></div>
+      ${[['Texas','TX',28],['California','CA',24],['New York','NY',19],['Florida','FL',16],['Colorado','CO',12],['Other','—',28]].map(([state,code,count])=>`
+      <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+        <span style="font-size:11px;color:rgba(255,255,255,.55);flex:1">${state}</span>
+        <div style="height:5px;width:${Math.round((count/28)*80)}px;background:var(--bark);border-radius:3px;opacity:.6"></div>
+        <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);width:24px;text-align:right">${count}</span>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── PROMO ─────────────────────────────────────────
+function renderPromo(){
+  return `
+  <div class="card a1" style="border-style:dashed;cursor:pointer" onclick="openCreatePromoModal()">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:24px">🎟️</div>
+      <div><div style="font-size:13px;font-weight:700;color:#e8d8c0">Create New Promo Code</div><div style="font-size:10px;color:rgba(255,255,255,.3)">Click to create discount code</div></div>
+    </div>
+  </div>
+
+  <div class="card a2">
+    <div class="card-hdr"><div class="card-title">Active Promo Codes</div></div>
+    ${[
+      {code:'TUFTRA10',disc:'10% off',type:'All orders',uses:143,limit:500,expiry:'Dec 31, 2025',status:'active'},
+      {code:'WELCOME20',disc:'20% off',type:'First order only',uses:67,limit:200,expiry:'Jun 30, 2025',status:'active'},
+      {code:'SUMMER15',disc:'15% off',type:'Orders over $200',uses:28,limit:100,expiry:'Aug 31, 2025',status:'active'},
+      {code:'VIP30',disc:'30% off',type:'VIP customers only',uses:12,limit:50,expiry:'Dec 31, 2025',status:'paused'},
+    ].map(p=>`
+    <div class="promo-card">
+      <div>
+        <div class="promo-code">${p.code}</div>
+        <div style="font-size:18px;font-weight:700;color:rgba(100,220,140,.8);margin-top:2px">${p.disc}</div>
+      </div>
+      <div class="promo-info">
+        <div style="font-size:12px;color:rgba(255,255,255,.6)">${p.type}</div>
+        <div class="promo-details">Used: ${p.uses}/${p.limit} · Expires: ${p.expiry}</div>
+        <div style="height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:6px;overflow:hidden"><div style="height:100%;width:${Math.round((p.uses/p.limit)*100)}%;background:var(--bark);border-radius:2px"></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <span class="bdg ${p.status==='active'?'bdg-green':'bdg-gold'}">${p.status}</span>
+        <div class="promo-actions">
+          <button class="tbtn" onclick="showToast('Editing ${p.code}...')">Edit</button>
+          <button class="tbtn tbtn-red" onclick="showToast('${p.code} deactivated!')">Pause</button>
+        </div>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ── SUPPORT ───────────────────────────────────────
+function renderSupport(){
+  return `
+  <div class="card a1">
+    <div class="card-hdr">
+      <div class="card-title">Customer Support Tickets <span style="font-size:10px;color:rgba(255,255,255,.3);font-weight:400">${SUPPORT_TICKETS.length} total</span></div>
+      <div style="display:flex;gap:6px"><span class="bdg bdg-red">3 Open</span><span class="bdg bdg-green">1 Resolved</span></div>
+    </div>
+    ${SUPPORT_TICKETS.map(t=>`
+    <div class="support-card">
+      <div class="support-hdr">
+        <div>
+          <div class="support-id">${t.id} · ${t.buyer} · ${t.days}d ago</div>
+          <div class="support-title">${t.subject}</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <span class="bdg ${t.priority==='high'?'bdg-red':t.priority==='medium'?'bdg-gold':'bdg-muted'}">${t.priority}</span>
+          <span class="bdg ${t.status==='open'?'bdg-gold':'bdg-green'}">${t.status}</span>
+        </div>
+      </div>
+      ${t.status==='open'?`
+      <div class="support-actions">
+        <button class="tbtn tbtn-green" onclick="showToast('Ticket ${t.id} resolved!')">✅ Mark Resolved</button>
+        <button class="tbtn" onclick="showToast('Opening email to ${t.buyer}...')">📧 Email Customer</button>
+        <button class="tbtn tbtn-gold" onclick="showToast('Assigning to seller...')">↗️ Assign to Seller</button>
+        <button class="tbtn tbtn-red" onclick="showToast('Processing refund...')">💰 Issue Refund</button>
+      </div>`:`<span style="font-size:10px;color:rgba(100,220,140,.6)">✅ Resolved</span>`}
+    </div>`).join('')}
+  </div>`;
+}
+
+// ── SUB-ADMIN ─────────────────────────────────────
+function renderSubAdmin(){
+  return `
+  <div class="alert alert-gold agold a1"><div class="alert-icon">🔐</div><div><div class="alert-title">You are the Super Admin</div><div class="alert-text">Only you can add/remove sub-admins and change their permissions. Sub-admins cannot see payments or add other admins.</div></div></div>
+
+  <div class="card a1" style="border-style:dashed;cursor:pointer" onclick="openAddSubAdminModal()">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:24px">👤</div>
+      <div><div style="font-size:13px;font-weight:700;color:#e8d8c0">Add New Sub-Admin</div><div style="font-size:10px;color:rgba(255,255,255,.3)">Invite team member and set their permissions</div></div>
+    </div>
+  </div>
+
+  ${SUB_ADMINS.map(sa=>`
+  <div class="sub-admin-card a2">
+    <div class="sa-hdr">
+      <div class="sa-avatar" style="background:${sa.color}">${sa.avatar}</div>
+      <div style="flex:1">
+        <div class="sa-name">${sa.name}</div>
+        <div class="sa-email">${sa.email} · Role: ${sa.role}</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="bdg ${sa.active?'bdg-green':'bdg-red'}">${sa.active?'Active':'Inactive'}</span>
+        <button class="tbtn tbtn-red" onclick="showToast('${sa.name} removed!')">Remove</button>
+      </div>
+    </div>
+    <div class="sa-permissions">Permissions</div>
+    <div class="perm-grid">
+      ${Object.entries(sa.perms).map(([key,val])=>`
+      <div class="perm-item">
+        <div>
+          <div class="perm-label">${PERM_LABELS[key]}</div>
+        </div>
+        <button class="toggle ${val?'on':''}" onclick="this.classList.toggle('on');showToast('Permission updated!')"><div class="toggle-knob"></div></button>
+      </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn-primary" onclick="showToast('Permissions saved for ${sa.name}!')">Save Permissions</button>
+      <button class="btn-outline" onclick="showToast('Password reset email sent!')">Reset Password</button>
+    </div>
+  </div>`).join('')}`;
+}
+
+// ── SETTINGS ──────────────────────────────────────
+function renderSettings(){
+  return `
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" class="a1">
+    <div>
+      <div class="card">
+        <div class="card-hdr"><div class="card-title">Platform Settings</div><button class="btn-primary" onclick="showToast('Settings saved!')">Save All</button></div>
+        ${[
+          ['Commission %','8%','Platform commission on every sale'],
+          ['Payout Cycle','Every 5 days','How often sellers get paid'],
+          ['Wrong Delivery Penalty','10%','Payout cut for wrong delivery'],
+          ['Late Shipment Hours','48 hours','After this — warning issued'],
+          ['Free Shipping','All orders','No minimum required'],
+          ['Return Window','30 days','Customer return period'],
+        ].map(([lbl,val,sub])=>`
+        <div class="setting-row">
+          <div><div class="setting-lbl">${lbl}</div><div class="setting-sub">${sub}</div></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="setting-val">${val}</span>
+            <button class="setting-edit" onclick="showToast('Editing ${lbl}...')">Edit</button>
+          </div>
+        </div>`).join('')}
+      </div>
+
+      <div class="card" style="margin-top:0">
+        <div class="card-hdr"><div class="card-title">Platform Toggles</div></div>
+        ${[
+          ['Promo Codes','Allow buyers to use discount codes',true],
+          ['Free Shipping','Show free shipping on all orders',true],
+          ['Room Visualizer','Enable room visualizer feature',true],
+          ['AI Listing Helper','Enable AI for sellers',true],
+          ['Maintenance Mode','Take site offline for updates',false],
+          ['New Seller Registration','Allow new sellers to apply',true],
+        ].map(([lbl,sub,on])=>`
+        <div class="setting-row">
+          <div><div class="setting-lbl">${lbl}</div><div class="setting-sub">${sub}</div></div>
+          <button class="toggle ${on?'on':''}" onclick="this.classList.toggle('on');showToast('${lbl} updated!')"><div class="toggle-knob"></div></button>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="border-color:rgba(42,106,64,.2)">
+        <div class="card-hdr"><div class="card-title" style="color:rgba(100,220,140,.8)">💳 Your Bank Account</div><button class="tbtn" onclick="openBankModal()">Edit</button></div>
+        <div style="background:rgba(42,106,64,.08);border:1px solid rgba(42,106,64,.2);border-radius:8px;padding:14px;margin-bottom:14px">
+          <div style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Commission Deposit Account</div>
+          ${[['Bank Name','Chase Bank'],['Account Holder','Tuftra Admin'],['Account Number','••••••4242'],['Routing Number','••••••1234'],['Last Deposit','$${(SELLERS.reduce((a,s)=>a+s.gross,0)*0.08).toFixed(2)} — Apr 26, 2025']].map(([k,v])=>`
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px">
+            <span style="color:rgba(255,255,255,.3)">${k}</span>
+            <span style="font-weight:600;color:#e8d8c0">${v}</span>
+          </div>`).join('')}
+        </div>
+        <div style="font-size:10px;color:rgba(255,255,255,.25);line-height:1.6">🔒 Bank details encrypted via Stripe. Your 8% commission is auto-transferred every payout cycle.</div>
+      </div>
+
+      <div class="card" style="margin-top:0">
+        <div class="card-hdr"><div class="card-title">Admin Account</div></div>
+        <div class="fg"><label>Admin Email</label><input value="admin@tuftra.com"></div>
+        <div class="fg"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
+        <div class="fg"><label>New Password</label><input type="password" placeholder="••••••••"></div>
+        <div style="background:rgba(196,122,24,.08);border:1px solid rgba(196,122,24,.2);border-radius:7px;padding:10px 12px;font-size:10px;color:rgba(220,170,60,.7);line-height:1.6;margin-bottom:12px">
+          🛡️ Enable 2FA for maximum security. Anyone who gets your password cannot login without your phone.
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary" onclick="showToast('Password updated! ✅')">Update Password</button>
+          <button class="btn-outline" onclick="showToast('2FA setup email sent!')">Enable 2FA</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:0;border-color:rgba(184,50,50,.2)">
+        <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:6px">⚠️ Danger Zone</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:10px;line-height:1.6">These actions affect the entire platform. Proceed with extreme caution.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-danger" onclick="showToast('Maintenance mode enabled!')">Enable Maintenance Mode</button>
+          <button class="btn-danger" onclick="showToast('Report generating...')">Export Full Database</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── MODALS ────────────────────────────────────────
+function openBankModal(){
+  document.getElementById('modal-container').innerHTML=`
+  <div class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" style="max-width:480px" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title">Edit Bank Account</div>
+      <div class="modal-sub">Your 8% commission is deposited here every payout cycle via Stripe</div>
+      <div class="fg"><label>Bank Name *</label><input value="Chase Bank" placeholder="e.g. Chase Bank"></div>
+      <div class="fg"><label>Account Holder Name *</label><input value="Tuftra Admin" placeholder="Name on account"></div>
+      <div class="fgrid-2">
+        <div class="fg"><label>Account Number *</label><input type="password" value="123456789042" placeholder="Account number"></div>
+        <div class="fg"><label>Routing Number *</label><input value="021000021" placeholder="9-digit routing"></div>
+      </div>
+      <div style="background:rgba(42,106,64,.08);border:1px solid rgba(42,106,64,.2);border-radius:7px;padding:10px 12px;font-size:10px;color:rgba(100,220,140,.7);line-height:1.6;margin-bottom:14px">
+        🔒 Encrypted & stored securely via Stripe. Only you can see or edit this.
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-primary" onclick="showToast('Bank account updated! ✅');closeModal()">Save Bank Account</button>
+        <button class="btn-outline" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openAddSubAdminModal(){
+  const perms=Object.keys(PERM_LABELS);
+  document.getElementById('modal-container').innerHTML=`
+  <div class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" style="max-width:560px" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title">Add Sub-Admin</div>
+      <div class="modal-sub">Invite a team member and set exactly what they can access</div>
+      <div class="fgrid-2">
+        <div class="fg"><label>Full Name *</label><input placeholder="e.g. Sarah Johnson"></div>
+        <div class="fg"><label>Email *</label><input placeholder="sarah@tuftra.com"></div>
+      </div>
+      <div class="fg"><label>Role / Title</label><input placeholder="e.g. Operations Manager, Support Agent"></div>
+      <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin:14px 0 10px">Set Permissions</div>
+      <div class="perm-grid">
+        ${perms.map(key=>`
+        <div class="perm-item">
+          <div><div class="perm-label">${PERM_LABELS[key]}</div></div>
+          <button class="toggle ${key==='payments'||key==='settings'||key==='subadmin'?'':'on'}" onclick="this.classList.toggle('on')"><div class="toggle-knob"></div></button>
+        </div>`).join('')}
+      </div>
+      <div style="background:rgba(184,50,50,.08);border:1px solid rgba(184,50,50,.2);border-radius:7px;padding:10px 12px;font-size:10px;color:rgba(220,100,100,.7);line-height:1.6;margin:14px 0">
+        ⚠️ Payment Control, Platform Settings, and Sub-Admin access are locked for security. Only you (Super Admin) can access these.
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-primary" onclick="showToast('Sub-admin invited! Email sent. ✅');closeModal()">Send Invitation</button>
+        <button class="btn-outline" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openCreatePromoModal(){
+  document.getElementById('modal-container').innerHTML=`
+  <div class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" style="max-width:480px" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title">Create Promo Code</div>
+      <div class="modal-sub">Create a discount code for buyers</div>
+      <div class="fgrid-2">
+        <div class="fg"><label>Promo Code *</label><input placeholder="e.g. TUFTRA10" style="text-transform:uppercase"></div>
+        <div class="fg"><label>Discount % *</label><input type="number" placeholder="e.g. 10" min="1" max="50"></div>
+      </div>
+      <div class="fgrid-2">
+        <div class="fg"><label>Usage Limit</label><input type="number" placeholder="e.g. 500 (blank = unlimited)"></div>
+        <div class="fg"><label>Expiry Date</label><input type="date"></div>
+      </div>
+      <div class="fg"><label>Applicable To</label><select><option>All orders</option><option>First order only</option><option>Orders over $150</option><option>Orders over $200</option><option>Specific sellers</option></select></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn-primary" onclick="showToast('Promo code created! ✅');closeModal()">Create Code</button>
+        <button class="btn-outline" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openApplyPenaltyModal(){
+  document.getElementById('modal-container').innerHTML=`
+  <div class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" style="max-width:480px" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title">Apply Manual Penalty</div>
+      <div class="modal-sub">Manually apply a penalty to a seller</div>
+      <div class="fg"><label>Select Seller *</label><select><option></option><option></option><option></option><option></option></select></div>
+      <div class="fg"><label>Related Order (optional)</label><input placeholder="e.g. #T-1094"></div>
+      <div class="fg"><label>Violation Type *</label><select><option>Wrong Delivery — 10% cut</option><option>Late Shipment — Warning</option><option>Damaged Item — Full refund</option><option>Customer Complaint</option><option>Other (custom)</option></select></div>
+      <div class="fg"><label>Custom Amount (USD)</label><input type="number" placeholder="Leave blank to use default %"></div>
+      <div class="fg"><label>Note to Seller *</label><textarea placeholder="Explain the reason for this penalty..."></textarea></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-primary" style="background:var(--red);background-image:none" onclick="showToast('Penalty applied! Seller notified. ✅');closeModal()">Apply Penalty</button>
+        <button class="btn-outline" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openRejectModal(name){
+  document.getElementById('modal-container').innerHTML=`
+  <div class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" style="max-width:420px" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title">Reject Product</div>
+      <div class="modal-sub">Rejecting: <strong style="color:var(--bark)">${name}</strong></div>
+      <div class="fg"><label>Reason for Rejection *</label>
+        <select>
+          <option>Poor quality photos</option>
+          <option>Inaccurate description</option>
+          <option>Wrong category</option>
+          <option>Price too low/high</option>
+          <option>Prohibited item</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Message to Seller</label><textarea placeholder="Explain what needs to be fixed..."></textarea></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-primary" style="background:var(--red);background-image:none" onclick="showToast('Product rejected. Seller notified. ✅');closeModal()">Reject & Notify Seller</button>
+        <button class="btn-outline" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function approveSeller(name){showToast(`✅ ${name} approved! They can now list products.`);}
+function editCommission(id){
+  const s=SELLERS.find(x=>x.id===id);
+  document.getElementById('modal-container').innerHTML=`
+  <div class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" style="max-width:380px" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title">Edit Commission</div>
+      <div class="modal-sub">${s.name}</div>
+      <div class="fg"><label>Commission % *</label><input type="number" value="${s.commission}" min="0" max="30" id="comm-input"></div>
+      <div style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:12px;line-height:1.6">Default is 8%. You can set custom rate for this seller. They will be notified.</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-primary" onclick="showToast('Commission updated to '+document.getElementById('comm-input').value+'%!');closeModal()">Save</button>
+        <button class="btn-outline" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── UTILS ─────────────────────────────────────────
+function closeModal(){document.getElementById('modal-container').innerHTML='';}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.style.display='none',2800);
+}
+
+// ── INIT ──────────────────────────────────────────
+document.getElementById('screen-login').style.display='block';
+
+// ── OTP MODULE ─────────────────────────────────────────────────
+let _otpGenerated='',_otpCallback=null,_otpTimer=null,_otpSeconds=30;
+function showOTPModal(phone,onSuccess){
+  _otpCallback=onSuccess;
+  _otpGenerated=String(Math.floor(100000+Math.random()*900000));
+  _otpSeconds=30;
+  console.log('[OTP Demo] Code:',_otpGenerated);
+  document.getElementById('modal-container').innerHTML=`
+  <div id="otp-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px">
+    <div style="background:#1e1a14;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px 28px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;animation:fadeUp .3s ease">
+      <div style="width:60px;height:60px;background:rgba(184,149,106,.15);border:1px solid rgba(184,149,106,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px">📱</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#e8d8c0;margin-bottom:6px">Verify Your Phone</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.7;margin-bottom:24px">We sent a 6-digit SMS code to<br><strong style="color:#e8d8c0">${phone}</strong></div>
+      <div id="otp-boxes" style="display:flex;gap:10px;justify-content:center;margin-bottom:8px">
+        ${[0,1,2,3,4,5].map(i=>`<input id="otp-box-${i}" type="tel" maxlength="1" style="width:44px;height:52px;border:2px solid rgba(255,255,255,.1);border-radius:10px;font-size:22px;font-weight:700;text-align:center;font-family:'Jost',sans-serif;color:#e8d8c0;outline:none;transition:border .2s;background:rgba(255,255,255,.05)" oninput="otpIn(this,${i})" onkeydown="otpKey(event,${i})" onpaste="otpPaste(event)">`).join('')}
+      </div>
+      <div id="otp-error" style="font-size:11px;color:rgba(220,100,100,.9);min-height:18px;margin-bottom:10px;display:none">❌ Incorrect code. Please try again.</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.3);margin-bottom:18px">
+        <span id="otp-timer-txt">Resend in <strong id="otp-timer">30</strong>s</span>
+        <button id="otp-resend-btn" onclick="otpResend('${phone}')" style="display:none;background:none;border:none;color:#b8956a;font-weight:700;font-size:11px;cursor:pointer;font-family:'Jost',sans-serif;text-decoration:underline">Resend OTP</button>
+      </div>
+      <div style="background:rgba(184,149,106,.08);border:1px solid rgba(184,149,106,.2);border-radius:8px;padding:8px 12px;font-size:10px;color:#b8956a;margin-bottom:18px">💡 OTP sent via SMS</div>
+      <button id="otp-verify-btn" onclick="otpVerify()" disabled style="width:100%;background:#444;color:#fff;border:none;border-radius:10px;padding:14px;font-size:14px;font-weight:700;cursor:not-allowed;font-family:'Jost',sans-serif;transition:all .2s">Verify & Sign In →</button>
+      <button onclick="closeOTPModal()" style="width:100%;background:none;border:none;margin-top:10px;font-size:11px;color:rgba(255,255,255,.3);cursor:pointer;font-family:'Jost',sans-serif">← Go back</button>
+    </div>
+  </div>`;
+  setTimeout(()=>{const b=document.getElementById('otp-box-0');if(b)b.focus();},100);
+  clearInterval(_otpTimer);
+  _otpTimer=setInterval(()=>{
+    _otpSeconds--;
+    const t=document.getElementById('otp-timer');
+    if(!t)return clearInterval(_otpTimer);
+    if(_otpSeconds<=0){clearInterval(_otpTimer);const rb=document.getElementById('otp-resend-btn'),tt=document.getElementById('otp-timer-txt');if(tt)tt.style.display='none';if(rb)rb.style.display='inline';}
+    else t.textContent=_otpSeconds;
+  },1000);
+}
+function otpIn(el,idx){
+  el.style.borderColor=el.value?'rgba(184,149,106,.8)':'rgba(255,255,255,.1)';
+  if(el.value&&idx<5){const n=document.getElementById('otp-box-'+(idx+1));if(n)n.focus();}
+  const code=[0,1,2,3,4,5].map(i=>{const b=document.getElementById('otp-box-'+i);return b?b.value:''}).join('');
+  const btn=document.getElementById('otp-verify-btn');
+  if(btn){btn.disabled=code.length!==6;btn.style.background=code.length===6?'#b8956a':'#444';btn.style.cursor=code.length===6?'pointer':'not-allowed';}
+  if(code.length===6)otpVerify();
+}
+function otpKey(e,idx){
+  if(e.key==='Backspace'){const el=document.getElementById('otp-box-'+idx);if(el&&!el.value&&idx>0){const p=document.getElementById('otp-box-'+(idx-1));if(p){p.value='';p.focus();p.style.borderColor='rgba(255,255,255,.1)';}}}
+  if(e.key==='ArrowLeft'&&idx>0){const p=document.getElementById('otp-box-'+(idx-1));if(p)p.focus();}
+  if(e.key==='ArrowRight'&&idx<5){const n=document.getElementById('otp-box-'+(idx+1));if(n)n.focus();}
+}
+function otpPaste(e){
+  e.preventDefault();
+  const text=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').substring(0,6);
+  text.split('').forEach((ch,i)=>{const b=document.getElementById('otp-box-'+i);if(b){b.value=ch;b.style.borderColor='rgba(184,149,106,.8)';}});
+  const btn=document.getElementById('otp-verify-btn');
+  if(text.length===6&&btn){btn.disabled=false;btn.style.background='#b8956a';btn.style.cursor='pointer';}
+  setTimeout(otpVerify,100);
+}
+function otpVerify(){
+  const code=[0,1,2,3,4,5].map(i=>{const b=document.getElementById('otp-box-'+i);return b?b.value:''}).join('');
+  if(code!==_otpGenerated){
+    const err=document.getElementById('otp-error');if(err)err.style.display='block';
+    [0,1,2,3,4,5].forEach(i=>{const b=document.getElementById('otp-box-'+i);if(b)b.style.borderColor='rgba(220,100,100,.8)';});
+    const boxes=document.getElementById('otp-boxes');
+    if(boxes){boxes.style.animation='none';setTimeout(()=>{boxes.style.animation='shake .4s ease';},10);}
+    return;
+  }
+  clearInterval(_otpTimer);
+  closeOTPModal();
+  if(_otpCallback)_otpCallback();
+}
+function otpResend(phone){
+  _otpGenerated=String(Math.floor(100000+Math.random()*900000));
+  _otpSeconds=30;
+  const hint=document.getElementById('demo-otp-hint');if(hint)hint.textContent=_otpGenerated;
+  const rb=document.getElementById('otp-resend-btn'),tt=document.getElementById('otp-timer-txt'),t=document.getElementById('otp-timer');
+  if(rb)rb.style.display='none';if(tt)tt.style.display='inline';if(t)t.textContent=30;
+  clearInterval(_otpTimer);
+  _otpTimer=setInterval(()=>{
+    _otpSeconds--;
+    const ti=document.getElementById('otp-timer');if(!ti)return clearInterval(_otpTimer);
+    if(_otpSeconds<=0){clearInterval(_otpTimer);const r=document.getElementById('otp-resend-btn'),s=document.getElementById('otp-timer-txt');if(s)s.style.display='none';if(r)r.style.display='inline';}
+    else ti.textContent=_otpSeconds;
+  },1000);
+  showToast('📱 New OTP sent!');
+}
+function closeOTPModal(){clearInterval(_otpTimer);document.getElementById('modal-container').innerHTML='';}
+
+</script>
+</body>
+</html>

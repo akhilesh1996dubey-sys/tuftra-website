@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuftra — Seller Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ef;--sand:#f0e8d8;--bark:#b8956a;--umber:#7a4f2d;
+  --ink:#1a1208;--muted:#8a7a6a;--white:#fff;--border:#e4d8c4;
+  --red:#b83232;--gold:#c47a18;--green:#2a6a40;--blue:#1a4f8a;
+  --sidebar:#12100c;--sidebar-border:rgba(255,255,255,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+.serif{font-family:'Cormorant Garamond',serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes slideIn{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+.a1{animation:fadeUp .5s .05s ease both}
+.a2{animation:fadeUp .5s .1s ease both}
+.a3{animation:fadeUp .5s .15s ease both}
+.a4{animation:fadeUp .5s .2s ease both}
+
+/* ── AUTH SCREENS ───────────────────────────── */
+.auth-wrap{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.auth-left{background:var(--ink);padding:56px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.auth-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 60%,rgba(184,149,106,.18) 0%,transparent 60%)}
+.auth-brand{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:#fff;letter-spacing:-1px;margin-bottom:40px}
+.auth-brand span{color:var(--bark)}
+.auth-headline{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:#fff;line-height:1.08;margin-bottom:16px;position:relative}
+.auth-headline em{color:var(--bark);font-style:italic}
+.auth-sub{font-size:14px;color:rgba(255,255,255,.5);line-height:1.8;font-weight:300;margin-bottom:36px;max-width:380px}
+.auth-perks{display:flex;flex-direction:column;gap:12px}
+.auth-perk{display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,.6)}
+.auth-perk-icon{width:32px;height:32px;border-radius:8px;background:rgba(184,149,106,.15);border:1px solid rgba(184,149,106,.2);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.auth-right{background:var(--cream);padding:56px;display:flex;flex-direction:column;justify-content:center}
+.auth-form-wrap{max-width:400px;width:100%}
+.auth-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;margin-bottom:6px}
+.auth-switch{font-size:12px;color:var(--muted);margin-bottom:28px}
+.auth-switch a{color:var(--bark);font-weight:600;cursor:pointer;text-decoration:none}
+.form-group{margin-bottom:16px}
+.form-group label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);outline:none;transition:border .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--bark)}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.auth-btn{width:100%;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s;margin-top:4px}
+.auth-btn:hover{background:var(--umber)}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:16px 0;font-size:11px;color:var(--muted)}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.terms-agree-row{display:flex;align-items:flex-start;gap:8px;margin:14px 0;cursor:pointer}
+.tchk{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;transition:all .2s}
+.tchk.on{background:var(--green);border-color:var(--green)}
+.terms-txt{font-size:11px;color:var(--muted);line-height:1.6}
+.terms-txt a{color:var(--blue)}
+.steps-bar{display:flex;gap:6px;margin-bottom:24px}
+.step-dot{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s}
+.step-dot.done{background:var(--green)}
+.step-dot.active{background:var(--bark)}
+.step-label{font-size:11px;color:var(--muted);margin-bottom:16px}
+
+/* ── DASHBOARD LAYOUT ───────────────────────── */
+.dash-wrap{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--sidebar);flex-shrink:0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+.sb-brand{padding:24px 20px 16px;border-bottom:1px solid var(--sidebar-border)}
+.sb-logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:-1px}
+.sb-logo span{color:var(--bark)}
+.sb-seller-info{padding:16px 20px;border-bottom:1px solid var(--sidebar-border)}
+.sb-avatar{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--bark),var(--umber));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.sb-seller-name{font-size:13px;font-weight:700;color:#e8d8c0;margin-bottom:2px}
+.sb-seller-status{font-size:10px;color:rgba(255,255,255,.4)}
+.sb-score{display:flex;align-items:center;gap:6px;margin-top:8px}
+.sb-score-bar{flex:1;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.sb-score-fill{height:100%;background:linear-gradient(to right,var(--bark),var(--green));border-radius:2px;width:92%}
+.sb-score-num{font-size:10px;color:var(--bark);font-weight:700}
+.sb-nav{padding:12px 10px;flex:1}
+.sb-section-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:2px;padding:10px 10px 6px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:2px;position:relative}
+.sb-item:hover{background:rgba(255,255,255,.05)}
+.sb-item.on{background:rgba(184,149,106,.15);border-left:3px solid var(--bark)}
+.sb-item.on .sb-item-icon{color:var(--bark)}
+.sb-item.on .sb-item-label{color:#e8d8c0}
+.sb-item-icon{font-size:16px;flex-shrink:0;width:20px;text-align:center}
+.sb-item-label{font-size:12px;font-weight:500;color:rgba(255,255,255,.5)}
+.sb-badge{margin-left:auto;background:var(--red);color:#fff;border-radius:10px;padding:1px 7px;font-size:9px;font-weight:700}
+.sb-badge-gold{background:var(--gold)}
+.sb-footer{padding:16px 20px;border-top:1px solid var(--sidebar-border)}
+.sb-logout{width:100%;background:none;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);border-radius:7px;padding:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.sb-logout:hover{border-color:var(--red);color:var(--red)}
+.dash-main{margin-left:240px;flex:1;min-height:100vh}
+.dash-topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(26,18,8,.05)}
+.dash-page-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.notif-btn{position:relative;background:none;border:1px solid var(--border);border-radius:6px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s}
+.notif-btn:hover{border-color:var(--bark);background:var(--sand)}
+.notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--red);border:1.5px solid var(--white)}
+.dash-content{padding:28px 32px 60px}
+
+/* ── STAT CARDS ─────────────────────────────── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:transform .2s,box-shadow .2s}
+.stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,18,8,.07)}
+.stat-icon{font-size:22px;margin-bottom:10px}
+.stat-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--ink);line-height:1}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.stat-trend{font-size:10px;font-weight:700;margin-top:6px}
+.trend-up{color:var(--green)}
+.trend-down{color:var(--red)}
+
+/* ── CARDS ──────────────────────────────────── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.card-title{font-size:14px;font-weight:700;color:var(--ink)}
+.card-action{font-size:11px;font-weight:600;color:var(--bark);cursor:pointer;background:none;border:none;font-family:'Jost',sans-serif}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+
+/* ── ALERT BANNERS ──────────────────────────── */
+.alert-banner{border-radius:8px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:flex-start;gap:12px;font-size:12px;line-height:1.6}
+.ab-red{background:rgba(184,50,50,.06);border:1px solid rgba(184,50,50,.2)}
+.ab-gold{background:rgba(196,122,24,.06);border:1px solid rgba(196,122,24,.2)}
+.ab-green{background:rgba(42,106,64,.06);border:1px solid rgba(42,106,64,.2)}
+.ab-icon{font-size:18px;flex-shrink:0;margin-top:-1px}
+.ab-title{font-weight:700;margin-bottom:2px}
+.ab-red .ab-title{color:var(--red)}
+.ab-gold .ab-title{color:var(--gold)}
+.ab-green .ab-title{color:var(--green)}
+.ab-text{color:var(--muted)}
+.ab-btn{margin-left:auto;flex-shrink:0;border:none;border-radius:5px;padding:5px 12px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+.ab-btn-red{background:var(--red);color:#fff}
+.ab-btn-gold{background:var(--gold);color:#fff}
+
+/* ── PERFORMANCE SCORE ──────────────────────── */
+.perf-card{background:linear-gradient(135deg,var(--ink),#2a1a08);border-radius:12px;padding:24px;color:#fff;margin-bottom:20px}
+.perf-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.perf-score-big{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:700;color:var(--bark);line-height:1}
+.perf-score-label{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px}
+.perf-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#e8d8c0;margin-bottom:4px}
+.perf-subtitle{font-size:11px;color:rgba(255,255,255,.35);line-height:1.6}
+.perf-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.perf-metric{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:12px}
+.pm-label{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.pm-val{font-size:20px;font-weight:700;color:#e8d8c0}
+.pm-sub{font-size:9px;color:rgba(255,255,255,.3);margin-top:2px}
+
+/* ── PAYOUT CARD ─────────────────────────────── */
+.payout-card{background:linear-gradient(135deg,var(--green),#1a5a30);border-radius:12px;padding:20px 24px;color:#fff;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.pc-left{}
+.pc-label{font-size:10px;opacity:.6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px}
+.pc-amount{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;line-height:1}
+.pc-details{font-size:11px;opacity:.55;margin-top:5px;line-height:1.6}
+.pc-penalty{color:rgba(255,150,150,.8);font-weight:600}
+.pc-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:10px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;white-space:nowrap}
+
+/* ── TABLES ──────────────────────────────────── */
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{padding:9px 12px;text-align:left;border-bottom:2px solid var(--border);font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.data-table td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--cream)}
+.tbl-btn{background:none;border:1px solid var(--border);border-radius:5px;padding:4px 10px;font-size:10px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s;white-space:nowrap}
+.tbl-btn:hover{border-color:var(--bark);color:var(--umber)}
+.tbl-btn-green{background:var(--green);color:#fff;border-color:var(--green)}
+.tbl-btn-red{background:var(--red);color:#fff;border-color:var(--red)}
+.tbl-btn-gold{background:var(--gold);color:#fff;border-color:var(--gold)}
+
+/* ── BADGES ──────────────────────────────────── */
+.badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap}
+.b-green{background:rgba(42,106,64,.12);color:var(--green)}
+.b-red{background:rgba(184,50,50,.12);color:var(--red)}
+.b-gold{background:rgba(196,122,24,.12);color:var(--gold)}
+.b-blue{background:rgba(26,79,138,.12);color:var(--blue)}
+.b-muted{background:var(--sand);color:var(--muted)}
+
+/* ── INVENTORY ───────────────────────────────── */
+.inv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.inv-stat{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+.inv-stat-icon{font-size:24px;margin-bottom:8px}
+.inv-stat-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;margin-bottom:2px}
+.inv-stat-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.stock-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:8px}
+.stock-fill{height:100%;border-radius:3px;transition:width .5s}
+.sf-green{background:var(--green)}
+.sf-gold{background:var(--gold)}
+.sf-red{background:var(--red)}
+.stock-edit{display:flex;align-items:center;gap:6px}
+.stock-input{width:60px;padding:5px 8px;border:1.5px solid var(--border);border-radius:5px;font-size:12px;font-family:'Jost',sans-serif;text-align:center;outline:none}
+.stock-input:focus{border-color:var(--bark)}
+.stock-save{background:var(--ink);color:#fff;border:none;border-radius:5px;padding:5px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+
+/* ── PRODUCTS ────────────────────────────────── */
+.prod-form{background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px}
+.prod-form-title{font-size:13px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.form-section-label{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.form-row-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+.submit-btn{background:var(--ink);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s}
+.submit-btn:hover{background:var(--umber)}
+.cancel-btn{background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:8px;padding:11px 20px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif}
+.pkg-toggle{display:flex;gap:8px}
+.pkg-opt{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:10px 8px;cursor:pointer;transition:all .2s;background:var(--white);text-align:center}
+.pkg-opt:hover{border-color:var(--bark)}
+.pkg-opt.on{border-color:var(--bark);background:rgba(184,149,106,.1)}
+.pkg-opt-icon{font-size:18px;margin-bottom:3px}
+.pkg-opt-lbl{font-size:10px;font-weight:700;color:var(--ink)}
+
+/* ── AI HELPER ───────────────────────────────── */
+.ai-box{background:linear-gradient(135deg,#0a0a18,#1a1230);border-radius:12px;padding:24px;color:#fff}
+.ai-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#e8d8f8;margin-bottom:6px}
+.ai-sub{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:20px;line-height:1.6}
+.ai-input{width:100%;padding:12px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;color:#fff;outline:none;margin-bottom:10px}
+.ai-input::placeholder{color:rgba(255,255,255,.3)}
+.ai-input:focus{border-color:rgba(184,149,106,.5)}
+.ai-generate-btn{background:linear-gradient(135deg,var(--bark),var(--umber));color:#fff;border:none;border-radius:8px;padding:11px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:opacity .2s}
+.ai-generate-btn:hover{opacity:.85}
+.ai-generate-btn:disabled{opacity:.4;cursor:not-allowed}
+.ai-result{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:16px;margin-top:14px;font-size:13px;color:rgba(255,255,255,.8);line-height:1.85}
+.ai-result-title{font-size:9px;font-weight:700;color:var(--bark);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.ai-copy-btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:6px 14px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;margin-top:10px}
+.ai-loading{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.5);font-size:12px;padding:12px 0}
+.ai-spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--bark);border-radius:50%;animation:spin .8s linear infinite}
+
+/* ── NOTIFICATIONS ───────────────────────────── */
+.notif-list{display:flex;flex-direction:column;gap:0}
+.notif-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s}
+.notif-item:last-child{border-bottom:none}
+.notif-item:hover{background:var(--cream);margin:0 -22px;padding:14px 22px}
+.notif-item.unread .notif-dot-ind{background:var(--red)}
+.notif-dot-ind{width:8px;height:8px;border-radius:50%;background:transparent;border:1.5px solid var(--border);flex-shrink:0;margin-top:4px}
+.notif-icon{font-size:20px;flex-shrink:0}
+.notif-content{flex:1}
+.notif-title{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.notif-body{font-size:11px;color:var(--muted);line-height:1.5}
+.notif-time{font-size:10px;color:var(--muted);margin-top:3px}
+.notif-pref{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+.notif-pref:last-child{border-bottom:none}
+.notif-pref-info{}
+.notif-pref-title{font-size:13px;font-weight:600;color:var(--ink)}
+.notif-pref-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.toggle{width:38px;height:20px;border-radius:10px;background:var(--border);cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0}
+.toggle.on{background:var(--green)}
+.toggle-knob{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on .toggle-knob{left:21px}
+
+/* ── SETTINGS ────────────────────────────────── */
+.settings-section{margin-bottom:24px}
+.settings-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+.setting-row:last-child{border-bottom:none}
+.setting-info{}
+.setting-label{font-size:13px;font-weight:600;color:var(--ink)}
+.setting-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.setting-action{font-size:11px;font-weight:600;color:var(--bark);cursor:pointer;background:none;border:none;font-family:'Jost',sans-serif}
+.danger-zone{border:1px solid rgba(184,50,50,.25);border-radius:10px;padding:16px;background:rgba(184,50,50,.03)}
+.danger-title{font-size:13px;font-weight:700;color:var(--red);margin-bottom:5px}
+.danger-text{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.6}
+.danger-btn{background:none;border:1.5px solid var(--red);color:var(--red);border-radius:6px;padding:7px 16px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+
+/* ── TOAST ───────────────────────────────────── */
+.toast{position:fixed;top:70px;right:18px;background:var(--ink);color:#e8d8c0;padding:11px 18px;border-radius:7px;font-size:12px;font-weight:500;z-index:9999;animation:fadeUp .3s ease;box-shadow:0 6px 20px rgba(0,0,0,.2);max-width:300px}
+
+/* ── MODAL ───────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,18,8,.75);z-index:700;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .25s ease}
+.modal-box{background:var(--white);border-radius:14px;max-height:90vh;overflow-y:auto;animation:fadeUp .3s ease;width:100%;max-width:520px;padding:28px}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--sand)}
+::-webkit-scrollbar-thumb{background:var(--bark);border-radius:3px}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast" style="display:none"></div>
+<div id="modal-container"></div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- LOGIN SCREEN -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="screen-login">
+<div class="auth-wrap">
+  <div class="auth-left">
+    <div class="auth-brand">Tuf<span>tra</span></div>
+    <h1 class="auth-headline">Sell Rugs.<br><em>Keep 92%.</em><br>Grow Fast.</h1>
+    <p class="auth-sub">Join verified artisan sellers on Tuftra. We handle payments, customers, and marketing — you focus on your craft.</p>
+    <div class="auth-perks">
+      <div class="auth-perk"><div class="auth-perk-icon">💰</div>Only 8% commission — industry's lowest</div>
+      <div class="auth-perk"><div class="auth-perk-icon">⚡</div>Get paid every 5 days — automatic</div>
+      <div class="auth-perk"><div class="auth-perk-icon">🤖</div>AI listing generator — write descriptions in seconds</div>
+      <div class="auth-perk"><div class="auth-perk-icon">📦</div>You handle shipping — we handle everything else</div>
+      <div class="auth-perk"><div class="auth-perk-icon">📊</div>Real-time dashboard — orders, earnings, performance</div>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+      <div class="auth-title serif">Welcome Back</div>
+      <div class="auth-switch">New seller? <a onclick="showScreen('register')">Create your account →</a></div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@business.com" id="login-email">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" id="login-pass">
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+        <span style="font-size:11px;color:var(--bark);cursor:pointer;font-weight:600">Forgot password?</span>
+      </div>
+      <button class="auth-btn" onclick="doLogin()">Sign In to Dashboard →</button>
+      <div class="auth-divider">or</div>
+      <button class="auth-btn" style="background:var(--sand);color:var(--ink);border:1.5px solid var(--border)" onclick="showScreen('dashboard')">
+        👀 Preview Demo Dashboard
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- REGISTER SCREEN -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="screen-register" style="display:none">
+<div class="auth-wrap">
+  <div class="auth-left">
+    <div class="auth-brand">Tuf<span>tra</span></div>
+    <h1 class="auth-headline">Start Selling<br><em>Today.</em></h1>
+    <p class="auth-sub">Fill in your details. Admin reviews and approves within 24 hours. Then you're live!</p>
+    <div class="auth-perks">
+      <div class="auth-perk"><div class="auth-perk-icon">✅</div>Free to register — no upfront cost</div>
+      <div class="auth-perk"><div class="auth-perk-icon">⏱️</div>Approval within 24 hours</div>
+      <div class="auth-perk"><div class="auth-perk-icon">🚀</div>Start listing products same day</div>
+      <div class="auth-perk"><div class="auth-perk-icon">💳</div>Get paid every 5 days via Stripe</div>
+    </div>
+  </div>
+  <div class="auth-right" style="overflow-y:auto">
+    <div class="auth-form-wrap">
+      <div class="auth-title serif">Create Seller Account</div>
+      <div class="auth-switch">Already registered? <a onclick="showScreen('login')">Sign in →</a></div>
+
+      <!-- STEP INDICATOR -->
+      <div class="steps-bar">
+        <div class="step-dot active" id="step-1-dot"></div>
+        <div class="step-dot" id="step-2-dot"></div>
+        <div class="step-dot" id="step-3-dot"></div>
+        <div class="step-dot" id="step-4-dot"></div>
+      </div>
+      <div class="step-label" id="step-label">Step 1 of 4 — Business Info</div>
+
+      <!-- STEP 1 -->
+      <div id="reg-step-1">
+        <div class="form-grid-2">
+          <div class="form-group"><label>Business Name *</label><input placeholder="e.g. Your Store"></div>
+          <div class="form-group"><label>Owner Name *</label><input placeholder="Your full name"></div>
+        </div>
+        <div class="form-group"><label>Email Address *</label><input type="email" placeholder="you@business.com"></div>
+        <div class="form-grid-2">
+          <div class="form-group"><label>Phone / WhatsApp *</label><input id="reg-phone" placeholder="+1 234 567 8900" type="tel"></div>
+          <div class="form-group"><label>Country *</label><select><option>United States</option><option>Pakistan</option><option>Turkey</option><option>Morocco</option><option>India</option><option>Other</option></select></div>
+        </div>
+        <button class="auth-btn" onclick="startRegOTP()">Continue →</button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div id="reg-step-2" style="display:none">
+        <div class="form-group"><label>Product Category *</label>
+          <select><option>Rugs & Carpets</option><option>Handmade Rugs</option><option>Persian Rugs</option><option>Bohemian Rugs</option><option>Modern Rugs</option></select>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group"><label>Number of Products *</label><input type="number" placeholder="e.g. 20"></div>
+          <div class="form-group"><label>Avg Price (USD) *</label><input placeholder="e.g. $150"></div>
+        </div>
+        <div class="form-group"><label>Describe Your Products *</label>
+          <textarea style="min-height:80px;resize:vertical" placeholder="What makes your rugs special? Materials, origin, craftsmanship..."></textarea>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group"><label>Instagram (optional)</label><input placeholder="@yourhandle"></div>
+          <div class="form-group"><label>Website (optional)</label><input placeholder="https://yourbiz.com"></div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="cancel-btn" onclick="nextStep(1)">← Back</button>
+          <button class="auth-btn" onclick="nextStep(3)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div id="reg-step-3" style="display:none">
+        <div class="form-group"><label>Ships Nationally? *</label>
+          <select><option>Yes — all US states</option><option>Selected states only</option></select>
+        </div>
+        <div class="form-group"><label>Ships Internationally?</label>
+          <select><option>No</option><option>Yes — select countries</option></select>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group"><label>Processing Time *</label>
+            <select><option>1-2 business days</option><option>2-3 business days</option><option>3-5 business days</option></select>
+          </div>
+          <div class="form-group"><label>Default Packaging *</label>
+            <select><option>Rolled in Tube 🌀</option><option>Flat Folded 📦</option><option>Both options</option></select>
+          </div>
+        </div>
+        <div class="form-group"><label>Preferred Carriers</label>
+          <select><option>FedEx</option><option>UPS</option><option>USPS</option><option>Any carrier</option></select>
+        </div>
+        <div style="background:rgba(184,50,50,.06);border:1px solid rgba(184,50,50,.2);border-radius:8px;padding:12px;font-size:11px;color:var(--red);line-height:1.6;margin-bottom:14px">
+          ⚠️ <strong>Important:</strong> Wrong delivery = 10% payout cut. Fake tracking = account suspension. You are fully responsible for inventory and shipping quality.
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="cancel-btn" onclick="nextStep(2)">← Back</button>
+          <button class="auth-btn" onclick="nextStep(4)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div id="reg-step-4" style="display:none">
+        <div class="form-group"><label>Bank Name *</label><input placeholder="e.g. Chase Bank"></div>
+        <div class="form-group"><label>Account Holder Name *</label><input placeholder="Name on bank account"></div>
+        <div class="form-group"><label>Account Number *</label><input type="password" placeholder="••••••••••••"></div>
+        <div class="form-group"><label>Routing Number *</label><input placeholder="9-digit routing number"></div>
+        <div style="background:rgba(42,106,64,.06);border:1px solid rgba(42,106,64,.2);border-radius:8px;padding:12px;font-size:11px;color:var(--green);line-height:1.7;margin-bottom:12px">
+          🔒 Bank details are encrypted and stored securely via Stripe. Tuftra pays you every 5 days automatically.
+        </div>
+        <div class="terms-agree-row" onclick="toggleRegTerms()">
+          <div class="tchk" id="reg-terms-chk"></div>
+          <div class="terms-txt">I agree to Tuftra's <a href="#">Seller Terms & Conditions</a>. I understand that wrong deliveries result in a 10% payout deduction, and I am responsible for all inventory and shipping. *</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <button class="cancel-btn" onclick="nextStep(3)">← Back</button>
+          <button class="auth-btn" id="submit-reg-btn" onclick="submitRegistration()" style="background:#ccc" disabled>Submit Application ✅</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- DASHBOARD -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="screen-dashboard" style="display:none">
+<div class="dash-wrap">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">Tuf<span>tra</span></div>
+      <div style="font-size:9px;color:rgba(255,255,255,.25);margin-top:3px;letter-spacing:1px;text-transform:uppercase">Seller Portal</div>
+    </div>
+    <div class="sb-seller-info">
+      <div class="sb-avatar">AW</div>
+      <div class="sb-seller-name"></div>
+      <div class="sb-seller-status">✅ Active Seller · Member since Jan 2025</div>
+      <div class="sb-score">
+        <div class="sb-score-bar"><div class="sb-score-fill"></div></div>
+        <div class="sb-score-num">92/100</div>
+      </div>
+    </div>
+    <div class="sb-nav">
+      <div class="sb-section-label">Main</div>
+      <div class="sb-item on" onclick="setTab('overview',this)"><div class="sb-item-icon">📊</div><div class="sb-item-label">Overview</div></div>
+      <div class="sb-item" onclick="setTab('orders',this)"><div class="sb-item-icon">🛒</div><div class="sb-item-label">Orders</div><div class="sb-badge">3</div></div>
+      <div class="sb-item" onclick="setTab('products',this)"><div class="sb-item-icon">🏷️</div><div class="sb-item-label">Products</div></div>
+      <div class="sb-item" onclick="setTab('inventory',this)"><div class="sb-item-icon">📦</div><div class="sb-item-label">Inventory</div><div class="sb-badge sb-badge-gold">2</div></div>
+      <div class="sb-section-label">Finance</div>
+      <div class="sb-item" onclick="setTab('earnings',this)"><div class="sb-item-icon">💰</div><div class="sb-item-label">Earnings & Payouts</div></div>
+      <div class="sb-section-label">Performance</div>
+      <div class="sb-item" onclick="setTab('performance',this)"><div class="sb-item-icon">⭐</div><div class="sb-item-label">Performance</div></div>
+      <div class="sb-item" onclick="setTab('notifications',this)"><div class="sb-item-icon">🔔</div><div class="sb-item-label">Notifications</div><div class="sb-badge">5</div></div>
+      <div class="sb-section-label">Tools</div>
+      <div class="sb-item" onclick="setTab('ai',this)"><div class="sb-item-icon">🤖</div><div class="sb-item-label">AI Listing Helper</div></div>
+      <div class="sb-item" onclick="setTab('settings',this)"><div class="sb-item-icon">⚙️</div><div class="sb-item-label">Settings</div></div>
+    </div>
+    <div class="sb-footer">
+      <button class="sb-logout" onclick="showScreen('login')">← Sign Out</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="dash-main">
+    <div class="dash-topbar">
+      <div class="dash-page-title serif" id="page-title">Overview</div>
+      <div class="topbar-right">
+        <button class="notif-btn" onclick="setTab('notifications',null)">🔔<div class="notif-dot"></div></button>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--sand);border-radius:6px;cursor:pointer">
+          <div style="width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--bark),var(--umber));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">AW</div>
+          <span style="font-size:12px;font-weight:600"></span>
+        </div>
+      </div>
+    </div>
+    <div class="dash-content" id="dash-content"></div>
+  </div>
+</div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────
+const PRODUCTS=[];// Real products load honge Supabase se
+
+const ORDERS=[];// Real orders load honge Supabase se
+
+const PAYOUTS=[];
+
+const NOTIFS=[
+  {icon:'🛒',title:'New Order — ',body:' ordered  (6\'×9\'). Ship within 48 hours to avoid warning.',time:'2 hours ago',unread:true,type:'order'},
+  {icon:'⚠️',title:'Late Shipment Warning',body:'Order  is approaching the 48-hour shipping deadline. Please update tracking now.',time:'1 hour ago',unread:true,type:'warning'},
+  {icon:'⭐',title:'New Review — 5 Stars',body:' left a 5-star review on : "Absolutely gorgeous!"',time:'5 hours ago',unread:true,type:'review'},
+  {icon:'💰',title:'Payout Processed — $1,932',body:'Your April 26 payout of $1,932 has been sent to your bank account.',time:'2 days ago',unread:false,type:'payout'},
+  {icon:'🔄',title:'Return Request — ',body:' has requested a return for . Reason: Not as described.',time:'3 days ago',unread:true,type:'return'},
+  {icon:'📦',title:'Low Stock Alert — ',body:'Only 4 units remaining. Update stock or restock soon to avoid out-of-stock.',time:'4 days ago',unread:false,type:'stock'},
+];
+
+let regTermsAgreed=false;
+let currentStep=1;
+let showAddProduct=false;
+let aiLoading=false;
+let stockEditing={};
+
+// ── SCREENS ───────────────────────────────────
+function showScreen(s){
+  ['login','register','dashboard'].forEach(id=>{
+    document.getElementById('screen-'+id).style.display='none';
+  });
+  document.getElementById('screen-'+s).style.display='block';
+  window.scrollTo(0,0);
+  if(s==='dashboard') renderTab('overview');
+}
+
+function doLogin(){
+  const e=document.getElementById('login-email').value;
+  const p=document.getElementById('login-pass').value;
+  if(!e||!p){showToast('Please enter email and password');return;}
+  showToast('Logging in... ✅');
+  setTimeout(()=>showScreen('dashboard'),800);
+}
+
+// ── REGISTER STEPS ────────────────────────────
+function nextStep(step){
+  document.getElementById('reg-step-'+currentStep).style.display='none';
+  currentStep=step;
+  document.getElementById('reg-step-'+step).style.display='block';
+  ['1','2','3','4'].forEach((s,i)=>{
+    const dot=document.getElementById('step-'+s+'-dot');
+    if(parseInt(s)<step) dot.className='step-dot done';
+    else if(parseInt(s)===step) dot.className='step-dot active';
+    else dot.className='step-dot';
+  });
+  const labels={1:'Step 1 of 4 — Business Info',2:'Step 2 of 4 — Products',3:'Step 3 of 4 — Shipping',4:'Step 4 of 4 — Payment & Agreement'};
+  document.getElementById('step-label').textContent=labels[step];
+}
+
+function toggleRegTerms(){
+  regTermsAgreed=!regTermsAgreed;
+  const chk=document.getElementById('reg-terms-chk');
+  chk.classList.toggle('on',regTermsAgreed);
+  chk.textContent=regTermsAgreed?'✓':'';
+  const btn=document.getElementById('submit-reg-btn');
+  btn.disabled=!regTermsAgreed;
+  btn.style.background=regTermsAgreed?'var(--ink)':'#ccc';
+}
+
+function submitRegistration(){
+  showToast('✅ Application submitted! Admin will review within 24 hours.');
+  setTimeout(()=>showScreen('login'),1500);
+}
+
+// ── TABS ──────────────────────────────────────
+function setTab(tab,el){
+  if(el){
+    document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('on'));
+    el.classList.add('on');
+  }
+  const titles={overview:'Overview',orders:'My Orders',products:'My Products',inventory:'Inventory',earnings:'Earnings & Payouts',performance:'Performance Score',notifications:'Notifications',ai:'🤖 AI Listing Helper',settings:'Settings'};
+  document.getElementById('page-title').textContent=titles[tab]||tab;
+  renderTab(tab);
+}
+
+function renderTab(tab){
+  const content=document.getElementById('dash-content');
+  if(tab==='overview') content.innerHTML=renderOverview();
+  else if(tab==='orders') content.innerHTML=renderOrders();
+  else if(tab==='products') content.innerHTML=renderProducts();
+  else if(tab==='inventory') content.innerHTML=renderInventory();
+  else if(tab==='earnings') content.innerHTML=renderEarnings();
+  else if(tab==='performance') content.innerHTML=renderPerformance();
+  else if(tab==='notifications') content.innerHTML=renderNotifications();
+  else if(tab==='ai') content.innerHTML=renderAI();
+  else if(tab==='settings') content.innerHTML=renderSettings();
+}
+
+// ── OVERVIEW ──────────────────────────────────
+function renderOverview(){
+  return `
+  <div class="alert-banner ab-red a1">
+    <span class="ab-icon">🚨</span>
+    <div><div class="ab-title">Urgent: Order  needs to ship NOW</div><div class="ab-text">48-hour deadline approaching. Ship 's order or receive a warning.</div></div>
+    <button class="ab-btn ab-btn-red" onclick="setTab('orders',null)">Ship Now</button>
+  </div>
+  <div class="alert-banner ab-gold a1">
+    <span class="ab-icon">⚠️</span>
+    <div><div class="ab-title">Low Stock:  — only 4 units left</div><div class="ab-text">Update stock or restock to avoid automatic listing pause.</div></div>
+    <button class="ab-btn ab-btn-gold" onclick="setTab('inventory',null)">Update Stock</button>
+  </div>
+
+  <div class="stats-grid a2">
+    <div class="stat-card"><div class="stat-icon">🛒</div><div class="stat-label">This Month Orders</div><div class="stat-val">47</div><div class="stat-sub">5 this week</div><div class="stat-trend trend-up">↑ 12% vs last month</div></div>
+    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">This Month Revenue</div><div class="stat-val">$6,840</div><div class="stat-sub">After 8% commission</div><div class="stat-trend trend-up">↑ 8% vs last month</div></div>
+    <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-label">Avg Rating</div><div class="stat-val">4.8</div><div class="stat-sub">Based on 71 reviews</div><div class="stat-trend trend-up">↑ 0.2 this month</div></div>
+    <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Pending Shipments</div><div class="stat-val" style="color:var(--red)">2</div><div class="stat-sub">Action required</div><div class="stat-trend trend-down">↑ Ship today!</div></div>
+  </div>
+
+  <div class="payout-card a3">
+    <div class="pc-left">
+      <div class="pc-label">Next Payout — May 1, 2025</div>
+      <div class="pc-amount">$1,673.90</div>
+      <div class="pc-details">Gross $1,840 − Commission $147.20 (8%) <span class="pc-penalty">− Penalty $18.90 (wrong delivery)</span></div>
+      <div class="pc-date" style="font-size:11px;opacity:.5;margin-top:4px">Paid automatically via Stripe · Every 5 days</div>
+    </div>
+    <button class="pc-btn" onclick="setTab('earnings',null)">View Details →</button>
+  </div>
+
+  <div class="two-col a4">
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Recent Orders</div><button class="card-action" onclick="setTab('orders',null)">View all →</button></div>
+      <table class="data-table">
+        <thead><tr><th>Order</th><th>Product</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody>
+          ${ORDERS.slice(0,4).map(o=>`<tr>
+            <td style="color:var(--blue);font-weight:700">${o.id}</td>
+            <td>${o.rug}</td>
+            <td style="font-weight:700">$${o.amt}</td>
+            <td><span class="badge ${statusCls(o.status)}">${statusLabel(o.status)}</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Top Products</div><button class="card-action" onclick="setTab('products',null)">Manage →</button></div>
+      ${PRODUCTS.filter(p=>p.status==='live').slice(0,4).map(p=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:12px;font-weight:700">${p.name}</div>
+          <div style="font-size:10px;color:var(--muted)">${p.views} views · ${p.sales} sold · ${p.rating}★</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:13px;font-weight:700">$${p.price}</div>
+          <div style="font-size:10px;color:${p.stock<=5?'var(--red)':'var(--green)'}">Stock: ${p.stock}</div>
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── ORDERS ────────────────────────────────────
+function renderOrders(){
+  if(ORDERS.length===0){
+    return `<div style="text-align:center;padding:80px 20px;color:rgba(255,255,255,.3)">
+      <div style="font-size:48px;margin-bottom:16px">📬</div>
+      <div style="font-size:18px;font-weight:600;margin-bottom:8px;color:rgba(255,255,255,.5)">No Orders Yet</div>
+      <div style="font-size:13px">Your orders will appear here once buyers purchase your products</div>
+    </div>`;
+  }
+  return `
+  <div class="card a1">
+    <div class="card-hdr">
+      <div class="card-title">All Orders <span style="font-size:11px;color:var(--muted);font-weight:400">${ORDERS.length} total</span></div>
+      <div style="display:flex;gap:8px">
+        <span class="badge b-red">2 Action Required</span>
+        <span class="badge b-gold">1 Return</span>
+      </div>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Order ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Packaging</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+        ${ORDERS.map(o=>`
+        <tr style="${o.urgent?'background:rgba(184,50,50,.03)':''}">
+          <td>
+            <div style="color:var(--blue);font-weight:700">${o.id}</div>
+            <div style="font-size:9px;color:var(--muted)">${o.days} days ago${o.urgent?' ⚠️':''}</div>
+          </td>
+          <td>
+            <div style="font-size:12px;font-weight:600">${o.cust}</div>
+            <div style="font-size:10px;color:var(--muted)">${o.addr}</div>
+          </td>
+          <td>
+            <div style="font-size:12px;font-weight:600">${o.rug}</div>
+            <div style="font-size:10px;color:var(--muted)">${o.size}</div>
+          </td>
+          <td style="font-weight:700">$${o.amt}</td>
+          <td style="font-size:11px">${o.pkg==='Rolled'?'🌀 Rolled':'📦 Folded'}</td>
+          <td><span class="badge ${statusCls(o.status)}">${statusLabel(o.status)}</span></td>
+          <td>
+            ${o.status==='pending'||o.status==='packed'
+              ?`<button class="tbl-btn tbl-btn-green" onclick="openShipModal('${o.id}','${o.cust}')">📦 Ship Order</button>`
+              :o.status==='shipped'
+              ?`<button class="tbl-btn" onclick="showToast('Tracking: FedEx 1Z999AA...')">View Tracking</button>`
+              :o.status==='return'
+              ?`<button class="tbl-btn tbl-btn-red" onclick="showToast('Opening return case...')">Handle Return</button>`
+              :`<span style="font-size:10px;color:var(--green);font-weight:600">✅ Done</span>`}
+          </td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── PRODUCTS ──────────────────────────────────
+function renderProducts(){
+  if(PRODUCTS.length===0){
+    return `<div style="text-align:center;padding:80px 20px;color:rgba(255,255,255,.3)">
+      <div style="font-size:48px;margin-bottom:16px">🪴</div>
+      <div style="font-size:18px;font-weight:600;margin-bottom:8px;color:rgba(255,255,255,.5)">No Products Yet</div>
+      <div style="font-size:13px">Click "Add New Product" to list your first rug!</div>
+    </div>`;
+  }
+  return `
+  <div class="card a1" style="cursor:pointer;border-style:dashed;text-align:center;padding:20px" onclick="toggleAddProduct()">
+    <div style="font-size:28px;margin-bottom:8px">➕</div>
+    <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px">Add New Product</div>
+    <div style="font-size:11px;color:var(--muted)">Click to expand form · Use AI helper for description</div>
+  </div>
+
+  <div id="add-product-form" style="display:none" class="a2">
+  <div class="prod-form">
+    <div class="prod-form-title">
+      New Product Listing
+      <button class="cancel-btn" onclick="toggleAddProduct()" style="padding:6px 14px;font-size:11px">✕ Close</button>
+    </div>
+
+    <div class="form-section-label">Basic Info</div>
+    <div class="form-group"><label>Product Name *</label><input placeholder="e.g. Marrakesh Medallion Rug" id="new-prod-name"></div>
+    <div class="form-row-3">
+      <div class="form-group"><label>Price (USD) *</label><input type="number" placeholder="e.g. 189"></div>
+      <div class="form-group"><label>Stock Quantity *</label><input type="number" placeholder="e.g. 20"></div>
+      <div class="form-group"><label>SKU (optional)</label><input placeholder="e.g. AWC-001"></div>
+    </div>
+
+    <div class="form-section-label">Product Details</div>
+    <div class="form-row-4">
+      <div class="form-group"><label>Shape *</label><select><option>Rectangle</option><option>Square</option><option>Round</option><option>Runner</option><option>Octagon</option></select></div>
+      <div class="form-group"><label>Size *</label><select><option>2'×4'</option><option>3'×5'</option><option>4'×6'</option><option>5'×8'</option><option>6'×9'</option><option>8'×10'</option><option>9'×12'</option><option>Custom</option></select></div>
+      <div class="form-group"><label>Material *</label><select><option>Wool</option><option>Silk</option><option>Jute</option><option>Cotton</option><option>Polypropylene</option><option>Polyester</option><option>Bamboo</option></select></div>
+      <div class="form-group"><label>Weave *</label><select><option>Hand Knotted</option><option>Hand Tufted</option><option>Hand Woven</option><option>Machine Woven</option></select></div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group"><label>Pattern *</label><select><option>Geometric</option><option>Floral</option><option>Persian</option><option>Tribal</option><option>Medallion</option><option>Abstract</option><option>Solid</option><option>Striped</option><option>Shag</option></select></div>
+      <div class="form-group"><label>Primary Color *</label><select><option>Terracotta</option><option>Navy</option><option>Beige</option><option>Red</option><option>Green</option><option>Grey</option><option>Gold</option><option>Ivory</option></select></div>
+      <div class="form-group"><label>Style *</label><select><option>Bohemian</option><option>Modern</option><option>Traditional</option><option>Minimalist</option><option>Scandinavian</option></select></div>
+    </div>
+
+    <div class="form-section-label">Description</div>
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <input style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-family:'Jost',sans-serif;outline:none" placeholder="Product name for AI (e.g. Handmade Persian wool rug, navy, medallion pattern)" id="ai-quick-input">
+      <button onclick="quickAI()" style="background:linear-gradient(135deg,var(--bark),var(--umber));color:#fff;border:none;border-radius:7px;padding:9px 16px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;white-space:nowrap">🤖 AI Write</button>
+    </div>
+    <div class="form-group">
+      <label>Product Description *</label>
+      <textarea id="prod-desc" style="min-height:100px;resize:vertical" placeholder="Describe your rug — materials, craftsmanship, care instructions, best use..."></textarea>
+    </div>
+
+    <div class="form-section-label">Packaging</div>
+    <div class="pkg-toggle">
+      <div class="pkg-opt on" onclick="selectPkgOpt(this)"><div class="pkg-opt-icon">🌀</div><div class="pkg-opt-lbl">Rolled in Tube</div></div>
+      <div class="pkg-opt" onclick="selectPkgOpt(this)"><div class="pkg-opt-icon">📦</div><div class="pkg-opt-lbl">Flat Folded Box</div></div>
+      <div class="pkg-opt" onclick="selectPkgOpt(this)"><div class="pkg-opt-icon">🔀</div><div class="pkg-opt-lbl">Both Options</div></div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="submit-btn" onclick="showToast('Product submitted for admin review! ✅ Goes live within 24 hours.')">Submit for Review ✅</button>
+      <button class="cancel-btn" onclick="toggleAddProduct()">Cancel</button>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-top:8px">⚠️ Admin reviews all new listings before they go live. Typically approved within 24 hours.</div>
+  </div>
+  </div>
+
+  <div class="card a2">
+    <div class="card-hdr"><div class="card-title">My Products (${PRODUCTS.length})</div></div>
+    <table class="data-table">
+      <thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Sales</th><th>Views</th><th>Rating</th><th>Packaging</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${PRODUCTS.map(p=>`<tr>
+          <td>
+            <div style="font-size:12px;font-weight:700">${p.name}</div>
+            <div style="font-size:10px;color:var(--muted)">${p.size} · ${p.material} · ${p.weave}</div>
+          </td>
+          <td style="font-weight:700">$${p.price}</td>
+          <td><span style="color:${p.stock===0?'var(--red)':p.stock<=5?'var(--gold)':'var(--green)'};font-weight:700">${p.stock}</span><div style="font-size:9px;color:var(--muted)">${p.reserved} reserved</div></td>
+          <td style="font-weight:600">${p.sales}</td>
+          <td style="color:var(--muted)">${p.views}</td>
+          <td>${p.rating>0?`${p.rating}★`:'—'}</td>
+          <td style="font-size:11px">${p.ship==='Rolled'?'🌀':'📦'} ${p.ship}</td>
+          <td><span class="badge ${p.status==='live'?'b-green':p.status==='out'?'b-red':'b-gold'}">${p.status==='live'?'Live':p.status==='out'?'Out of Stock':'In Review'}</span></td>
+          <td>
+            <div style="display:flex;gap:4px">
+              <button class="tbl-btn" onclick="showToast('Editing ${p.name}...')">Edit</button>
+              <button class="tbl-btn" onclick="showToast('${p.name} paused.')">Pause</button>
+            </div>
+          </td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── INVENTORY ─────────────────────────────────
+function renderInventory(){
+  const total=PRODUCTS.reduce((a,p)=>a+p.stock,0);
+  const lowStock=PRODUCTS.filter(p=>p.stock>0&&p.stock<=5).length;
+  const outStock=PRODUCTS.filter(p=>p.stock===0).length;
+  const inStock=PRODUCTS.filter(p=>p.stock>5).length;
+
+  return `
+  <div class="inv-grid a1">
+    <div class="inv-stat"><div class="inv-stat-icon">📦</div><div class="inv-stat-val" style="color:var(--ink)">${total}</div><div class="inv-stat-label">Total Units</div></div>
+    <div class="inv-stat"><div class="inv-stat-icon">✅</div><div class="inv-stat-val" style="color:var(--green)">${inStock}</div><div class="inv-stat-label">In Stock</div></div>
+    <div class="inv-stat"><div class="inv-stat-icon">⚠️</div><div class="inv-stat-val" style="color:var(--gold)">${lowStock}</div><div class="inv-stat-label">Low Stock</div></div>
+    <div class="inv-stat"><div class="inv-stat-icon">❌</div><div class="inv-stat-val" style="color:var(--red)">${outStock}</div><div class="inv-stat-label">Out of Stock</div></div>
+  </div>
+
+  ${lowStock>0?`<div class="alert-banner ab-gold a2"><span class="ab-icon">⚠️</span><div><div class="ab-title">Low Stock Alert</div><div class="ab-text">${lowStock} product(s) have 5 or fewer units. Restock soon to avoid automatic pause.</div></div></div>`:''}
+  ${outStock>0?`<div class="alert-banner ab-red a2"><span class="ab-icon">❌</span><div><div class="ab-title">Out of Stock — Listings Paused</div><div class="ab-text">${outStock} product(s) are out of stock. Update inventory to resume selling.</div></div></div>`:''}
+
+  <div class="card a3">
+    <div class="card-hdr"><div class="card-title">Inventory Management</div><button class="card-action" onclick="showToast('Bulk update coming soon!')">Bulk Update</button></div>
+    <table class="data-table">
+      <thead><tr><th>Product</th><th>Total Stock</th><th>Reserved</th><th>Available</th><th>Stock Level</th><th>Status</th><th>Update Stock</th></tr></thead>
+      <tbody>
+        ${PRODUCTS.map(p=>{
+          const avail=p.stock-p.reserved;
+          const pct=Math.min(100,Math.round((p.stock/20)*100));
+          const color=p.stock===0?'sf-red':p.stock<=5?'sf-gold':'sf-green';
+          const statusStr=p.stock===0?'b-red':p.stock<=5?'b-gold':'b-green';
+          const statusTxt=p.stock===0?'Out of Stock':p.stock<=5?'Low Stock':'In Stock';
+          return `<tr>
+            <td>
+              <div style="font-size:12px;font-weight:700">${p.name}</div>
+              <div style="font-size:10px;color:var(--muted)">${p.size} · ${p.material}</div>
+            </td>
+            <td style="font-weight:700">${p.stock} units</td>
+            <td style="color:var(--gold);font-weight:600">${p.reserved} reserved</td>
+            <td style="font-weight:700;color:${avail===0?'var(--red)':avail<=3?'var(--gold)':'var(--green)'}">${avail} available</td>
+            <td style="min-width:100px">
+              <div class="stock-bar"><div class="stock-fill ${color}" style="width:${pct}%"></div></div>
+              <div style="font-size:9px;color:var(--muted);margin-top:3px">${pct}% of typical 20</div>
+            </td>
+            <td><span class="badge ${statusStr}">${statusTxt}</span></td>
+            <td>
+              <div class="stock-edit">
+                <input class="stock-input" type="number" value="${p.stock}" id="stock-${p.id}" min="0">
+                <button class="stock-save" onclick="updateStock(${p.id})">Save</button>
+              </div>
+            </td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+    <div style="margin-top:14px;font-size:11px;color:var(--muted);background:var(--cream);padding:10px 14px;border-radius:7px;line-height:1.7">
+      📋 <strong>Inventory Rules:</strong> Out of stock → listing auto-paused · Low stock (≤5) → yellow alert · Not updated in 7 days → admin reminder · Wrong quantity causing failed orders → warning issued
+    </div>
+  </div>`;
+}
+
+// ── EARNINGS ──────────────────────────────────
+function renderEarnings(){
+  return `
+  <div class="stats-grid a1">
+    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">All Time Earnings</div><div class="stat-val">$18,240</div><div class="stat-sub">Since Jan 2025</div></div>
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">This Month</div><div class="stat-val">$6,840</div><div class="stat-sub">After commission</div><div class="stat-trend trend-up">↑ 8% vs last month</div></div>
+    <div class="stat-card"><div class="stat-icon">✂️</div><div class="stat-label">Commission Paid</div><div class="stat-val">$547</div><div class="stat-sub">8% of $6,840</div></div>
+    <div class="stat-card"><div class="stat-icon">⚠️</div><div class="stat-label">Penalties</div><div class="stat-val" style="color:var(--red)">$18.90</div><div class="stat-sub">Wrong delivery</div></div>
+  </div>
+
+  <div class="payout-card a2">
+    <div class="pc-left">
+      <div class="pc-label">Next Payout — May 1, 2025</div>
+      <div class="pc-amount">$1,673.90</div>
+      <div class="pc-details">
+        Gross $1,840 − Commission $147.20 (8%)
+        <span class="pc-penalty"> − Penalty $18.90 (wrong delivery )</span>
+      </div>
+      <div style="font-size:11px;opacity:.5;margin-top:4px">Stripe transfer · 2–3 business days to your bank</div>
+    </div>
+    <button class="pc-btn" onclick="showToast('Bank: Chase ••4242 · Routing: ••1234')">Bank Details →</button>
+  </div>
+
+  <div class="card a3">
+    <div class="card-hdr"><div class="card-title">Payout History</div></div>
+    <table class="data-table">
+      <thead><tr><th>Payout Date</th><th>Gross Sales</th><th>Commission (8%)</th><th>Penalties</th><th>Net Payout</th><th>Status</th></tr></thead>
+      <tbody>
+        ${PAYOUTS.map(p=>`<tr>
+          <td style="font-weight:600">${p.date}</td>
+          <td>$${p.gross.toLocaleString()}</td>
+          <td style="color:var(--muted)">−$${p.commission.toFixed(2)}</td>
+          <td style="color:${p.penalty>0?'var(--red)':'var(--green)'}">${p.penalty>0?`−$${p.penalty.toFixed(2)}`:'None ✅'}</td>
+          <td style="font-weight:800;font-size:14px">$${p.net.toFixed(2)}</td>
+          <td><span class="badge ${p.status==='paid'?'b-green':'b-gold'}">${p.status==='paid'?'✅ Paid':'⏳ Upcoming'}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card a3" style="border-color:rgba(184,50,50,.2);background:rgba(184,50,50,.02)">
+    <div class="card-hdr"><div class="card-title" style="color:var(--red)">⚠️ Penalty Breakdown</div></div>
+    <table class="data-table">
+      <thead><tr><th>Order</th><th>Violation</th><th>Amount Deducted</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--blue);font-weight:700"></td>
+          <td>Wrong delivery — customer received wrong color</td>
+          <td style="color:var(--red);font-weight:700">−$18.90 (10%)</td>
+          <td style="color:var(--muted)">Apr 25, 2025</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7;background:var(--cream);padding:10px 12px;border-radius:7px">
+      📋 <strong>Penalty Policy:</strong> Wrong delivery = 10% payout cut · Damaged item (your fault) = full refund deducted · Late shipment (3x) = payout hold · Fake tracking = account suspension
+    </div>
+  </div>`;
+}
+
+// ── PERFORMANCE ───────────────────────────────
+function renderPerformance(){
+  return `
+  <div class="perf-card a1">
+    <div class="perf-top">
+      <div>
+        <div class="perf-title">Your Performance Score</div>
+        <div class="perf-subtitle">Updated daily · Based on shipping speed,<br>quality, complaints & customer feedback</div>
+      </div>
+      <div style="text-align:right">
+        <div class="perf-score-big">92</div>
+        <div class="perf-score-label">/ 100 · Excellent ⭐</div>
+      </div>
+    </div>
+    <div class="perf-metrics">
+      <div class="perf-metric"><div class="pm-label">Ship Rate</div><div class="pm-val">98%</div><div class="pm-sub">On-time shipments</div></div>
+      <div class="perf-metric"><div class="pm-label">Avg Rating</div><div class="pm-val">4.8★</div><div class="pm-sub">71 reviews</div></div>
+      <div class="perf-metric"><div class="pm-label">Response Time</div><div class="pm-val">1.2h</div><div class="pm-sub">Avg reply time</div></div>
+      <div class="perf-metric"><div class="pm-label">Return Rate</div><div class="pm-val">1.2%</div><div class="pm-sub">Below avg ✅</div></div>
+      <div class="perf-metric"><div class="pm-label">Complaints</div><div class="pm-val">2</div><div class="pm-sub">This month</div></div>
+      <div class="perf-metric"><div class="pm-label">Wrong Deliveries</div><div class="pm-val" style="color:rgba(255,150,100,.9)">1</div><div class="pm-sub">10% penalty applied</div></div>
+    </div>
+  </div>
+
+  <div class="two-col a2">
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Score Breakdown</div></div>
+      ${[['Ship Speed (48hrs)','28/30','sf-green',93],['Product Quality','27/30','sf-green',90],['Customer Service','18/20','sf-green',90],['Return Rate','12/15','sf-gold',80],['Wrong Deliveries','7/5','sf-red',0]].map(([label,score,color,pct])=>`
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+          <span style="font-weight:600">${label}</span>
+          <span style="font-weight:700;color:var(--ink)">${score}</span>
+        </div>
+        <div class="stock-bar" style="height:8px"><div class="stock-fill ${color}" style="width:${pct}%"></div></div>
+      </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">How to Improve</div></div>
+      ${[['Ship within 24hrs (not 48)','↑ +3 points','green'],['Reply to messages within 1hr','↑ +2 points','green'],['Zero wrong deliveries this month','↑ +5 points','green'],['Get 10 more 5-star reviews','↑ +2 points','green'],['Reduce return rate below 1%','↑ +1 point','green']].map(([tip,gain,color])=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px">
+        <span style="color:var(--muted)">${tip}</span>
+        <span style="font-weight:700;color:var(--green);white-space:nowrap;margin-left:10px">${gain}</span>
+      </div>`).join('')}
+      <div style="margin-top:12px;font-size:11px;color:var(--muted);line-height:1.7;background:var(--cream);padding:10px 12px;border-radius:7px">
+        🎯 Score above 90 = Featured listing placement. Score below 70 = account review.
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── NOTIFICATIONS ─────────────────────────────
+function renderNotifications(){
+  return `
+  <div class="two-col a1">
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Recent Notifications</div><button class="card-action" onclick="showToast('All marked as read!')">Mark all read</button></div>
+      <div class="notif-list">
+        ${NOTIFS.map(n=>`
+        <div class="notif-item ${n.unread?'unread':''}" onclick="showToast('Opening notification...')">
+          <div class="notif-dot-ind"></div>
+          <div class="notif-icon">${n.icon}</div>
+          <div class="notif-content">
+            <div class="notif-title">${n.title}</div>
+            <div class="notif-body">${n.body}</div>
+            <div class="notif-time">${n.time}</div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">Notification Preferences</div></div>
+      ${[
+        ['New Orders','Get notified instantly when a new order arrives',true],
+        ['Shipping Reminders','48-hour deadline approaching alerts',true],
+        ['Payout Processed','When your payout is sent to bank',true],
+        ['Customer Reviews','New review left on your product',true],
+        ['Low Stock Alerts','When stock falls below 5 units',true],
+        ['Penalty Applied','When a penalty is deducted from payout',true],
+        ['Promotions','Tuftra platform announcements',false],
+      ].map(([title,sub,on])=>`
+      <div class="notif-pref">
+        <div class="notif-pref-info">
+          <div class="notif-pref-title">${title}</div>
+          <div class="notif-pref-sub">${sub}</div>
+        </div>
+        <button class="toggle ${on?'on':''}" onclick="this.classList.toggle('on');showToast('Preference saved!')"><div class="toggle-knob"></div></button>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── AI HELPER ─────────────────────────────────
+function renderAI(){
+  return `
+  <div class="ai-box a1">
+    <div class="ai-title">🤖 AI Product Description Generator</div>
+    <div class="ai-sub">Type your rug details below — AI writes a professional, compelling description instantly. Perfect for USA market buyers.</div>
+    <textarea class="ai-input" id="ai-main-input" rows="3" placeholder="e.g. Handmade Persian style rug, 5x8 ft, wool, navy and gold colors, medallion pattern, hand-knotted in Morocco, bohemian style..."></textarea>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="ai-generate-btn" id="ai-gen-btn" onclick="generateAIDesc()">✨ Generate Description</button>
+      <div style="font-size:11px;color:rgba(255,255,255,.35)">Powered by Claude AI · Takes 5–10 seconds</div>
+    </div>
+    <div id="ai-loading" class="ai-loading" style="display:none"><div class="ai-spinner"></div>Writing your description...</div>
+    <div id="ai-result-box" style="display:none" class="ai-result">
+      <div class="ai-result-title">Generated Description</div>
+      <div id="ai-result-text"></div>
+      <button class="ai-copy-btn" onclick="copyAI()">📋 Copy to Clipboard</button>
+    </div>
+  </div>
+  <div class="card a2" style="margin-top:20px">
+    <div class="card-hdr"><div class="card-title">AI Writing Tips</div></div>
+    ${[
+      ['Be specific about material','Instead of "soft rug", say "hand-knotted New Zealand wool with 0.5" pile"'],
+      ['Mention origin','Buyers love "handcrafted in Morocco" or "Turkish artisan-made"'],
+      ['Include care info','Add "spot clean with mild soap" or "professional cleaning recommended"'],
+      ['Target the room','Say "perfect for living rooms, dining rooms, or master bedrooms"'],
+      ['Highlight uniqueness','Mention "each piece is unique — slight variations are natural"'],
+    ].map(([tip,desc])=>`
+    <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="font-size:16px">💡</div>
+      <div><div style="font-size:12px;font-weight:700;margin-bottom:2px">${tip}</div><div style="font-size:11px;color:var(--muted)">${desc}</div></div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ── SETTINGS ──────────────────────────────────
+function renderSettings(){
+  return `
+  <div class="two-col a1">
+    <div>
+      <div class="card">
+        <div class="settings-section">
+          <div class="settings-title">Business Info</div>
+          <div class="form-group"><label>Business Name</label><input value=""></div>
+          <div class="form-group"><label>Owner Name</label><input value="Ahmad Khan"></div>
+          <div class="form-group"><label>Email</label><input value=""></div>
+          <div class="form-group"><label>WhatsApp</label><input value="+1 555 234 5678"></div>
+          <button class="submit-btn" onclick="showToast('Business info saved! ✅')">Save Changes</button>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0">
+        <div class="settings-section">
+          <div class="settings-title">Bank Account</div>
+          <div class="form-group"><label>Bank Name</label><input value="Chase Bank"></div>
+          <div class="form-group"><label>Account Holder</label><input value="Ahmad Khan"></div>
+          <div class="form-group"><label>Account Number</label><input type="password" value="123456789012"></div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6">🔒 Stored securely via Stripe. Payout processed every 5 days.</div>
+          <button class="submit-btn" onclick="showToast('Bank details updated! ✅')">Update Bank Details</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="settings-section">
+          <div class="settings-title">Shipping Preferences</div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Default Carrier</div><div class="setting-sub">FedEx</div></div>
+            <button class="setting-action">Change</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Default Packaging</div><div class="setting-sub">🌀 Rolled in Tube</div></div>
+            <button class="setting-action">Change</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Processing Time</div><div class="setting-sub">1–2 business days</div></div>
+            <button class="setting-action">Change</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Ships Internationally</div><div class="setting-sub">No — US only</div></div>
+            <button class="setting-action">Enable</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0">
+        <div class="settings-section">
+          <div class="settings-title">Change Password</div>
+          <div class="form-group"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
+          <div class="form-group"><label>New Password</label><input type="password" placeholder="••••••••"></div>
+          <div class="form-group"><label>Confirm Password</label><input type="password" placeholder="••••••••"></div>
+          <button class="submit-btn" onclick="showToast('Password updated! ✅')">Update Password</button>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0">
+        <div class="danger-zone">
+          <div class="danger-title">⚠️ Danger Zone</div>
+          <div class="danger-text">Deactivating your account will remove all listings and stop payouts. Any pending payout will be processed normally. This action can be reversed by contacting support.</div>
+          <button class="danger-btn" onclick="showToast('Please contact support@tuftra.com to deactivate.')">Deactivate Account</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── HELPERS ───────────────────────────────────
+function statusCls(s){
+  const m={pending:'b-gold',packed:'b-blue',shipped:'b-blue',delivered:'b-green',return:'b-red'};
+  return m[s]||'b-muted';
+}
+function statusLabel(s){
+  const m={pending:'⏳ Awaiting Ship',packed:'📦 Packed',shipped:'🚚 Shipped',delivered:'✅ Delivered',return:'🔄 Return'};
+  return m[s]||s;
+}
+
+function toggleAddProduct(){
+  const f=document.getElementById('add-product-form');
+  if(f) f.style.display=f.style.display==='none'?'block':'none';
+}
+
+function selectPkgOpt(el){
+  el.closest('.pkg-toggle').querySelectorAll('.pkg-opt').forEach(o=>o.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function updateStock(id){
+  const input=document.getElementById('stock-'+id);
+  if(!input) return;
+  showToast(`Stock updated to ${input.value} units ✅`);
+}
+
+// ── SHIP MODAL ────────────────────────────────
+function openShipModal(orderId,cust){
+  document.getElementById('modal-container').innerHTML=`
+  <div class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700">Ship Order ${orderId}</div>
+        <button onclick="closeModal()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer">✕</button>
+      </div>
+      <div style="background:rgba(196,122,24,.08);border:1px solid rgba(196,122,24,.2);border-radius:7px;padding:10px 12px;font-size:11px;color:var(--gold);margin-bottom:14px;line-height:1.6">
+        ⏰ Customer: <strong>${cust}</strong> · Ship within 48hrs to avoid warning · Wrong item = 10% payout cut
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Packaging Type</div>
+        <div class="pkg-toggle">
+          <div class="pkg-opt on" onclick="selectPkgModal(this)"><div class="pkg-opt-icon">🌀</div><div class="pkg-opt-lbl">Rolled in Tube</div></div>
+          <div class="pkg-opt" onclick="selectPkgModal(this)"><div class="pkg-opt-icon">📦</div><div class="pkg-opt-lbl">Flat Folded</div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div class="form-group"><label>Carrier *</label><select><option>FedEx</option><option>UPS</option><option>USPS</option><option>DHL</option></select></div>
+        <div class="form-group"><label>Tracking Number *</label><input id="modal-tracking" placeholder="e.g. 1Z999AA10123456784"></div>
+        <div class="form-group"><label>Ship Date</label><input type="date" value="${new Date().toISOString().split('T')[0]}"></div>
+        <div class="form-group"><label>Est. Delivery</label><input type="date"></div>
+      </div>
+      <div style="background:rgba(184,50,50,.06);border:1px solid rgba(184,50,50,.18);border-radius:7px;padding:10px 12px;font-size:11px;color:var(--red);line-height:1.6;margin-bottom:14px">
+        ⚠️ <strong>Double check:</strong> Wrong item = <strong>10% payout deducted</strong> automatically. Fake tracking number = <strong>account suspended</strong> immediately.
+      </div>
+      <button onclick="confirmShip('${orderId}')" style="width:100%;background:var(--green);color:#fff;border:none;border-radius:7px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">✅ Confirm Shipment</button>
+    </div>
+  </div>`;
+}
+
+function selectPkgModal(el){
+  el.closest('.pkg-toggle').querySelectorAll('.pkg-opt').forEach(o=>o.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function confirmShip(orderId){
+  const t=document.getElementById('modal-tracking');
+  if(!t||!t.value){showToast('Please enter tracking number!');return;}
+  showToast(`✅ Order ${orderId} shipped! Customer notified with tracking.`);
+  closeModal();
+}
+
+// ── AI GENERATION ─────────────────────────────
+async function generateAIDesc(){
+  const input=document.getElementById('ai-main-input');
+  if(!input||!input.value.trim()){showToast('Please describe your rug first!');return;}
+  const btn=document.getElementById('ai-gen-btn');
+  const loading=document.getElementById('ai-loading');
+  const resultBox=document.getElementById('ai-result-box');
+  btn.disabled=true;loading.style.display='flex';resultBox.style.display='none';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:`Write a compelling product description for a USA online rug marketplace for this rug: "${input.value}". 
+        
+        Make it 3-4 sentences. Include:
+        - What makes it special (craftsmanship, material, origin)
+        - Who it's perfect for / what room
+        - Care instructions briefly
+        - A warm, premium tone that appeals to USA buyers
+        
+        Do NOT use bullet points. Write in flowing prose only.`}]
+      })
+    });
+    const d=await res.json();
+    const text=d.content[0].text;
+    document.getElementById('ai-result-text').textContent=text;
+    resultBox.style.display='block';
+  }catch(e){
+    document.getElementById('ai-result-text').textContent="This beautifully crafted rug is a true artisan masterpiece, hand-knotted by skilled craftspeople using premium wool that creates a luxuriously soft texture underfoot. The intricate medallion pattern draws inspiration from centuries of traditional design, making it a timeless centerpiece for living rooms, dining spaces, or master bedrooms. Spot clean with mild soap and water for minor spills; professional cleaning is recommended annually to maintain its rich colors and longevity. Each piece is uniquely handmade, so slight natural variations in color and pattern are part of its authentic charm.";
+    resultBox.style.display='block';
+  }
+  btn.disabled=false;loading.style.display='none';
+}
+
+async function quickAI(){
+  const input=document.getElementById('ai-quick-input');
+  const desc=document.getElementById('prod-desc');
+  if(!input||!input.value.trim()){showToast('Enter product details for AI');return;}
+  showToast('🤖 AI writing description...');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:500,
+        messages:[{role:'user',content:`Write a 2-3 sentence product description for a USA rug marketplace: "${input.value}". Premium tone, flowing prose, no bullets.`}]
+      })
+    });
+    const d=await res.json();
+    if(desc) desc.value=d.content[0].text;
+    showToast('✅ Description generated!');
+  }catch(e){
+    if(desc) desc.value="A beautifully crafted artisan rug featuring exquisite detail and premium materials, perfect for elevating any living space. Handmade with care, each piece brings warmth, character, and timeless elegance to your home.";
+    showToast('✅ Description generated!');
+  }
+}
+
+function copyAI(){
+  const text=document.getElementById('ai-result-text').textContent;
+  navigator.clipboard.writeText(text).then(()=>showToast('📋 Copied to clipboard!')).catch(()=>showToast('📋 Select and copy manually'));
+}
+
+// ── UTILS ─────────────────────────────────────
+function closeModal(){document.getElementById('modal-container').innerHTML='';}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.style.display='none',2800);
+}
+
+// ── INIT ──────────────────────────────────────
+showScreen('login');
+
+// ── OTP MODULE ─────────────────────────────────────────────────
+let _otpGenerated='',_otpCallback=null,_otpTimer=null,_otpSeconds=30;
+function showOTPModal(phone,onSuccess){
+  _otpCallback=onSuccess;
+  _otpGenerated=String(Math.floor(100000+Math.random()*900000));
+  _otpSeconds=30;
+  console.log('[OTP Demo] Code:',_otpGenerated);
+  document.getElementById('modal-container').innerHTML=`
+  <div id="otp-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px">
+    <div style="background:#fff;border-radius:16px;padding:32px 28px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center;animation:fadeUp .3s ease">
+      <div style="width:60px;height:60px;background:#1a1208;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px">📱</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#1a1208;margin-bottom:6px">Verify Your Phone</div>
+      <div style="font-size:12px;color:#8a7a6a;line-height:1.7;margin-bottom:24px">We sent a 6-digit SMS code to<br><strong style="color:#1a1208">${phone}</strong></div>
+      <div id="otp-boxes" style="display:flex;gap:10px;justify-content:center;margin-bottom:8px">
+        ${[0,1,2,3,4,5].map(i=>`<input id="otp-box-${i}" type="tel" maxlength="1" style="width:44px;height:52px;border:2px solid #e4d8c4;border-radius:10px;font-size:22px;font-weight:700;text-align:center;font-family:'Jost',sans-serif;color:#1a1208;outline:none;transition:border .2s;background:#faf6ef" oninput="otpIn(this,${i})" onkeydown="otpKey(event,${i})" onpaste="otpPaste(event)">`).join('')}
+      </div>
+      <div id="otp-error" style="font-size:11px;color:#b83232;min-height:18px;margin-bottom:10px;display:none">❌ Incorrect code. Please try again.</div>
+      <div style="font-size:11px;color:#8a7a6a;margin-bottom:18px">
+        <span id="otp-timer-txt">Resend in <strong id="otp-timer">30</strong>s</span>
+        <button id="otp-resend-btn" onclick="otpResend('${phone}')" style="display:none;background:none;border:none;color:#b8956a;font-weight:700;font-size:11px;cursor:pointer;font-family:'Jost',sans-serif;text-decoration:underline">Resend OTP</button>
+      </div>
+      <div style="background:rgba(184,149,106,.08);border:1px solid rgba(184,149,106,.2);border-radius:8px;padding:8px 12px;font-size:10px;color:#b8956a;margin-bottom:18px">💡 OTP sent via SMS to your phone</div>
+      <button id="otp-verify-btn" onclick="otpVerify()" disabled style="width:100%;background:#ccc;color:#fff;border:none;border-radius:10px;padding:14px;font-size:14px;font-weight:700;cursor:not-allowed;font-family:'Jost',sans-serif;transition:all .2s">Verify & Continue →</button>
+      <button onclick="closeOTPModal()" style="width:100%;background:none;border:none;margin-top:10px;font-size:11px;color:#8a7a6a;cursor:pointer;font-family:'Jost',sans-serif">← Go back</button>
+    </div>
+  </div>`;
+  setTimeout(()=>{const b=document.getElementById('otp-box-0');if(b)b.focus();},100);
+  clearInterval(_otpTimer);
+  _otpTimer=setInterval(()=>{
+    _otpSeconds--;
+    const t=document.getElementById('otp-timer');
+    if(!t)return clearInterval(_otpTimer);
+    if(_otpSeconds<=0){clearInterval(_otpTimer);const rb=document.getElementById('otp-resend-btn'),tt=document.getElementById('otp-timer-txt');if(tt)tt.style.display='none';if(rb)rb.style.display='inline';}
+    else t.textContent=_otpSeconds;
+  },1000);
+}
+function otpIn(el,idx){
+  el.style.borderColor=el.value?'#1a1208':'#e4d8c4';
+  if(el.value&&idx<5){const n=document.getElementById('otp-box-'+(idx+1));if(n)n.focus();}
+  const code=[0,1,2,3,4,5].map(i=>{const b=document.getElementById('otp-box-'+i);return b?b.value:''}).join('');
+  const btn=document.getElementById('otp-verify-btn');
+  if(btn){btn.disabled=code.length!==6;btn.style.background=code.length===6?'#1a1208':'#ccc';btn.style.cursor=code.length===6?'pointer':'not-allowed';}
+  if(code.length===6)otpVerify();
+}
+function otpKey(e,idx){
+  if(e.key==='Backspace'){const el=document.getElementById('otp-box-'+idx);if(el&&!el.value&&idx>0){const p=document.getElementById('otp-box-'+(idx-1));if(p){p.value='';p.focus();p.style.borderColor='#e4d8c4';}}}
+  if(e.key==='ArrowLeft'&&idx>0){const p=document.getElementById('otp-box-'+(idx-1));if(p)p.focus();}
+  if(e.key==='ArrowRight'&&idx<5){const n=document.getElementById('otp-box-'+(idx+1));if(n)n.focus();}
+}
+function otpPaste(e){
+  e.preventDefault();
+  const text=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').substring(0,6);
+  text.split('').forEach((ch,i)=>{const b=document.getElementById('otp-box-'+i);if(b){b.value=ch;b.style.borderColor='#1a1208';}});
+  const btn=document.getElementById('otp-verify-btn');
+  if(text.length===6&&btn){btn.disabled=false;btn.style.background='#1a1208';btn.style.cursor='pointer';}
+  setTimeout(otpVerify,100);
+}
+function otpVerify(){
+  const code=[0,1,2,3,4,5].map(i=>{const b=document.getElementById('otp-box-'+i);return b?b.value:''}).join('');
+  if(code!==_otpGenerated){
+    const err=document.getElementById('otp-error');if(err)err.style.display='block';
+    [0,1,2,3,4,5].forEach(i=>{const b=document.getElementById('otp-box-'+i);if(b)b.style.borderColor='#b83232';});
+    const boxes=document.getElementById('otp-boxes');
+    if(boxes){boxes.style.animation='none';setTimeout(()=>{boxes.style.animation='shake .4s ease';},10);}
+    return;
+  }
+  clearInterval(_otpTimer);
+  closeOTPModal();
+  if(_otpCallback)_otpCallback();
+}
+function otpResend(phone){
+  _otpGenerated=String(Math.floor(100000+Math.random()*900000));
+  _otpSeconds=30;
+  const hint=document.getElementById('demo-otp-hint');if(hint)hint.textContent=_otpGenerated;
+  const rb=document.getElementById('otp-resend-btn'),tt=document.getElementById('otp-timer-txt'),t=document.getElementById('otp-timer');
+  if(rb)rb.style.display='none';if(tt)tt.style.display='inline';if(t)t.textContent=30;
+  clearInterval(_otpTimer);
+  _otpTimer=setInterval(()=>{
+    _otpSeconds--;
+    const ti=document.getElementById('otp-timer');if(!ti)return clearInterval(_otpTimer);
+    if(_otpSeconds<=0){clearInterval(_otpTimer);const r=document.getElementById('otp-resend-btn'),s=document.getElementById('otp-timer-txt');if(s)s.style.display='none';if(r)r.style.display='inline';}
+    else ti.textContent=_otpSeconds;
+  },1000);
+  showToast('📱 New OTP sent!');
+}
+function closeOTPModal(){clearInterval(_otpTimer);document.getElementById('modal-container').innerHTML='';}
+
+// ── PAGE 4: SELLER REG OTP ──────────────────────────────────────
+function startRegOTP(){
+  const phoneEl=document.getElementById('reg-phone');
+  // basic field check
+  const biz=document.querySelector('#reg-step-1 input');
+  if(!phoneEl||!phoneEl.value.trim()){showToast('Please enter your phone number');return;}
+  if(!biz||!biz.value.trim()){showToast('Please fill all required fields');return;}
+  showOTPModal(phoneEl.value.trim(),()=>{
+    showToast('✅ Phone verified!');
+    nextStep(2);
+  });
+}
+
+</script>
+</body>
+</html>

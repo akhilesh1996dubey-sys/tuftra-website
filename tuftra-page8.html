@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sell on Tuftra — Reach Thousands of Rug Buyers in the USA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ef;--sand:#f0e8d8;--bark:#b8956a;--umber:#7a4f2d;
+  --ink:#1a1208;--muted:#8a7a6a;--white:#fff;--border:#e4d8c4;
+  --red:#b83232;--gold:#c47a18;--green:#2a6a40;--blue:#1a4f8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+.serif{font-family:'Cormorant Garamond',serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.a1{animation:fadeUp .7s .1s ease both}
+.a2{animation:fadeUp .7s .2s ease both}
+.a3{animation:fadeUp .7s .3s ease both}
+.a4{animation:fadeUp .7s .4s ease both}
+.a5{animation:fadeUp .7s .5s ease both}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:500;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;box-shadow:0 2px 16px rgba(26,18,8,.06)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-1px;text-decoration:none}
+.nav-logo span{color:var(--bark)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.nav-btn{background:none;border:1.5px solid var(--border);border-radius:7px;padding:8px 18px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.nav-btn:hover{border-color:var(--bark);color:var(--umber)}
+.nav-cta{background:var(--ink);color:#fff;border:none;border-radius:7px;padding:9px 22px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s}
+.nav-cta:hover{background:var(--umber)}
+
+/* HERO */
+.hero{background:var(--ink);min-height:92vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(184,149,106,.12) 0%,transparent 60%)}
+.hero-left{padding:80px 64px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--bark);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.hero-eyebrow::before{content:'';width:24px;height:2px;background:var(--bark)}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:700;color:#fff;line-height:1.05;margin-bottom:20px}
+.hero-title em{color:var(--bark);font-style:italic}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.55);line-height:1.85;margin-bottom:36px;max-width:440px;font-weight:300}
+.hero-cta-row{display:flex;gap:12px;align-items:center;margin-bottom:40px}
+.cta-primary{background:var(--bark);color:#fff;border:none;border-radius:8px;padding:16px 32px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s;letter-spacing:.3px}
+.cta-primary:hover{background:var(--umber);transform:translateY(-1px)}
+.cta-secondary{background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:8px;padding:15px 24px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.cta-secondary:hover{border-color:var(--bark);color:var(--bark)}
+.hero-stats{display:flex;gap:36px}
+.hero-stat-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--bark);line-height:1}
+.hero-stat-label{font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;letter-spacing:.3px}
+.hero-right{position:relative;display:flex;align-items:center;justify-content:center;padding:40px}
+.hero-card-stack{position:relative;width:340px;height:420px}
+.hero-card{position:absolute;background:var(--white);border-radius:16px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.hc-main{width:300px;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3}
+.hc-back1{width:280px;top:42%;left:47%;transform:translate(-50%,-50%) rotate(6deg);z-index:2;opacity:.7}
+.hc-back2{width:280px;top:56%;left:53%;transform:translate(-50%,-50%) rotate(-4deg);z-index:1;opacity:.4}
+.card-rug-img{height:120px;border-radius:10px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-size:48px}
+.card-rug-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;margin-bottom:3px}
+.card-rug-meta{font-size:11px;color:var(--muted);margin-bottom:10px}
+.card-earnings{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(42,106,64,.08);border:1px solid rgba(42,106,64,.2);border-radius:8px}
+.card-earn-label{font-size:10px;color:var(--green);font-weight:700}
+.card-earn-val{font-size:18px;font-weight:800;color:var(--green)}
+.free-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(42,106,64,.12);border:1px solid rgba(42,106,64,.25);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:var(--green);margin-top:8px}
+
+/* MARQUEE */
+.marquee-wrap{background:var(--bark);padding:12px 0;overflow:hidden}
+.marquee-track{display:flex;animation:marquee 25s linear infinite;width:max-content}
+.mitem{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;padding:0 28px;opacity:.85}
+.mdot{color:rgba(255,255,255,.35)}
+
+/* SECTIONS */
+.section{padding:80px 48px}
+.section-center{text-align:center;max-width:680px;margin:0 auto 48px}
+.section-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--bark);text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;line-height:1.1;margin-bottom:14px}
+.section-sub{font-size:14px;color:var(--muted);line-height:1.85;font-weight:300}
+
+/* WHY TUFTRA */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.why-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px;transition:transform .3s,box-shadow .3s}
+.why-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(26,18,8,.08)}
+.why-icon{font-size:32px;margin-bottom:16px}
+.why-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.why-text{font-size:13px;color:var(--muted);line-height:1.8}
+.why-badge{display:inline-flex;align-items:center;gap:5px;margin-top:12px;background:rgba(42,106,64,.1);border:1px solid rgba(42,106,64,.2);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:var(--green)}
+
+/* EARNINGS CALCULATOR */
+.calc-section{background:var(--ink);padding:80px 48px}
+.calc-wrap{max-width:800px;margin:0 auto}
+.calc-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:36px;margin-top:40px}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+.calc-field label{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:8px}
+.calc-field input,.calc-field select{width:100%;padding:12px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;font-size:14px;font-family:'Jost',sans-serif;color:#fff;outline:none;transition:border .2s}
+.calc-field input:focus,.calc-field select:focus{border-color:rgba(184,149,106,.5)}
+.calc-field select option{background:#1a1208}
+.calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.calc-result-box{background:rgba(255,255,255,.04);border-radius:10px;padding:16px;text-align:center;border:1px solid rgba(255,255,255,.07)}
+.crb-label{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.crb-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700}
+.crb-sub{font-size:10px;color:rgba(255,255,255,.3);margin-top:3px}
+
+/* HOW IT WORKS */
+.how-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;max-width:1000px;margin:0 auto}
+.how-grid::before{content:'';position:absolute;top:32px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--bark),rgba(184,149,106,.2));z-index:0}
+.how-step{text-align:center;padding:0 16px;position:relative;z-index:1}
+.how-num{width:64px;height:64px;border-radius:50%;background:var(--white);border:3px solid var(--bark);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 16px;transition:transform .3s}
+.how-step:hover .how-num{transform:scale(1.1)}
+.how-title{font-size:13px;font-weight:700;margin-bottom:6px}
+.how-text{font-size:11px;color:var(--muted);line-height:1.7}
+
+/* COMMISSION */
+.commission-section{background:linear-gradient(135deg,var(--ink),#2a1a08);padding:80px 48px;text-align:center}
+.comm-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(42,106,64,.2);border:1px solid rgba(42,106,64,.3);border-radius:20px;padding:8px 20px;font-size:12px;font-weight:700;color:rgba(100,220,140,.9);margin-bottom:20px}
+.comm-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:#fff;margin-bottom:16px}
+.comm-title span{color:var(--bark)}
+.comm-sub{font-size:15px;color:rgba(255,255,255,.5);max-width:580px;margin:0 auto 40px;line-height:1.8;font-weight:300}
+.comm-compare{display:flex;gap:20px;max-width:700px;margin:0 auto;justify-content:center;flex-wrap:wrap}
+.comm-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;text-align:center;min-width:180px;flex:1}
+.comm-card.highlight{background:rgba(42,106,64,.15);border-color:rgba(42,106,64,.35)}
+.comm-card-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.comm-card-pct{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;margin-bottom:6px}
+.comm-card.highlight .comm-card-pct{color:rgba(100,220,140,.9)}
+.comm-card-sub{font-size:10px;color:rgba(255,255,255,.3)}
+
+/* SELLERS SHOWCASE */
+.sellers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.seller-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px;text-align:center;transition:transform .2s}
+.seller-card:hover{transform:translateY(-3px)}
+.seller-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#fff;margin:0 auto 14px}
+.seller-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.seller-location{font-size:11px;color:var(--muted);margin-bottom:12px}
+.seller-stats{display:flex;justify-content:center;gap:20px}
+.ss-val{font-size:16px;font-weight:800;color:var(--ink)}
+.ss-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.seller-quote{font-size:12px;color:var(--muted);font-style:italic;line-height:1.7;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+
+/* FAQ */
+.faq-wrap{max-width:720px;margin:0 auto}
+.faq-item{border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;transition:border .2s}
+.faq-item.open{border-color:var(--bark)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink);transition:background .2s}
+.faq-q:hover{background:var(--sand)}
+.faq-item.open .faq-q{background:rgba(184,149,106,.06);color:var(--umber)}
+.faq-arrow{font-size:18px;transition:transform .3s;color:var(--muted);flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg);color:var(--bark)}
+.faq-a{display:none;padding:0 20px 16px;font-size:13px;color:var(--muted);line-height:1.85}
+.faq-item.open .faq-a{display:block;animation:fadeIn .2s ease}
+
+/* APPLICATION FORM */
+.apply-section{background:linear-gradient(135deg,var(--ink),#1a0a04);padding:80px 48px}
+.apply-wrap{max-width:720px;margin:0 auto}
+.apply-header{text-align:center;margin-bottom:40px}
+.apply-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:36px}
+.af-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px}
+.af-input{width:100%;padding:12px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;color:#fff;outline:none;transition:border .2s;margin-bottom:14px}
+.af-input:focus{border-color:rgba(184,149,106,.5)}
+.af-input::placeholder{color:rgba(255,255,255,.25)}
+.af-select{width:100%;padding:12px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;color:#fff;outline:none;margin-bottom:14px}
+.af-select option{background:#1a1208}
+.af-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.af-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.af-section-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:2px;margin:18px 0 12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.07)}
+.terms-row{display:flex;align-items:flex-start;gap:9px;cursor:pointer;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;margin-bottom:14px;transition:border .2s}
+.terms-row:hover{border-color:rgba(184,149,106,.4)}
+.tchk{width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;transition:all .2s}
+.tchk.on{background:var(--green);border-color:var(--green)}
+.terms-text{font-size:11px;color:rgba(255,255,255,.45);line-height:1.6}
+.terms-text a{color:rgba(184,149,106,.8)}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--bark),var(--umber));color:#fff;border:none;border-radius:8px;padding:15px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:opacity .2s;letter-spacing:.3px}
+.submit-btn:hover{opacity:.88}
+.submit-btn:disabled{background:rgba(255,255,255,.1);cursor:not-allowed;opacity:.4}
+.info-note{background:rgba(42,106,64,.1);border:1px solid rgba(42,106,64,.2);border-radius:7px;padding:11px 14px;font-size:11px;color:rgba(100,220,140,.7);line-height:1.7;margin-bottom:14px}
+
+/* PKG CHOICE */
+.pkg-choice{display:flex;gap:10px;margin-bottom:14px}
+.pkg-opt{flex:1;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;padding:12px;cursor:pointer;text-align:center;background:rgba(255,255,255,.04);transition:all .2s}
+.pkg-opt:hover{border-color:rgba(184,149,106,.4)}
+.pkg-opt.on{border-color:var(--bark);background:rgba(184,149,106,.1)}
+.pkg-opt-icon{font-size:20px;margin-bottom:4px}
+.pkg-opt-lbl{font-size:11px;font-weight:700;color:#e8d8c0}
+.pkg-opt-sub{font-size:9px;color:rgba(255,255,255,.3);margin-top:2px}
+
+/* SUCCESS */
+.success-wrap{text-align:center;padding:40px 20px;display:none}
+.success-icon{font-size:56px;margin-bottom:16px}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:#fff;margin-bottom:8px}
+.success-sub{font-size:14px;color:rgba(255,255,255,.5);line-height:1.8;max-width:400px;margin:0 auto}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,.5);padding:56px 48px 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;margin-bottom:10px}
+.footer-brand span{color:var(--bark)}
+.footer-desc{font-size:12px;line-height:1.85;font-weight:300}
+.footer-col-title{font-size:10px;font-weight:700;color:#fff;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s;font-weight:300}
+.footer-links a:hover{color:var(--bark)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;font-size:11px}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{color:rgba(255,255,255,.3);text-decoration:none;font-size:10px}
+
+/* TOAST */
+.toast{position:fixed;top:76px;right:18px;background:var(--ink);color:#e8d8c0;padding:11px 18px;border-radius:7px;font-size:12px;font-weight:600;z-index:9999;animation:fadeUp .3s ease;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+
+/* ════════════════════════════════════════
+   MOBILE RESPONSIVE — Full Breakpoints
+   ════════════════════════════════════════ */
+
+/* ── HAMBURGER ── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s}
+.nav-mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:20px 24px;z-index:499;box-shadow:0 8px 24px rgba(26,18,8,.1)}
+.nav-mobile-menu.open{display:block}
+.nav-mobile-menu ul{list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.nav-mobile-menu ul a{display:block;padding:10px 0;font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border)}
+.nav-mobile-menu .nav-cta{width:100%;text-align:center;padding:12px}
+
+@media(max-width:768px){
+
+  /* NAV */
+  nav{padding:0 20px;height:56px}
+  .nav-links,.nav-btn{display:none}
+  .nav-hamburger{display:flex}
+  .nav-logo{font-size:24px}
+
+  /* HERO */
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:48px 24px 32px}
+  .hero-title{font-size:42px}
+  .hero-sub{font-size:14px;max-width:100%}
+  .hero-cta-row{flex-direction:column;gap:10px}
+  .cta-primary,.cta-secondary{width:100%;text-align:center;padding:14px}
+  .hero-stats{gap:20px;flex-wrap:wrap}
+  .hero-stat-val{font-size:26px}
+  .hero-right{display:none}
+
+  /* SECTIONS */
+  .section{padding:48px 20px}
+  .section-title{font-size:32px}
+  .section-sub{font-size:13px}
+
+  /* WHY GRID */
+  .why-grid{grid-template-columns:1fr;gap:14px}
+
+  /* COMMISSION */
+  .commission-section{padding:48px 20px}
+  .comm-title{font-size:36px}
+  .comm-sub{font-size:13px}
+  .comm-compare{flex-direction:column;gap:12px;align-items:center}
+  .comm-card{width:100%;max-width:340px}
+
+  /* CALCULATOR */
+  .calc-section{padding:48px 20px}
+  .calc-box{padding:20px}
+  .calc-row{grid-template-columns:1fr;gap:14px}
+  .calc-results{grid-template-columns:1fr;gap:10px}
+
+  /* HOW IT WORKS */
+  .how-grid{grid-template-columns:1fr;gap:0;max-width:100%}
+  .how-grid::before{display:none}
+  .how-step{display:flex;align-items:flex-start;gap:16px;text-align:left;padding:14px 0;border-bottom:1px solid var(--border)}
+  .how-step:last-child{border-bottom:none}
+  .how-num{width:48px;height:48px;font-size:18px;flex-shrink:0;margin:0}
+  .how-title{font-size:13px;margin-bottom:4px}
+
+  /* SELLERS GRID */
+  .sellers-grid{grid-template-columns:1fr;gap:14px}
+
+  /* FAQ */
+  .faq-q{font-size:13px;padding:14px 16px}
+
+  /* APPLY FORM */
+  .apply-section{padding:48px 16px}
+  .apply-card{padding:20px 16px}
+  .af-2,.af-3{grid-template-columns:1fr;gap:0}
+  .pkg-choice{flex-direction:column;gap:8px}
+
+  /* FOOTER */
+  footer{padding:40px 20px 24px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .footer-bottom{flex-direction:column;gap:10px;text-align:center}
+  .footer-legal{justify-content:center;flex-wrap:wrap}
+}
+
+@media(max-width:480px){
+  .hero-title{font-size:34px}
+  .hero-stats{gap:14px}
+  .hero-stat-val{font-size:22px}
+  .section-title{font-size:28px}
+  .comm-title{font-size:30px}
+  .comm-card-pct{font-size:32px}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast" style="display:none"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="tuftra-homepage-fixed.html">Tuf<span>tra</span></a>
+  <ul class="nav-links">
+    <li><a href="#why">Why Tuftra</a></li>
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#earnings">Earnings</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="window.location='tuftra-page4.html'">Seller Login</button>
+    <button class="nav-cta" onclick="scrollToApply()">Start Selling Free →</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow a1">For Rug Sellers & Artisans</div>
+    <h1 class="hero-title a2">Sell Your Rugs<br>to <em>Thousands</em><br>of USA Buyers</h1>
+    <p class="hero-sub a3">Join Tuftra — the premium rug marketplace built for artisan sellers. Zero commission right now. Get paid every 5 days. You handle shipping, we handle everything else.</p>
+    <div class="hero-cta-row a4">
+      <button class="cta-primary" onclick="scrollToApply()">Apply to Sell — It's Free →</button>
+      <button class="cta-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See How it Works</button>
+    </div>
+    <div class="hero-stats a5">
+      <div>
+        <div class="hero-stat-val">$0</div>
+        <div class="hero-stat-label">Commission Right Now</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">5 Days</div>
+        <div class="hero-stat-label">Payout Cycle</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">USA</div>
+        <div class="hero-stat-label">Target Market</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">24hrs</div>
+        <div class="hero-stat-label">Approval Time</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right a3">
+    <div class="hero-card-stack">
+      <div class="hero-card hc-back2" style="background:var(--sand)"></div>
+      <div class="hero-card hc-back1" style="background:var(--sand)"></div>
+      <div class="hero-card hc-main">
+        <div class="card-rug-img" style="background:linear-gradient(135deg,#c4763a,#8b4010)">◈</div>
+        <div class="card-rug-name"></div>
+        <div class="card-rug-meta">5'×8' · Hand-knotted Wool · Bohemian</div>
+        <div class="card-earnings">
+          <div>
+            <div class="card-earn-label">Your Earnings</div>
+            <div style="font-size:10px;color:var(--muted)">After 0% commission</div>
+          </div>
+          <div class="card-earn-val">$189</div>
+        </div>
+        <div class="free-tag">🆓 Zero Commission — Keep 100%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="mitem">Zero Commission</span><span class="mdot"> · </span>
+    <span class="mitem">Keep 100%</span><span class="mdot"> · </span>
+    <span class="mitem">Paid Every 5 Days</span><span class="mdot"> · </span>
+    <span class="mitem">USA Market</span><span class="mdot"> · </span>
+    <span class="mitem">Free to Join</span><span class="mdot"> · </span>
+    <span class="mitem">AI Listing Helper</span><span class="mdot"> · </span>
+    <span class="mitem">Verified Sellers</span><span class="mdot"> · </span>
+    <span class="mitem">Secure Payments</span><span class="mdot"> · </span>
+    <span class="mitem">Zero Commission</span><span class="mdot"> · </span>
+    <span class="mitem">Keep 100%</span><span class="mdot"> · </span>
+    <span class="mitem">Paid Every 5 Days</span><span class="mdot"> · </span>
+    <span class="mitem">USA Market</span><span class="mdot"> · </span>
+    <span class="mitem">Free to Join</span><span class="mdot"> · </span>
+    <span class="mitem">AI Listing Helper</span><span class="mdot"> · </span>
+    <span class="mitem">Verified Sellers</span><span class="mdot"> · </span>
+    <span class="mitem">Secure Payments</span><span class="mdot"> · </span>
+  </div>
+</div>
+
+<!-- WHY TUFTRA -->
+<section class="section" id="why">
+  <div class="section-center">
+    <div class="section-eyebrow">Why Sell on Tuftra</div>
+    <div class="section-title serif">Everything You Need<br>to Sell Rugs Online</div>
+    <div class="section-sub">We built Tuftra specifically for rug sellers. Everything is designed to help you sell more, earn more, and grow faster.</div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card a1">
+      <div class="why-icon">🆓</div>
+      <div class="why-title serif">Zero Commission</div>
+      <div class="why-text">We currently charge zero commission on all sales. You keep 100% of every sale. We believe in growing with you — and earning your trust before charging anything.</div>
+      <div class="why-badge">✅ FREE right now</div>
+    </div>
+    <div class="why-card a2">
+      <div class="why-icon">⚡</div>
+      <div class="why-title serif">Paid Every 5 Days</div>
+      <div class="why-text">No waiting weeks for your money. Tuftra processes payouts automatically every 5 days via Stripe. Straight to your bank account — transparent, trackable, reliable.</div>
+      <div class="why-badge">💳 Stripe powered</div>
+    </div>
+    <div class="why-card a3">
+      <div class="why-icon">🤖</div>
+      <div class="why-title serif">AI Listing Helper</div>
+      <div class="why-text">No copywriting skills needed. Our AI writes professional product descriptions for your rugs in seconds. Just describe your product and get a full, compelling listing ready to go.</div>
+      <div class="why-badge">✨ Claude AI powered</div>
+    </div>
+    <div class="why-card a1">
+      <div class="why-icon">📦</div>
+      <div class="why-title serif">You Control Shipping</div>
+      <div class="why-text">You handle inventory and shipping the way you know best. Use FedEx, UPS, or USPS. Choose rolled or folded packaging. We give you full control — and tools to manage it efficiently.</div>
+      <div class="why-badge">🌀 Rolled or 📦 Folded</div>
+    </div>
+    <div class="why-card a2">
+      <div class="why-icon">🛡️</div>
+      <div class="why-title serif">Protected Payments</div>
+      <div class="why-text">Buyers pay Tuftra — we hold funds securely until delivery is confirmed. You're always protected. No chargebacks hitting you directly. Disputes handled fairly by our team.</div>
+      <div class="why-badge">🔒 Buyer & seller protected</div>
+    </div>
+    <div class="why-card a3">
+      <div class="why-icon">📊</div>
+      <div class="why-title serif">Real-Time Dashboard</div>
+      <div class="why-text">Track every order, earning, and review from your seller dashboard. See what's selling, what needs restocking, and how your performance score is trending — all in real time.</div>
+      <div class="why-badge">📈 Live analytics</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMISSION COMPARISON -->
+<section class="commission-section" id="earnings">
+  <div class="comm-badge">🆓 Currently Free for All Sellers</div>
+  <div class="comm-title serif">Keep <span>100%</span><br>of Every Sale</div>
+  <div class="comm-sub">While other platforms take 15–33% of your revenue, Tuftra charges zero commission right now. Sell the same rug and earn significantly more on Tuftra.</div>
+  <div class="comm-compare">
+    <div class="comm-card">
+      <div class="comm-card-name">Amazon</div>
+      <div class="comm-card-pct" style="color:rgba(220,100,100,.8)">15–20%</div>
+      <div class="comm-card-sub">commission per sale</div>
+    </div>
+    <div class="comm-card">
+      <div class="comm-card-name">Etsy</div>
+      <div class="comm-card-pct" style="color:rgba(220,100,100,.8)">6.5%</div>
+      <div class="comm-card-sub">+ listing fees</div>
+    </div>
+    <div class="comm-card">
+      <div class="comm-card-name">Wayfair</div>
+      <div class="comm-card-pct" style="color:rgba(220,100,100,.8)">23–33%</div>
+      <div class="comm-card-sub">commission per sale</div>
+    </div>
+    <div class="comm-card highlight">
+      <div class="comm-card-name">Tuftra</div>
+      <div class="comm-card-pct">0%</div>
+      <div class="comm-card-sub">🆓 Free right now</div>
+    </div>
+  </div>
+  <div style="margin-top:36px">
+    <button class="cta-primary" onclick="scrollToApply()">Start Selling Free Today →</button>
+  </div>
+</section>
+
+<!-- EARNINGS CALCULATOR -->
+<section class="calc-section">
+  <div class="calc-wrap">
+    <div style="text-align:center">
+      <div class="section-eyebrow" style="color:var(--bark)">Earnings Calculator</div>
+      <div class="section-title serif" style="color:#fff">How Much Can You Earn?</div>
+      <div class="section-sub" style="color:rgba(255,255,255,.45)">Enter your numbers to see your potential earnings on Tuftra</div>
+    </div>
+    <div class="calc-box">
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Average Rug Price (USD)</label>
+          <input type="number" id="avg-price" value="189" oninput="calcEarnings()">
+        </div>
+        <div class="calc-field">
+          <label>Orders Per Month</label>
+          <input type="number" id="orders-per-month" value="20" oninput="calcEarnings()">
+        </div>
+      </div>
+      <div class="calc-results" id="calc-results">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how" style="background:var(--white)">
+  <div class="section-center">
+    <div class="section-eyebrow">Simple Process</div>
+    <div class="section-title serif">How It Works</div>
+    <div class="section-sub">From application to first sale in as little as 48 hours</div>
+  </div>
+  <div class="how-grid">
+    <div class="how-step a1">
+      <div class="how-num">📝</div>
+      <div class="how-title">Apply Free</div>
+      <div class="how-text">Fill out the seller application. Takes 5 minutes. No fees, no contract.</div>
+    </div>
+    <div class="how-step a2">
+      <div class="how-num">✅</div>
+      <div class="how-title">Get Approved</div>
+      <div class="how-text">Our team reviews your application within 24 hours and activates your account.</div>
+    </div>
+    <div class="how-step a3">
+      <div class="how-num">🏷️</div>
+      <div class="how-title">List Products</div>
+      <div class="how-text">Add your rugs with photos, descriptions (AI helps!), pricing, and sizes.</div>
+    </div>
+    <div class="how-step a4">
+      <div class="how-num">🚚</div>
+      <div class="how-title">Ship Orders</div>
+      <div class="how-text">Orders come in, you pack and ship. Update tracking in your dashboard.</div>
+    </div>
+    <div class="how-step a5">
+      <div class="how-num">💰</div>
+      <div class="how-title">Get Paid</div>
+      <div class="how-text">Every 5 days, your earnings land in your bank. Zero commission — you keep it all.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SELLER STORIES -->
+<section class="section" style="background:var(--cream)">
+  <div class="section-center">
+    <div class="section-eyebrow">Seller Stories</div>
+    <div class="section-title serif">Sellers Love Tuftra</div>
+    <div class="section-sub">Real sellers sharing their experience on the platform</div>
+  </div>
+  <div class="sellers-grid">
+    <div class="seller-card a1">
+      <div class="seller-avatar" style="background:linear-gradient(135deg,#c4763a,#8b4010)">AW</div>
+      <div class="seller-name"></div>
+      <div class="seller-location">📍 Lahore, Pakistan · Rugs & Carpets</div>
+      <div class="seller-stats">
+        <div style="text-align:center"><div class="ss-val">312</div><div class="ss-label">Orders</div></div>
+        <div style="text-align:center"><div class="ss-val">$18k+</div><div class="ss-label">Earned</div></div>
+        <div style="text-align:center"><div class="ss-val">4.9★</div><div class="ss-label">Rating</div></div>
+      </div>
+      <div class="seller-quote">"Tuftra's zero commission policy changed everything for us. We list the same rugs and keep so much more. The 5-day payout is incredibly reliable."</div>
+    </div>
+    <div class="seller-card a2">
+      <div class="seller-avatar" style="background:linear-gradient(135deg,#2c3e6b,#1a2545)">HL</div>
+      <div class="seller-name"></div>
+      <div class="seller-location">📍 Istanbul, Turkey · Persian & Traditional</div>
+      <div class="seller-stats">
+        <div style="text-align:center"><div class="ss-val">241</div><div class="ss-label">Orders</div></div>
+        <div style="text-align:center"><div class="ss-val">$22k+</div><div class="ss-label">Earned</div></div>
+        <div style="text-align:center"><div class="ss-val">4.9★</div><div class="ss-label">Rating</div></div>
+      </div>
+      <div class="seller-quote">"The AI listing helper saved us hours every week. Our descriptions are now professional and consistent. Sales went up 40% after we started using it."</div>
+    </div>
+    <div class="seller-card a3">
+      <div class="seller-avatar" style="background:linear-gradient(135deg,#4a7c59,#2a4f38)">NL</div>
+      <div class="seller-name"></div>
+      <div class="seller-location">📍 Marrakesh, Morocco · Eco & Handmade</div>
+      <div class="seller-stats">
+        <div style="text-align:center"><div class="ss-val">88</div><div class="ss-label">Orders</div></div>
+        <div style="text-align:center"><div class="ss-val">$6.8k</div><div class="ss-label">Earned</div></div>
+        <div style="text-align:center"><div class="ss-val">4.7★</div><div class="ss-label">Rating</div></div>
+      </div>
+      <div class="seller-quote">"As a small artisan business, Tuftra was the perfect fit. Easy to set up, transparent payments, and buyers who actually appreciate handmade quality."</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" style="background:var(--white)">
+  <div class="section-center">
+    <div class="section-eyebrow">Common Questions</div>
+    <div class="section-title serif">Frequently Asked<br>Questions</div>
+  </div>
+  <div class="faq-wrap">
+    ${[
+      ['Is it really free to sell on Tuftra?','Yes — completely free. No listing fees, no monthly fees, and zero commission on your sales right now. You keep 100% of every sale. We may introduce a small commission in the future with advance notice, as stated in our seller terms.'],
+      ['How and when do I get paid?','Tuftra processes payouts automatically every 5 days via Stripe. Your earnings are transferred directly to your registered bank account. You receive a detailed breakdown of every payout cycle.'],
+      ['Who handles shipping and delivery?','You do. As a seller on Tuftra, you are responsible for packing and shipping all orders. You can use any carrier (FedEx, UPS, USPS). You update the tracking number in your seller dashboard and buyers receive automatic tracking notifications.'],
+      ['What happens if I deliver the wrong product?','Wrong deliveries result in a 10% payout deduction, as per our seller policy. The buyer receives a full refund or replacement. This policy protects buyer trust and ensures seller accountability. Always double-check before shipping.'],
+      ['How long does approval take?','Our team reviews all seller applications within 24 hours. Once approved, you can immediately start listing products. New listings go through a quick quality check before going live.'],
+      ['Can I sell from outside the USA?','Yes! Tuftra welcomes sellers from Pakistan, Turkey, Morocco, India, and anywhere in the world — as long as you can ship to the USA. Many of our top sellers are international artisans.'],
+      ['What types of rugs can I sell?','Tuftra specializes in rugs — handmade, machine-made, Persian, Bohemian, Modern, Traditional, runners, round rugs, and more. All materials are accepted: wool, silk, jute, cotton, polypropylene, bamboo.'],
+      ['Is there a minimum number of products required?','No minimum. You can start with just 1 product. However, sellers with more variety tend to get more exposure. We recommend starting with at least 5–10 listings for best results.'],
+    ].map(([q,a])=>`
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">${q}<span class="faq-arrow">⌄</span></div>
+      <div class="faq-a">${a}</div>
+    </div>`).join('')}
+  </div>
+</section>
+
+<!-- APPLICATION FORM -->
+<section class="apply-section" id="apply">
+  <div class="apply-wrap">
+    <div class="apply-header">
+      <div class="section-eyebrow" style="color:var(--bark)">Join Tuftra</div>
+      <div class="section-title serif" style="color:#fff">Apply to Sell<br>on Tuftra</div>
+      <div class="section-sub" style="color:rgba(255,255,255,.45)">Fill in your details below. We review all applications within 24 hours and will email you upon approval.</div>
+    </div>
+
+    <!-- FORM -->
+    <div class="apply-card" id="apply-form">
+      <!-- BUSINESS INFO -->
+      <div class="af-section-label">Business Information</div>
+      <div class="af-2">
+        <div>
+          <label class="af-label">Business Name *</label>
+          <input class="af-input" placeholder="e.g. Your Store" id="af-bname">
+        </div>
+        <div>
+          <label class="af-label">Owner Name *</label>
+          <input class="af-input" placeholder="Your full name" id="af-oname">
+        </div>
+      </div>
+      <div class="af-2">
+        <div>
+          <label class="af-label">Email Address *</label>
+          <input class="af-input" type="email" placeholder="you@business.com" id="af-email">
+        </div>
+        <div>
+          <label class="af-label">WhatsApp / Phone *</label>
+          <input class="af-input" placeholder="+1 234 567 8900" id="af-phone">
+        </div>
+      </div>
+      <div class="af-2">
+        <div>
+          <label class="af-label">Country *</label>
+          <select class="af-select" id="af-country">
+            <option value="">Select Country</option>
+            <option>United States</option><option>Pakistan</option><option>Turkey</option>
+            <option>Morocco</option><option>India</option><option>Afghanistan</option>
+            <option>Iran</option><option>Egypt</option><option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="af-label">City</label>
+          <input class="af-input" placeholder="Your city" id="af-city">
+        </div>
+      </div>
+
+      <!-- PRODUCT INFO -->
+      <div class="af-section-label">Product Information</div>
+      <div>
+        <label class="af-label">Product Category *</label>
+        <select class="af-select" id="af-category">
+          <option value="">Select Category</option>
+          <option>Handmade Rugs</option><option>Persian / Oriental Rugs</option>
+          <option>Bohemian / Tribal Rugs</option><option>Modern / Contemporary Rugs</option>
+          <option>Traditional Rugs</option><option>Eco-Friendly Rugs</option>
+          <option>Machine-Made Rugs</option><option>Mixed / All Types</option>
+        </select>
+      </div>
+      <div class="af-3">
+        <div>
+          <label class="af-label">No. of Products *</label>
+          <input class="af-input" type="number" placeholder="e.g. 20" id="af-products" min="1">
+        </div>
+        <div>
+          <label class="af-label">Avg Price (USD) *</label>
+          <input class="af-input" placeholder="e.g. $150" id="af-price">
+        </div>
+        <div>
+          <label class="af-label">Processing Time *</label>
+          <select class="af-select" id="af-processing" style="margin-bottom:0">
+            <option>1–2 business days</option>
+            <option>2–3 business days</option>
+            <option>3–5 business days</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="af-label">Describe Your Products *</label>
+        <textarea class="af-input" style="min-height:80px;resize:vertical" placeholder="Tell us about your rugs — materials, craftsmanship, origin, what makes them special..." id="af-desc"></textarea>
+      </div>
+
+      <!-- SHIPPING INFO -->
+      <div class="af-section-label">Shipping & Packaging</div>
+      <div class="af-2">
+        <div>
+          <label class="af-label">Ships To *</label>
+          <select class="af-select" id="af-ships">
+            <option>USA (All States)</option>
+            <option>USA (Selected States)</option>
+            <option>USA + International</option>
+          </select>
+        </div>
+        <div>
+          <label class="af-label">Preferred Carrier</label>
+          <select class="af-select" id="af-carrier">
+            <option>FedEx</option><option>UPS</option><option>USPS</option>
+            <option>Any Carrier</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="af-label">Default Packaging *</label>
+        <div class="pkg-choice">
+          <div class="pkg-opt on" onclick="selectPkg(this)"><div class="pkg-opt-icon">🌀</div><div class="pkg-opt-lbl">Rolled in Tube</div><div class="pkg-opt-sub">Best for wool & silk</div></div>
+          <div class="pkg-opt" onclick="selectPkg(this)"><div class="pkg-opt-icon">📦</div><div class="pkg-opt-lbl">Flat Folded Box</div><div class="pkg-opt-sub">For smaller rugs</div></div>
+          <div class="pkg-opt" onclick="selectPkg(this)"><div class="pkg-opt-icon">🔀</div><div class="pkg-opt-lbl">Both Options</div><div class="pkg-opt-sub">Buyer's choice</div></div>
+        </div>
+      </div>
+
+      <!-- ONLINE PRESENCE -->
+      <div class="af-section-label">Online Presence (Optional)</div>
+      <div class="af-2">
+        <div>
+          <label class="af-label">Website</label>
+          <input class="af-input" placeholder="https://yourbiz.com" id="af-website">
+        </div>
+        <div>
+          <label class="af-label">Instagram</label>
+          <input class="af-input" placeholder="@yourhandle" id="af-instagram">
+        </div>
+      </div>
+
+      <!-- BANK INFO -->
+      <div class="af-section-label">Bank Account for Payouts</div>
+      <div class="info-note">🔒 Bank details are encrypted and stored securely via Stripe. Tuftra pays you every 5 days automatically. Zero commission right now — you keep 100%.</div>
+      <div class="af-2">
+        <div>
+          <label class="af-label">Bank Name *</label>
+          <input class="af-input" placeholder="e.g. Chase Bank" id="af-bank">
+        </div>
+        <div>
+          <label class="af-label">Account Holder Name *</label>
+          <input class="af-input" placeholder="Name on bank account" id="af-holder">
+        </div>
+      </div>
+      <div class="af-2">
+        <div>
+          <label class="af-label">Account Number *</label>
+          <input class="af-input" type="password" placeholder="••••••••••••" id="af-account">
+        </div>
+        <div>
+          <label class="af-label">Routing Number *</label>
+          <input class="af-input" placeholder="9-digit routing number" id="af-routing">
+        </div>
+      </div>
+
+      <!-- TERMS -->
+      <div class="af-section-label">Seller Agreement</div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:11px;color:rgba(255,255,255,.35);line-height:1.8;max-height:120px;overflow-y:auto">
+        By submitting this application, you acknowledge that: (1) You are responsible for product quality, accuracy, and compliance with applicable laws. (2) All orders must be shipped within your stated processing time. (3) Wrong deliveries result in a 10% payout deduction. (4) Tuftra holds all buyer payments and releases your earnings every 5 days. (5) Currently zero commission — the platform reserves the right to introduce fees with advance notice. (6) Your account may be suspended for repeated violations. Full terms available at tuftra.com/seller-terms.
+      </div>
+      <div class="terms-row" onclick="toggleTerms()">
+        <div class="tchk" id="terms-chk"></div>
+        <div class="terms-text">I have read and agree to the <a href="#">Tuftra Seller Terms & Conditions</a>. I understand my responsibilities as a seller on the Tuftra marketplace. *</div>
+      </div>
+
+      <button class="submit-btn" id="apply-submit-btn" disabled onclick="submitApplication()">
+        Submit Application — Start Selling Free 🚀
+      </button>
+      <div style="text-align:center;margin-top:10px;font-size:10px;color:rgba(255,255,255,.25)">
+        Our team reviews all applications within 24 hours · You'll receive an email upon approval
+      </div>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="success-wrap" id="apply-success">
+      <div class="success-icon">🎉</div>
+      <div class="success-title serif">Application Submitted!</div>
+      <div class="success-sub">Thank you! Our team will review your application within <strong style="color:var(--bark)">24 hours</strong> and send you an email with next steps. Welcome to Tuftra!</div>
+      <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button onclick="window.location='tuftra-page4.html'" style="background:var(--bark);color:#fff;border:none;border-radius:7px;padding:11px 24px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">Seller Login →</button>
+        <button onclick="document.getElementById('apply-success').style.display='none';document.getElementById('apply-form').style.display='block'" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:7px;padding:11px 20px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif">Submit Another</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Tuf<span>tra</span></div>
+      <div class="footer-desc">A curated marketplace for handcrafted rugs from verified artisan sellers across the USA. We hold buyer payments until delivery — shop and sell with confidence.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">For Sellers</div>
+      <ul class="footer-links">
+        <li><a href="#apply">Apply to Sell</a></li>
+        <li><a href="#">Seller Dashboard</a></li>
+        <li><a href="#">Seller Terms</a></li>
+        <li><a href="#">Payout Info</a></li>
+        <li><a href="#">Seller FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Buyers</div>
+      <ul class="footer-links">
+        <li><a href="tuftra-homepage-fixed.html">Shop Rugs</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="tuftra-page9.html">Returns Policy</a></li>
+        <li><a href="tuftra-page3.html">Track Order</a></li>
+        <li><a href="tuftra-page9.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="tuftra-page9.html">About Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Tuftra. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Seller Terms</a><a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CALCULATOR ────────────────────────────────────
+function calcEarnings(){
+  const price=parseFloat(document.getElementById('avg-price')?.value||189);
+  const orders=parseFloat(document.getElementById('orders-per-month')?.value||20);
+  const monthly=price*orders;
+  const yearly=monthly*12;
+  const perDay=(monthly/30).toFixed(0);
+
+  const cr=document.getElementById('calc-results');if(!cr)return;cr.innerHTML=`
+    <div class="calc-result-box">
+      <div class="crb-label">Monthly Earnings</div>
+      <div class="crb-val" style="color:rgba(100,220,140,.9)">$${monthly.toLocaleString()}</div>
+      <div class="crb-sub">🆓 Zero commission</div>
+    </div>
+    <div class="calc-result-box">
+      <div class="crb-label">Yearly Earnings</div>
+      <div class="crb-val" style="color:var(--bark)">$${yearly.toLocaleString()}</div>
+      <div class="crb-sub">At current pace</div>
+    </div>
+    <div class="calc-result-box">
+      <div class="crb-label">Per Day Average</div>
+      <div class="crb-val" style="color:#e8d8c0">$${perDay}</div>
+      <div class="crb-sub">Every single day</div>
+    </div>
+  `;
+}
+
+// ── FAQ ───────────────────────────────────────────
+function toggleFaq(el){
+  const isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
+  if(!isOpen) el.classList.add('open');
+}
+
+// ── TERMS ─────────────────────────────────────────
+let termsAgreed=false;
+function toggleTerms(){
+  termsAgreed=!termsAgreed;
+  const chk=document.getElementById('terms-chk');
+  if(chk){chk.classList.toggle('on',termsAgreed);chk.textContent=termsAgreed?'✓':'';}
+  const btn=document.getElementById('apply-submit-btn');
+  if(btn){btn.disabled=!termsAgreed;btn.style.opacity=termsAgreed?'1':'0.4';}
+}
+
+// ── PKG ───────────────────────────────────────────
+function selectPkg(el){
+  el.closest('.pkg-choice').querySelectorAll('.pkg-opt').forEach(o=>o.classList.remove('on'));
+  el.classList.add('on');
+}
+
+// ── SCROLL ────────────────────────────────────────
+function scrollToApply(){
+  document.getElementById('apply').scrollIntoView({behavior:'smooth'});
+}
+
+// ── SUBMIT ────────────────────────────────────────
+function submitApplication(){
+  const required=['af-bname','af-oname','af-email','af-phone','af-country','af-category','af-products','af-price','af-desc','af-bank','af-holder','af-account','af-routing'];
+  for(let id of required){
+    const el=document.getElementById(id);
+    if(!el||!el.value.trim()){
+      if(el) el.style.borderColor='rgba(184,50,50,.5)';
+      showToast('Please fill all required fields');
+      el.focus();
+      return;
+    }
+    el.style.borderColor='rgba(255,255,255,.1)';
+  }
+  document.getElementById('apply-form').style.display='none';
+  document.getElementById('apply-success').style.display='block';
+  document.getElementById('apply-success').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ── TOAST ─────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.style.display='none',2800);
+}
+
+// ── MOBILE MENU ──────────────────────────────────
+function toggleMenu(){
+  document.getElementById('nav-mobile-menu').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('nav-mobile-menu').classList.remove('open');
+}
+// Close menu when clicking outside
+document.addEventListener('click',function(e){
+  const menu=document.getElementById('nav-mobile-menu');
+  const btn=document.getElementById('nav-hamburger');
+  if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){
+    closeMenu();
+  }
+});
+
+// ── INIT ──────────────────────────────────────────
+calcEarnings();
+</script>
+</body>
+</html>

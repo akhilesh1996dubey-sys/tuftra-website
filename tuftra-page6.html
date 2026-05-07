@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuftra — Checkout</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ef;--sand:#f0e8d8;--bark:#b8956a;--umber:#7a4f2d;
+  --ink:#1a1208;--muted:#8a7a6a;--white:#fff;--border:#e4d8c4;
+  --red:#b83232;--gold:#c47a18;--green:#2a6a40;--blue:#1a4f8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+.serif{font-family:'Cormorant Garamond',serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes checkPop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes confetti{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.a1{animation:fadeUp .6s .05s ease both}
+.a2{animation:fadeUp .6s .15s ease both}
+.a3{animation:fadeUp .6s .25s ease both}
+
+/* TOPBAR */
+.topbar{background:var(--ink);color:#e8d8c0;text-align:center;padding:9px;font-size:11px;letter-spacing:1.5px;font-weight:500}
+.topbar span{color:var(--bark);font-weight:700}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,18,8,.05)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-1px;text-decoration:none}
+.nav-logo span{color:var(--bark)}
+.nav-steps{display:flex;align-items:center;gap:0}
+.nav-step{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--muted);padding:0 16px}
+.nav-step.active{color:var(--ink);font-weight:700}
+.nav-step.done{color:var(--green)}
+.nav-step-num{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;transition:all .3s}
+.nav-step.active .nav-step-num{border-color:var(--ink);background:var(--ink);color:#fff}
+.nav-step.done .nav-step-num{border-color:var(--green);background:var(--green);color:#fff}
+.nav-step-arrow{color:var(--border);font-size:14px;margin:0 -8px}
+.nav-secure{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+
+/* BREADCRUMB */
+.breadcrumb{padding:14px 40px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;background:var(--white);border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--muted);text-decoration:none;cursor:pointer}
+.breadcrumb a:hover{color:var(--umber)}
+.breadcrumb span{color:var(--ink);font-weight:500}
+
+/* MAIN LAYOUT */
+.checkout-wrap{max-width:1100px;margin:0 auto;padding:36px 40px 80px;display:grid;grid-template-columns:1fr 400px;gap:40px;align-items:start}
+
+/* LEFT SIDE */
+.checkout-left{}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;margin-bottom:4px}
+.section-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
+
+/* CONTACT SECTION */
+.checkout-section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:18px}
+.cs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cs-title{font-size:13px;font-weight:700;color:var(--ink)}
+.cs-edit{font-size:11px;color:var(--bark);cursor:pointer;background:none;border:none;font-family:'Jost',sans-serif;font-weight:600}
+.cs-summary{font-size:12px;color:var(--muted)}
+
+/* FORM */
+.fg{margin-bottom:14px}
+.fg label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;color:var(--ink);background:var(--white);outline:none;transition:border .2s}
+.fg input:focus,.fg select:focus{border-color:var(--bark)}
+.fg input::placeholder{color:#bbb}
+.fg-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.field-hint{font-size:10px;color:var(--muted);margin-top:4px}
+.save-row{display:flex;align-items:center;gap:8px;margin-top:4px}
+.save-chk{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--border);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;transition:all .2s}
+.save-chk.on{background:var(--green);border-color:var(--green)}
+.save-lbl{font-size:11px;color:var(--muted);cursor:pointer}
+
+/* DELIVERY OPTIONS */
+.delivery-opts{display:flex;flex-direction:column;gap:8px}
+.delivery-opt{border:1.5px solid var(--border);border-radius:8px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .2s}
+.delivery-opt:hover{border-color:var(--bark)}
+.delivery-opt.on{border-color:var(--ink);background:rgba(26,18,8,.03)}
+.do-radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.delivery-opt.on .do-radio{border-color:var(--ink);background:var(--ink)}
+.delivery-opt.on .do-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
+.do-info{flex:1}
+.do-name{font-size:13px;font-weight:600;color:var(--ink)}
+.do-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.do-price{font-size:13px;font-weight:700;color:var(--green)}
+
+/* PAYMENT */
+.payment-section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:18px}
+.stripe-badge{display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:10px 14px;background:rgba(26,18,8,.03);border-radius:8px;border:1px solid var(--border)}
+.stripe-logo{font-size:18px}
+.stripe-text{font-size:11px;color:var(--muted);line-height:1.5}
+.card-input-wrap{position:relative}
+.card-input-wrap input{padding-right:48px}
+.card-icons{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;gap:4px;font-size:18px}
+.card-type-row{display:flex;gap:8px;margin-bottom:12px}
+.card-type{padding:6px 14px;border:1.5px solid var(--border);border-radius:6px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s}
+.card-type:hover{border-color:var(--bark);color:var(--umber)}
+.card-type.on{border-color:var(--ink);background:var(--ink);color:#fff}
+.security-note{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);margin-top:10px;padding:8px 12px;background:rgba(42,106,64,.05);border-radius:6px}
+
+/* TERMS */
+.terms-section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:18px}
+.terms-agree-row{display:flex;align-items:flex-start;gap:9px;cursor:pointer;padding:12px 14px;background:rgba(26,18,8,.03);border:1px solid var(--border);border-radius:8px;transition:border .2s}
+.terms-agree-row:hover{border-color:var(--bark)}
+.tchk{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;transition:all .2s}
+.tchk.on{background:var(--green);border-color:var(--green)}
+.terms-txt{font-size:11px;color:var(--muted);line-height:1.6}
+.terms-txt a{color:var(--blue);text-decoration:underline}
+
+/* PLACE ORDER BTN */
+.place-order-btn{width:100%;background:var(--ink);color:#fff;border:none;border-radius:10px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:.3px}
+.place-order-btn:hover{background:var(--umber)}
+.place-order-btn:disabled{background:#ccc;cursor:not-allowed}
+.place-order-btn.processing{background:var(--umber);animation:pulse 1s infinite}
+.lock-icon{font-size:14px}
+.payment-logos{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.payment-logo{font-size:11px;color:var(--muted);background:var(--sand);padding:3px 10px;border-radius:4px;font-weight:600}
+
+/* RIGHT SIDE - ORDER SUMMARY */
+.order-summary{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px;position:sticky;top:80px}
+.os-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.cart-item:last-of-type{border-bottom:none}
+.ci-img{width:64px;height:64px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;position:relative}
+.ci-qty{position:absolute;top:-5px;right:-5px;width:18px;height:18px;background:var(--muted);color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.ci-info{flex:1}
+.ci-name{font-size:13px;font-weight:700;font-family:'Cormorant Garamond',serif;margin-bottom:2px;line-height:1.2}
+.ci-meta{font-size:10px;color:var(--muted);line-height:1.6}
+.ci-price{font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap}
+
+/* PROMO */
+.promo-wrap{margin:14px 0;display:flex;gap:8px}
+.promo-input{flex:1;padding:10px 13px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-family:'Jost',sans-serif;outline:none;transition:border .2s}
+.promo-input:focus{border-color:var(--bark)}
+.promo-btn{background:var(--ink);color:#fff;border:none;border-radius:7px;padding:10px 16px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s;white-space:nowrap}
+.promo-btn:hover{background:var(--umber)}
+.promo-success{font-size:11px;color:var(--green);font-weight:600;margin-top:4px;display:flex;align-items:center;gap:5px}
+.promo-error{font-size:11px;color:var(--red);margin-top:4px}
+
+/* TOTALS */
+.totals{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.total-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;color:var(--muted)}
+.total-row.discount{color:var(--green);font-weight:600}
+.total-row.free-ship{color:var(--green);font-weight:600}
+.total-row.grand{font-size:16px;font-weight:800;color:var(--ink);padding:12px 0;border-top:1px solid var(--border);margin-top:6px}
+
+/* TRUST */
+.trust-items{margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);padding:5px 0}
+.trust-icon{font-size:14px}
+
+/* SELLER INFO */
+.seller-note{background:rgba(184,149,106,.08);border:1px solid rgba(184,149,106,.25);border-radius:8px;padding:12px 14px;margin-top:14px;font-size:11px;color:var(--umber);line-height:1.7}
+
+/* ORDER CONFIRMATION */
+.confirmation-wrap{max-width:640px;margin:0 auto;padding:40px 40px 80px;text-align:center}
+.conf-check{width:80px;height:80px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 24px;animation:checkPop .5s ease both}
+.conf-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;margin-bottom:8px;color:var(--ink)}
+.conf-sub{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:28px}
+.conf-order-id{font-size:13px;font-weight:700;color:var(--blue);background:rgba(26,79,138,.08);padding:6px 16px;border-radius:20px;display:inline-block;margin-bottom:28px}
+
+/* TRACKING STEPS */
+.tracking-steps{display:flex;align-items:center;gap:0;margin-bottom:28px;padding:20px;background:var(--white);border:1px solid var(--border);border-radius:12px}
+.ts-step{flex:1;text-align:center;position:relative}
+.ts-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:50%;right:-50%;height:2px;background:var(--border);z-index:0}
+.ts-step.done::after{background:var(--green)}
+.ts-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:12px;margin:0 auto 6px;position:relative;z-index:1}
+.ts-step.done .ts-dot{background:var(--green);border-color:var(--green);color:#fff}
+.ts-step.active .ts-dot{background:var(--blue);border-color:var(--blue);color:#fff}
+.ts-label{font-size:10px;color:var(--muted);font-weight:500}
+
+/* CONF DETAILS */
+.conf-details{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;text-align:left}
+.conf-detail-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.conf-detail-row:last-child{border-bottom:none}
+.conf-detail-label{color:var(--muted)}
+.conf-detail-val{font-weight:700;color:var(--ink)}
+
+/* CONF ACTIONS */
+.conf-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.conf-btn-primary{background:var(--ink);color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s}
+.conf-btn-primary:hover{background:var(--umber)}
+.conf-btn-outline{background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:8px;padding:12px 24px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.conf-btn-outline:hover{border-color:var(--bark);color:var(--umber)}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;top:-10px;animation:confetti 3s ease forwards;z-index:9999}
+
+/* SPINNER */
+.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+
+/* TOAST */
+.toast{position:fixed;top:70px;right:16px;background:var(--ink);color:#e8d8c0;padding:10px 16px;border-radius:7px;font-size:12px;font-weight:600;z-index:9999;animation:fadeUp .3s ease;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+
+/* MARQUEE */
+.marquee-wrap{background:var(--bark);padding:10px 0;overflow:hidden}
+.marquee-track{display:flex;animation:marquee 30s linear infinite;width:max-content}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mitem{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;padding:0 24px;opacity:.85}
+.mdot{color:rgba(255,255,255,.35)}
+
+/* EMPTY CART */
+.empty-cart{text-align:center;padding:60px 20px;max-width:400px;margin:0 auto}
+.empty-icon{font-size:56px;margin-bottom:16px}
+.empty-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.empty-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.7}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--sand)}
+::-webkit-scrollbar-thumb{background:var(--bark);border-radius:3px}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  /* Nav */
+  nav{padding:0 16px;height:52px}
+  .nav-logo{font-size:22px}
+  .nav-steps{display:none}
+  .nav-secure{font-size:10px}
+
+  /* Topbar */
+  .topbar{font-size:9px;padding:7px;letter-spacing:.5px}
+
+  /* Breadcrumb */
+  .breadcrumb{padding:10px 16px;font-size:11px}
+
+  /* Main layout: stack vertically, summary on top */
+  .checkout-wrap{
+    display:flex;flex-direction:column-reverse;
+    padding:16px 14px 60px;gap:16px;
+    grid-template-columns:1fr;
+  }
+
+  /* Order summary */
+  .order-summary{position:static;top:auto}
+
+  /* Sections */
+  .checkout-section,.payment-section,.terms-section{padding:16px 14px}
+
+  /* Form grids collapse */
+  .fg-2,.fg-3{grid-template-columns:1fr;gap:10px}
+
+  /* Inputs */
+  .fg input,.fg select{font-size:14px;padding:12px}
+
+  /* Delivery opts */
+  .delivery-opt{flex-wrap:wrap}
+
+  /* Place order button */
+  .place-order-btn{font-size:14px;padding:15px}
+
+  /* Card type row */
+  .card-type-row{flex-wrap:wrap}
+  .card-type{font-size:10px;padding:5px 10px}
+
+  /* Confirmation */
+  .confirmation-wrap{padding:24px 16px 60px}
+  .conf-title{font-size:28px}
+  .tracking-steps{padding:12px 8px;gap:0}
+  .ts-label{font-size:9px}
+  .conf-actions{flex-direction:column}
+  .conf-btn-primary,.conf-btn-outline{width:100%}
+  .conf-detail-row{flex-direction:column;gap:2px}
+  .conf-detail-val{text-align:right}
+
+  /* Promo */
+  .promo-wrap{gap:6px}
+
+  /* Section title */
+  .section-title{font-size:18px}
+
+  /* Payment logos */
+  .payment-logos{gap:5px}
+  .payment-logo{font-size:10px;padding:3px 7px}
+}
+
+@media(max-width:400px){
+  .checkout-wrap{padding:12px 10px 60px}
+  .fg input,.fg select{font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast" style="display:none"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">🚚 FREE SHIPPING ON ALL ORDERS &nbsp;·&nbsp; Code <span>TUFTRA10</span> for 10% off &nbsp;·&nbsp; 30-Day Free Returns</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="tuftra-homepage-fixed.html">Tuf<span>tra</span></a>
+  <div class="nav-steps" id="nav-steps">
+    <div class="nav-step done" id="ns-cart">
+      <div class="nav-step-num">✓</div>Cart
+    </div>
+    <div class="nav-step-arrow">›</div>
+    <div class="nav-step active" id="ns-info">
+      <div class="nav-step-num">2</div>Information
+    </div>
+    <div class="nav-step-arrow">›</div>
+    <div class="nav-step" id="ns-payment">
+      <div class="nav-step-num">3</div>Payment
+    </div>
+    <div class="nav-step-arrow">›</div>
+    <div class="nav-step" id="ns-confirm">
+      <div class="nav-step-num">4</div>Confirmation
+    </div>
+  </div>
+  <div class="nav-secure">🔒 Secure Checkout · Stripe</div>
+</nav>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="mitem">Free Shipping All Orders</span><span class="mdot"> · </span>
+    <span class="mitem">Secure Stripe Payment</span><span class="mdot"> · </span>
+    <span class="mitem">30-Day Returns</span><span class="mdot"> · </span>
+    <span class="mitem">Verified Sellers</span><span class="mdot"> · </span>
+    <span class="mitem">Code TUFTRA10</span><span class="mdot"> · </span>
+    <span class="mitem">Free Shipping All Orders</span><span class="mdot"> · </span>
+    <span class="mitem">Secure Stripe Payment</span><span class="mdot"> · </span>
+    <span class="mitem">30-Day Returns</span><span class="mdot"> · </span>
+    <span class="mitem">Verified Sellers</span><span class="mdot"> · </span>
+    <span class="mitem">Code TUFTRA10</span><span class="mdot"> · </span>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb" id="breadcrumb">
+  <a href="tuftra-homepage-fixed.html">Home</a> ›
+  <a href="tuftra-homepage-fixed.html">Shop</a> ›
+  <span id="breadcrumb-current">Checkout</span>
+</div>
+
+<!-- VIEWS -->
+<div id="view-checkout"></div>
+<div id="view-confirmation" style="display:none"></div>
+
+<script>
+// ── CART DATA ────────────────────────────────────
+const CART_ITEMS=[];// Cart items dynamically add honge
+
+// ── STATE ────────────────────────────────────────
+let cart=[...CART_ITEMS];
+let promoApplied=false;
+let promoCode='';
+let promoDiscount=0;
+let termsAgreed=false;
+let saveInfo=false;
+let selectedDelivery='standard';
+let selectedCardType='card';
+let checkoutStep=2; // 1=cart, 2=info, 3=payment, 4=confirm
+let formData={};
+let isProcessing=false;
+
+const PROMOS={
+  'TUFTRA10':{discount:0.10,label:'10% off'},
+  'WELCOME20':{discount:0.20,label:'20% off first order'},
+  'SUMMER15':{discount:0.15,label:'15% off orders over $200'},
+};
+
+// ── CALCULATIONS ─────────────────────────────────
+function getSubtotal(){return cart.reduce((a,i)=>a+i.price*i.qty,0);}
+function getDiscount(){return promoApplied?Math.round(getSubtotal()*promoDiscount*100)/100:0;}
+function getShipping(){return 0;} // Free shipping
+function getTotal(){return getSubtotal()-getDiscount()+getShipping();}
+
+// ── RENDER CHECKOUT ───────────────────────────────
+function renderCheckout(){
+  if(cart.length===0){
+    document.getElementById('view-checkout').innerHTML=`
+    <div class="empty-cart a1">
+      <div class="empty-icon">🛒</div>
+      <div class="empty-title serif">Your cart is empty</div>
+      <div class="empty-sub">Looks like you haven't added any rugs yet. Browse our collection and find the perfect rug for your home.</div>
+      <button onclick="showToast('Going to shop...')" style="background:var(--ink);color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">Browse Rugs →</button>
+    </div>`;
+    return;
+  }
+
+  const sub=getSubtotal();
+  const disc=getDiscount();
+  const ship=getShipping();
+  const total=getTotal();
+
+  document.getElementById('view-checkout').innerHTML=`
+  <div class="checkout-wrap">
+
+    <!-- LEFT: CHECKOUT FORM -->
+    <div class="checkout-left">
+
+      <!-- STEP: INFORMATION -->
+      <div id="step-info" ${checkoutStep>2?'style="display:none"':''}>
+        <div class="section-title serif a1">Contact & Shipping</div>
+        <div class="section-sub a1">Where should we deliver your rug?</div>
+
+        <!-- CONTACT -->
+        <div class="checkout-section a2">
+          <div class="cs-header"><div class="cs-title">Contact Information</div></div>
+          <div class="fg"><label>Email Address *</label><input type="email" placeholder="you@email.com" id="email" oninput="saveFormData()"></div>
+          <div class="fg"><label>Phone Number * <span style="font-size:9px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">(US only)</span></label><input type="tel" placeholder="(555) 000-0000" id="phone" maxlength="14" oninput="formatUSPhone(this);saveFormData()"></div>
+        </div>
+
+        <!-- SHIPPING ADDRESS -->
+        <div class="checkout-section a2">
+          <div class="cs-header"><div class="cs-title">Shipping Address</div></div>
+          <div class="fg-2">
+            <div class="fg"><label>First Name *</label><input placeholder="Jane" id="fname" oninput="saveFormData()"></div>
+            <div class="fg"><label>Last Name *</label><input placeholder="Doe" id="lname" oninput="saveFormData()"></div>
+          </div>
+          <div class="fg"><label>Address Line 1 *</label><input placeholder="123 Maple Street" id="addr1" oninput="saveFormData()"></div>
+          <div class="fg"><label>Address Line 2 (Apt, Suite, etc.)</label><input placeholder="Apt 4B" id="addr2" oninput="saveFormData()"></div>
+          <div class="fg-3">
+            <div class="fg"><label>City *</label><input placeholder="Austin" id="city" oninput="saveFormData()"></div>
+            <div class="fg"><label>State *</label>
+              <select id="state" onchange="saveFormData()">
+                <option value="">Select State</option>
+                ${['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'].map(s=>`<option>${s}</option>`).join('')}
+              </select>
+            </div>
+            <div class="fg"><label>ZIP Code *</label><input placeholder="78701" id="zip" maxlength="5" oninput="saveFormData();estimateDelivery(this.value)"></div>
+          </div>
+          <div id="delivery-estimate" style="display:none;font-size:11px;color:var(--green);font-weight:600;margin-top:4px;padding:8px 12px;background:rgba(42,106,64,.08);border-radius:6px;border:1px solid rgba(42,106,64,.2)"></div>
+          <div class="save-row">
+            <div class="save-chk" id="save-chk" onclick="toggleSaveInfo()"></div>
+            <label class="save-lbl" onclick="toggleSaveInfo()">Save this information for next time</label>
+          </div>
+        </div>
+
+        <!-- DELIVERY METHOD -->
+        <div class="checkout-section a3">
+          <div class="cs-header"><div class="cs-title">Delivery Method</div></div>
+          <div class="delivery-opts">
+            <div class="delivery-opt on" id="del-standard" onclick="selectDelivery('standard')">
+              <div class="do-radio"></div>
+              <div class="do-info">
+                <div class="do-name">Standard Shipping</div>
+                <div class="do-sub">3–7 business days · FedEx / UPS / USPS · Tracking included</div>
+              </div>
+              <div class="do-price">FREE</div>
+            </div>
+            <div class="delivery-opt" id="del-express" onclick="selectDelivery('express')">
+              <div class="do-radio"></div>
+              <div class="do-info">
+                <div class="do-name">Express Shipping</div>
+                <div class="do-sub">1–3 business days · FedEx Priority · Tracking included</div>
+              </div>
+              <div class="do-price">$19.99</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--muted);line-height:1.7;background:rgba(184,149,106,.08);border:1px solid rgba(184,149,106,.2);border-radius:7px;padding:10px 13px">
+            📦 Your seller will pack and ship your rug. Rugs arrive either <strong>rolled in a protective tube 🌀</strong> or <strong>flat-folded in a reinforced box 📦</strong>.
+          </div>
+        </div>
+
+        <button class="place-order-btn" onclick="goToPayment()" style="margin-bottom:10px">
+          Continue to Payment →
+        </button>
+        <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px">
+          🔒 Your information is encrypted and secure
+        </div>
+      </div>
+
+      <!-- STEP: PAYMENT -->
+      <div id="step-payment" style="display:none">
+        <div class="section-title serif a1">Payment</div>
+        <div class="section-sub a1">All transactions are encrypted and processed securely by Stripe</div>
+
+        <!-- CONTACT SUMMARY -->
+        <div class="checkout-section a1" style="padding:14px 18px">
+          <div class="cs-header" style="margin-bottom:6px">
+            <div class="cs-title">Shipping to</div>
+            <button class="cs-edit" onclick="goToInfo()">Edit</button>
+          </div>
+          <div class="cs-summary" id="address-summary">Loading...</div>
+        </div>
+
+        <!-- PAYMENT FORM -->
+        <div class="payment-section a2">
+          <div class="cs-header"><div class="cs-title">Payment Method</div></div>
+
+          <div class="stripe-badge">
+            <div class="stripe-logo">🔒</div>
+            <div class="stripe-text">Your payment is processed securely by <strong>Stripe</strong> — the same technology used by Amazon, Shopify, and millions of businesses. Tuftra never stores your card details.</div>
+          </div>
+
+          <div class="card-type-row">
+            <div class="card-type on" id="ct-card" onclick="selectCardType('card')">💳 Credit / Debit Card</div>
+            <div class="card-type" id="ct-paypal" onclick="selectCardType('paypal')">🅿️ PayPal</div>
+            <div class="card-type" id="ct-apple" onclick="selectCardType('apple')"> Apple Pay</div>
+          </div>
+
+          <div id="card-form">
+            <div class="fg">
+              <label>Card Number *</label>
+              <div class="card-input-wrap">
+                <input placeholder="1234 5678 9012 3456" id="card-num" maxlength="19" oninput="formatCard(this)" type="tel">
+                <div class="card-icons" id="card-icons">💳</div>
+              </div>
+            </div>
+            <div class="fg-2">
+              <div class="fg">
+                <label>Expiry Date *</label>
+                <input placeholder="MM / YY" id="card-exp" maxlength="7" oninput="formatExpiry(this)">
+              </div>
+              <div class="fg">
+                <label>Security Code (CVV) *</label>
+                <input placeholder="123" id="card-cvv" maxlength="4" type="tel">
+                <div class="field-hint">3 digits on back · 4 digits for Amex</div>
+              </div>
+            </div>
+            <div class="fg">
+              <label>Name on Card *</label>
+              <input placeholder="Jane Doe" id="card-name">
+            </div>
+            <div class="security-note">
+              🔐 Your card info is encrypted with 256-bit SSL and processed by Stripe — Tuftra never sees or stores your card number.
+            </div>
+          </div>
+
+          <div id="paypal-form" style="display:none;padding:20px;text-align:center;background:var(--cream);border-radius:8px;border:1px solid var(--border)">
+            <div style="font-size:28px;margin-bottom:8px">🅿️</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Pay with PayPal</div>
+            <div style="font-size:11px;color:var(--muted)">You'll be redirected to PayPal to complete payment</div>
+          </div>
+
+          <div id="apple-form" style="display:none;padding:20px;text-align:center;background:var(--cream);border-radius:8px;border:1px solid var(--border)">
+            <div style="font-size:28px;margin-bottom:8px"> </div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Pay with Apple Pay</div>
+            <div style="font-size:11px;color:var(--muted)">Use Touch ID or Face ID to complete payment</div>
+          </div>
+        </div>
+
+        <!-- BILLING ADDRESS -->
+        <div class="checkout-section a2">
+          <div class="cs-header"><div class="cs-title">Billing Address</div></div>
+          <div style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:10px" onclick="toggleBilling()">
+            <div class="save-chk on" id="billing-same-chk">✓</div>
+            <label class="save-lbl" style="cursor:pointer">Same as shipping address</label>
+          </div>
+          <div id="billing-form" style="display:none">
+            <div class="fg"><label>Address Line 1</label><input placeholder="Billing address..."></div>
+            <div class="fg-3">
+              <div class="fg"><label>City</label><input placeholder="City"></div>
+              <div class="fg"><label>State</label><input placeholder="TX"></div>
+              <div class="fg"><label>ZIP</label><input placeholder="78701"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BUYER TERMS -->
+        <div class="terms-section a3">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Buyer Agreement</div>
+          <div class="terms-agree-row" onclick="toggleTerms()">
+            <div class="tchk" id="terms-chk"></div>
+            <div class="terms-txt">
+              I agree to Tuftra's <a href="tuftra-page9.html" onclick="event.stopPropagation()">Buyer Terms & Conditions</a> and <a href="#" onclick="event.stopPropagation()">Return Policy</a>. I understand that:
+              <br>• Payment is processed securely by Stripe and held by Tuftra until delivery
+              <br>• Sellers handle packaging and shipping (3–7 business days)
+              <br>• I can return unused items within 30 days of delivery
+              <br>• Tuftra acts as payment intermediary — sellers are paid after confirmed delivery
+            </div>
+          </div>
+        </div>
+
+        <!-- PLACE ORDER -->
+        <button class="place-order-btn" id="place-order-btn" onclick="placeOrder()" disabled>
+          🔒 Complete Order — Pay Securely via Stripe
+        </button>
+        <div style="text-align:center;margin-top:10px">
+          <div class="payment-logos">
+            <span class="payment-logo">VISA</span>
+            <span class="payment-logo">Mastercard</span>
+            <span class="payment-logo">Amex</span>
+            <span class="payment-logo">PayPal</span>
+            <span class="payment-logo"> Pay</span>
+            <span class="payment-logo">Stripe</span>
+          </div>
+          <div style="font-size:10px;color:var(--muted);margin-top:8px">Your card will be charged $${getTotal().toFixed(2)}. You can cancel or return within 30 days.</div>
+        </div>
+
+        <div style="margin-top:14px;text-align:center">
+          <button onclick="goToInfo()" style="background:none;border:none;font-size:11px;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;font-weight:600">← Return to Information</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: ORDER SUMMARY -->
+    <div class="order-summary a2">
+      <div class="os-title serif">Order Summary</div>
+
+      <!-- CART ITEMS -->
+      ${cart.map(item=>`
+      <div class="cart-item">
+        <div class="ci-img" style="background:${item.bg}">
+          <span>${item.icon}</span>
+          <div class="ci-qty">${item.qty}</div>
+        </div>
+        <div class="ci-info">
+          <div class="ci-name">${item.name}</div>
+          <div class="ci-meta">
+            ${item.size} · ${item.color}<br>
+            ${item.material}<br>
+            ${item.pkg}<br>
+            by ${item.seller}
+          </div>
+        </div>
+        <div class="ci-price">$${(item.price*item.qty).toFixed(2)}</div>
+      </div>`).join('')}
+
+      <!-- PROMO CODE -->
+      <div class="promo-wrap">
+        <input class="promo-input" id="promo-input" placeholder="Promo code (try TUFTRA10)" ${promoApplied?'disabled':''} value="${promoApplied?promoCode:''}">
+        <button class="promo-btn" onclick="applyPromo()" ${promoApplied?'disabled':''}>
+          ${promoApplied?'Applied ✅':'Apply'}
+        </button>
+      </div>
+      ${promoApplied?`<div class="promo-success">✅ ${PROMOS[promoCode].label} applied! You saved $${getDiscount().toFixed(2)}</div>`:''}
+      <div id="promo-error" class="promo-error" style="display:none"></div>
+
+      <!-- TOTALS -->
+      <div class="totals">
+        <div class="total-row"><span>Subtotal (${cart.reduce((a,i)=>a+i.qty,0)} items)</span><span>$${getSubtotal().toFixed(2)}</span></div>
+        ${promoApplied?`<div class="total-row discount"><span>Discount (${PROMOS[promoCode].label})</span><span>−$${getDiscount().toFixed(2)}</span></div>`:''}
+        <div class="total-row free-ship"><span>Shipping</span><span>FREE 🎉</span></div>
+        ${selectedDelivery==='express'?`<div class="total-row"><span>Express Upgrade</span><span>$19.99</span></div>`:''}
+        <div class="total-row grand"><span>Total</span><span>$${(getTotal()+(selectedDelivery==='express'?19.99:0)).toFixed(2)}</span></div>
+      </div>
+
+      <!-- TRUST -->
+      <div class="trust-items">
+        <div class="trust-item"><span class="trust-icon">🔒</span> Secure payment via Stripe</div>
+        <div class="trust-item"><span class="trust-icon">🚚</span> Free shipping on all orders</div>
+        <div class="trust-item"><span class="trust-icon">🔄</span> 30-day easy returns</div>
+        <div class="trust-item"><span class="trust-icon">✅</span> Verified artisan sellers</div>
+        <div class="trust-item"><span class="trust-icon">💳</span> Payment held until delivery</div>
+      </div>
+
+      <!-- SELLER NOTE -->
+      <div class="seller-note">
+        🏪 <strong>How your payment works:</strong> Your payment is held securely by Tuftra and released to the seller only after your order is confirmed delivered. You're protected at every step.
+      </div>
+    </div>
+
+  </div>`;
+
+  // Restore form data
+  restoreFormData();
+  updatePlaceOrderBtn();
+}
+
+// ── STEPS ────────────────────────────────────────
+function goToPayment(){
+  // Validate info
+  const required=['email','phone','fname','lname','addr1','city','state','zip'];
+  for(let id of required){
+    const el=document.getElementById(id);
+    if(!el||!el.value.trim()){
+      el.style.borderColor='var(--red)';
+      showToast('Please fill all required fields');
+      el.focus();
+      return;
+    }
+    el.style.borderColor='var(--border)';
+  }
+  // US-only: validate phone (10 digits)
+  const phoneEl=document.getElementById('phone');
+  if(phoneEl&&!isValidUSPhone(phoneEl.value)){
+    phoneEl.style.borderColor='var(--red)';
+    showToast('Please enter a valid 10-digit US phone number');
+    phoneEl.focus();return;
+  }
+  // US-only: validate ZIP (5 digits)
+  const zipEl=document.getElementById('zip');
+  if(zipEl&&!isValidUSZip(zipEl.value)){
+    zipEl.style.borderColor='var(--red)';
+    showToast('Please enter a valid 5-digit US ZIP code');
+    zipEl.focus();return;
+  }
+  saveFormData();
+  checkoutStep=3;
+  document.getElementById('step-info').style.display='none';
+  document.getElementById('step-payment').style.display='block';
+  // Update nav
+  document.getElementById('ns-info').className='nav-step done';
+  document.getElementById('ns-info').querySelector('.nav-step-num').textContent='✓';
+  document.getElementById('ns-payment').className='nav-step active';
+  // Show address summary
+  const summary=document.getElementById('address-summary');
+  if(summary){
+    summary.innerHTML=`<strong>${formData.fname} ${formData.lname}</strong> · ${formData.addr1}${formData.addr2?', '+formData.addr2:''}, ${formData.city}, ${formData.state} ${formData.zip}<br>${formData.email} · ${formData.phone}`;
+  }
+  window.scrollTo(0,0);
+}
+
+function goToInfo(){
+  checkoutStep=2;
+  document.getElementById('step-info').style.display='block';
+  document.getElementById('step-payment').style.display='none';
+  document.getElementById('ns-info').className='nav-step active';
+  document.getElementById('ns-payment').className='nav-step';
+  document.getElementById('ns-payment').querySelector('.nav-step-num').textContent='3';
+  window.scrollTo(0,0);
+}
+
+// ── FORM HELPERS ─────────────────────────────────
+function saveFormData(){
+  const fields=['email','phone','fname','lname','addr1','addr2','city','state','zip'];
+  fields.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) formData[id]=el.value;
+  });
+}
+
+function restoreFormData(){
+  Object.entries(formData).forEach(([id,val])=>{
+    const el=document.getElementById(id);
+    if(el) el.value=val;
+  });
+  if(Object.keys(formData).length>0&&formData.zip) estimateDelivery(formData.zip);
+}
+
+function toggleSaveInfo(){
+  saveInfo=!saveInfo;
+  const chk=document.getElementById('save-chk');
+  if(chk){chk.classList.toggle('on',saveInfo);chk.textContent=saveInfo?'✓':'';}
+}
+
+function estimateDelivery(zip){
+  const el=document.getElementById('delivery-estimate');
+  if(!el) return;
+  if(zip&&zip.length===5){
+    el.style.display='block';
+    const days=Math.floor(Math.random()*3)+3;
+    const date=new Date();date.setDate(date.getDate()+days+2);
+    const dateStr=date.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+    el.textContent=`📦 Estimated delivery: ${dateStr} (${days}–${days+2} business days)`;
+  } else {
+    el.style.display='none';
+  }
+}
+
+function selectDelivery(type){
+  selectedDelivery=type;
+  ['standard','express'].forEach(t=>{
+    const el=document.getElementById('del-'+t);
+    if(el) el.className='delivery-opt'+(t===type?' on':'');
+  });
+  renderCheckout();
+}
+
+// ── PAYMENT HELPERS ──────────────────────────────
+function selectCardType(type){
+  selectedCardType=type;
+  ['card','paypal','apple'].forEach(t=>{
+    const btn=document.getElementById('ct-'+t);
+    if(btn) btn.className='card-type'+(t===type?' on':'');
+    const form=document.getElementById(t+'-form');
+    if(form) form.style.display=t===type?'block':'none';
+  });
+  document.getElementById('card-form').style.display=type==='card'?'block':'none';
+}
+
+function formatCard(input){
+  let v=input.value.replace(/\D/g,'').substring(0,16);
+  input.value=v.replace(/(.{4})/g,'$1 ').trim();
+  // Detect card type
+  const icons=document.getElementById('card-icons');
+  if(!icons) return;
+  if(v.startsWith('4')) icons.textContent='💳 VISA';
+  else if(v.startsWith('5')) icons.textContent='💳 MC';
+  else if(v.startsWith('3')) icons.textContent='💳 Amex';
+  else icons.textContent='💳';
+}
+
+function formatExpiry(input){
+  let v=input.value.replace(/\D/g,'');
+  if(v.length>=2) v=v.substring(0,2)+' / '+v.substring(2,4);
+  input.value=v;
+}
+
+
+// ── US PHONE FORMATTER ────────────────────────────
+function formatUSPhone(input){
+  let v=input.value.replace(/\D/g,"").substring(0,10);
+  if(v.length>=7) v="("+v.substring(0,3)+") "+v.substring(3,6)+"-"+v.substring(6);
+  else if(v.length>=4) v="("+v.substring(0,3)+") "+v.substring(3);
+  else if(v.length>0) v="("+v;
+  input.value=v;
+}
+
+function isValidUSPhone(val){
+  return val.replace(/\D/g,"").length===10;
+}
+
+function isValidUSZip(val){
+  return /^[0-9]{5}$/.test(val.trim());
+}
+
+let billingSame=true;
+function toggleBilling(){
+  billingSame=!billingSame;
+  const chk=document.getElementById('billing-same-chk');
+  const form=document.getElementById('billing-form');
+  if(chk){chk.classList.toggle('on',billingSame);chk.textContent=billingSame?'✓':'';}
+  if(form) form.style.display=billingSame?'none':'block';
+}
+
+function toggleTerms(){
+  termsAgreed=!termsAgreed;
+  const chk=document.getElementById('terms-chk');
+  if(chk){chk.classList.toggle('on',termsAgreed);chk.textContent=termsAgreed?'✓':'';}
+  updatePlaceOrderBtn();
+}
+
+function updatePlaceOrderBtn(){
+  const btn=document.getElementById('place-order-btn');
+  if(!btn) return;
+  btn.disabled=!termsAgreed;
+  btn.style.background=termsAgreed?'var(--ink)':'#ccc';
+  btn.style.cursor=termsAgreed?'pointer':'not-allowed';
+}
+
+// ── PROMO ─────────────────────────────────────────
+function applyPromo(){
+  const input=document.getElementById('promo-input');
+  const errorEl=document.getElementById('promo-error');
+  if(!input) return;
+  const code=input.value.trim().toUpperCase();
+  if(PROMOS[code]){
+    promoApplied=true;
+    promoCode=code;
+    promoDiscount=PROMOS[code].discount;
+    renderCheckout();
+    showToast(`✅ ${PROMOS[code].label} applied!`);
+  } else {
+    if(errorEl){errorEl.style.display='block';errorEl.textContent='❌ Invalid promo code. Try TUFTRA10';}
+    showToast('Invalid promo code');
+  }
+}
+
+// ── PLACE ORDER ───────────────────────────────────
+async function placeOrder(){
+  if(!termsAgreed){showToast('Please agree to terms first');return;}
+  if(isProcessing) return;
+
+  // Validate card
+  const cardNum=document.getElementById('card-num');
+  const cardExp=document.getElementById('card-exp');
+  const cardCvv=document.getElementById('card-cvv');
+  const cardName=document.getElementById('card-name');
+
+  if(selectedCardType==='card'){
+    if(!cardNum?.value||cardNum.value.replace(/\s/g,'').length<16){showToast('Please enter a valid card number');return;}
+    if(!cardExp?.value||cardExp.value.length<7){showToast('Please enter expiry date');return;}
+    if(!cardCvv?.value||cardCvv.value.length<3){showToast('Please enter CVV');return;}
+    if(!cardName?.value){showToast('Please enter name on card');return;}
+  }
+
+  isProcessing=true;
+  const btn=document.getElementById('place-order-btn');
+  if(btn){
+    btn.innerHTML='<div class="spinner"></div> Processing Payment...';
+    btn.disabled=true;
+    btn.classList.add('processing');
+  }
+
+  // Simulate Stripe payment processing
+  await new Promise(r=>setTimeout(r,2500));
+
+  // Success!
+  const orderId='#T-'+Math.floor(1000+Math.random()*9000);
+  showConfirmation(orderId);
+}
+
+// ── CONFIRMATION ──────────────────────────────────
+function showConfirmation(orderId){
+  document.getElementById('view-checkout').style.display='none';
+  document.getElementById('view-confirmation').style.display='block';
+  document.getElementById('nav-steps').querySelectorAll('.nav-step').forEach((s,i)=>{
+    s.className='nav-step done';
+    s.querySelector('.nav-step-num').textContent='✓';
+  });
+  document.getElementById('breadcrumb-current').textContent='Order Confirmed';
+
+  // Launch confetti
+  launchConfetti();
+
+  const deliveryDate=new Date();
+  deliveryDate.setDate(deliveryDate.getDate()+6);
+  const dateStr=deliveryDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  const total=(getTotal()+(selectedDelivery==='express'?19.99:0)).toFixed(2);
+
+  document.getElementById('view-confirmation').innerHTML=`
+  <div class="confirmation-wrap">
+    <div class="conf-check a1">✓</div>
+    <div class="conf-title serif a2">Order Confirmed!</div>
+    <p class="conf-sub a2">
+      Thank you for your order! We've sent a confirmation to <strong>${formData.email||'your email'}</strong>.
+      Your seller has been notified and will ship your rug within 1–2 business days.
+    </p>
+    <div class="conf-order-id a2">${orderId}</div>
+
+    <!-- TRACKING STEPS -->
+    <div class="tracking-steps a3">
+      ${[['✓','Order Confirmed','done'],['📦','Seller Packing','active'],['🚚','Shipped & Tracked',''],['🏠','Delivered','']].map(([icon,label,cls])=>`
+      <div class="ts-step ${cls}">
+        <div class="ts-dot">${icon}</div>
+        <div class="ts-label">${label}</div>
+      </div>`).join('')}
+    </div>
+
+    <!-- ORDER DETAILS -->
+    <div class="conf-details a3">
+      <div class="conf-detail-row">
+        <span class="conf-detail-label">Order ID</span>
+        <span class="conf-detail-val" style="color:var(--blue)">${orderId}</span>
+      </div>
+      <div class="conf-detail-row">
+        <span class="conf-detail-label">Items</span>
+        <span class="conf-detail-val">${cart.map(i=>i.name).join(', ')}</span>
+      </div>
+      <div class="conf-detail-row">
+        <span class="conf-detail-label">Total Paid</span>
+        <span class="conf-detail-val" style="color:var(--green)">$${total}</span>
+      </div>
+      <div class="conf-detail-row">
+        <span class="conf-detail-label">Packaging</span>
+        <span class="conf-detail-val">${cart.map(i=>i.pkg).join(' · ')}</span>
+      </div>
+      <div class="conf-detail-row">
+        <span class="conf-detail-label">Shipping To</span>
+        <span class="conf-detail-val">${formData.fname||'Jane'} ${formData.lname||'Doe'} · ${formData.city||'Austin'}, ${formData.state||'TX'}</span>
+      </div>
+      <div class="conf-detail-row">
+        <span class="conf-detail-label">Est. Delivery</span>
+        <span class="conf-detail-val" style="color:var(--green)">${dateStr}</span>
+      </div>
+      <div class="conf-detail-row">
+        <span class="conf-detail-label">Seller</span>
+        <span class="conf-detail-val">${cart[0].seller}</span>
+      </div>
+      <div class="conf-detail-row">
+        <span class="conf-detail-label">Payment</span>
+        <span class="conf-detail-val">Held securely by Tuftra · Released after delivery</span>
+      </div>
+    </div>
+
+    <!-- PACKAGING INSTRUCTIONS -->
+    <div style="background:rgba(184,149,106,.08);border:1px solid rgba(184,149,106,.25);border-radius:12px;padding:18px 20px;margin-bottom:20px;text-align:left" class="a3">
+      <div style="font-size:12px;font-weight:700;color:var(--umber);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">📦 When Your Rug Arrives</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.9">
+        🌀 <strong>If rolled in a tube:</strong> Carefully unroll on your floor and let it rest flat for 24–48 hours. Any curling will naturally relax.<br>
+        📦 <strong>If flat-folded:</strong> Unfold and smooth out. Creases will disappear within a few days of normal use.<br>
+        💡 <strong>Tip:</strong> Place heavy furniture on corners overnight for faster flattening.
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="conf-actions a3">
+      <button class="conf-btn-primary" onclick="window.location='tuftra-page3.html'">📍 Track Your Order</button>
+      <button class="conf-btn-outline" onclick="showToast('Invoice downloading...')">📄 Download Invoice</button>
+      <button class="conf-btn-outline" onclick="window.location='tuftra-homepage-fixed.html'">🛍️ Continue Shopping</button>
+    </div>
+
+    <div style="margin-top:20px;font-size:11px;color:var(--muted);line-height:1.7">
+      Questions? Contact us at <strong>support@tuftra.com</strong> · We respond within 24 hours
+    </div>
+  </div>`;
+}
+
+// ── CONFETTI ─────────────────────────────────────
+function launchConfetti(){
+  const colors=['#b8956a','#2a6a40','#1a4f8a','#c47a18','#b83232','#7a4f2d'];
+  for(let i=0;i<60;i++){
+    const piece=document.createElement('div');
+    piece.className='confetti-piece';
+    piece.style.cssText=`
+      left:${Math.random()*100}vw;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-delay:${Math.random()*2}s;
+      animation-duration:${2+Math.random()*2}s;
+      width:${6+Math.random()*8}px;
+      height:${6+Math.random()*8}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(),5000);
+  }
+}
+
+// ── TOAST ─────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.style.display='none',2800);
+}
+
+// ── INIT ─────────────────────────────────────────
+renderCheckout();
+</script>
+</body>
+</html>

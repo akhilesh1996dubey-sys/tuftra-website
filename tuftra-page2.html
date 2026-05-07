@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> — Tuftra</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ef;--sand:#f0e8d8;--bark:#b8956a;--umber:#7a4f2d;
+  --ink:#1a1208;--muted:#8a7a6a;--white:#fff;--border:#e4d8c4;
+  --red:#b83232;--gold:#c47a18;--green:#2a6a40;--blue:#1a4f8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink)}
+.serif{font-family:'Cormorant Garamond',serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideRight{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.a1{animation:fadeUp .6s .1s ease both}
+.a2{animation:fadeUp .6s .2s ease both}
+.a3{animation:fadeUp .6s .3s ease both}
+
+/* TOPBAR */
+.topbar{background:var(--ink);color:#e8d8c0;text-align:center;padding:9px;font-size:11px;letter-spacing:1.5px;font-weight:500}
+.topbar span{color:var(--bark);font-weight:700}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:500;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;box-shadow:0 2px 16px rgba(26,18,8,.06)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--ink);letter-spacing:-1px;cursor:pointer;text-decoration:none}
+.nav-logo span{color:var(--bark)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:7px 14px;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s}
+.nav-btn:hover{border-color:var(--bark);color:var(--umber)}
+.cart-btn{background:var(--ink);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background .2s}
+.cart-btn:hover{background:var(--umber)}
+.cart-count{background:var(--red);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+
+/* BREADCRUMB */
+.breadcrumb{padding:16px 40px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;background:var(--white);border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--umber)}
+.breadcrumb span{color:var(--ink);font-weight:500}
+
+/* PRODUCT LAYOUT */
+.product-page{max-width:1200px;margin:0 auto;padding:40px 40px 80px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+
+/* LEFT — IMAGES */
+.img-section{position:sticky;top:80px}
+.main-img{width:100%;aspect-ratio:1;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(135deg,#c4763a,#8b4010);display:flex;align-items:center;justify-content:center;margin-bottom:12px;cursor:zoom-in}
+.main-img-inner{font-size:140px;opacity:.65;transition:transform .4s ease;user-select:none}
+.main-img:hover .main-img-inner{transform:scale(1.06)}
+.main-img-badges{position:absolute;top:16px;left:16px;display:flex;gap:6px;flex-direction:column}
+.img-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase;width:fit-content}
+.ib-sale{background:var(--red);color:#fff}
+.ib-hand{background:var(--umber);color:#fff}
+.ib-best{background:var(--gold);color:#fff}
+.discount-circle{position:absolute;top:16px;right:16px;width:56px;height:56px;border-radius:50%;background:var(--red);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;line-height:1.1}
+.disc-num{font-size:16px}
+.disc-off{font-size:8px;letter-spacing:1px;text-transform:uppercase}
+.ship-tag-main{position:absolute;bottom:16px;left:16px;background:rgba(26,18,8,.75);color:#e8d8c0;font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;backdrop-filter:blur(4px)}
+.thumb-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.thumb{aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border .2s;display:flex;align-items:center;justify-content:center;font-size:32px}
+.thumb:hover{border-color:var(--bark)}
+.thumb.active{border-color:var(--ink)}
+.thumb-1{background:linear-gradient(135deg,#c4763a,#8b4010)}
+.thumb-2{background:linear-gradient(160deg,#8b4010,#c4763a)}
+.thumb-3{background:linear-gradient(45deg,#c4763a88,#f0d8b0)}
+.thumb-4{background:linear-gradient(135deg,#d4a060,#c4763a)}
+
+/* RIGHT — INFO */
+.info-section{}
+.info-top{margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.seller-chip{background:var(--sand);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--umber);cursor:pointer;transition:all .2s}
+.seller-chip:hover{background:var(--bark);color:#fff;border-color:var(--bark)}
+.verified-chip{background:rgba(42,106,64,.12);border:1px solid rgba(42,106,64,.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--green)}
+.product-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;line-height:1.1;margin-bottom:12px;color:var(--ink)}
+.rating-bar{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.stars{color:var(--gold);font-size:14px}
+.rating-num{font-size:14px;font-weight:700}
+.review-link{font-size:13px;color:var(--blue);text-decoration:underline;cursor:pointer}
+.in-stock{font-size:12px;font-weight:600;color:var(--green)}
+
+/* PRICE */
+.price-section{margin-bottom:20px}
+.price-now{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:var(--ink);line-height:1}
+.price-meta{display:flex;align-items:center;gap:10px;margin-top:6px}
+.price-was{font-size:15px;color:var(--muted);text-decoration:line-through}
+.price-save{font-size:12px;font-weight:700;color:var(--red);background:rgba(184,50,50,.1);padding:3px 10px;border-radius:20px}
+.free-ship-badge{font-size:11px;font-weight:600;color:var(--green);background:rgba(42,106,64,.1);padding:3px 10px;border-radius:20px}
+
+/* SIZE SELECTOR */
+.selector-section{margin-bottom:20px}
+.selector-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.size-guide-link{font-size:11px;color:var(--blue);text-decoration:underline;cursor:pointer;font-weight:400;text-transform:none;letter-spacing:0}
+.size-grid{display:flex;flex-wrap:wrap;gap:8px}
+.size-btn{border:1.5px solid var(--border);border-radius:6px;padding:8px 14px;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;background:var(--white);font-family:'Jost',sans-serif;transition:all .2s}
+.size-btn:hover{border-color:var(--bark);color:var(--umber)}
+.size-btn.active{border-color:var(--ink);background:var(--ink);color:#fff;font-weight:600}
+.size-btn.oos{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+
+/* COLOR SELECTOR */
+.color-selector{display:flex;gap:8px;flex-wrap:wrap}
+.color-swatch{width:32px;height:32px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .2s;position:relative}
+.color-swatch:hover{transform:scale(1.12)}
+.color-swatch.active{border-color:var(--ink)}
+.color-swatch.active::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+
+/* WEAVE SELECTOR */
+.weave-grid{display:flex;flex-wrap:wrap;gap:8px}
+.weave-btn{border:1.5px solid var(--border);border-radius:6px;padding:7px 14px;font-size:11px;font-weight:500;color:var(--muted);cursor:pointer;background:var(--white);font-family:'Jost',sans-serif;transition:all .2s}
+.weave-btn:hover{border-color:var(--bark);color:var(--umber)}
+.weave-btn.active{border-color:var(--ink);background:var(--ink);color:#fff}
+
+/* QUANTITY */
+.qty-wrap{display:flex;align-items:center;gap:12px}
+.qty-btn{width:36px;height:36px;border-radius:6px;border:1.5px solid var(--border);background:var(--white);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);transition:all .2s;font-family:'Jost',sans-serif}
+.qty-btn:hover{border-color:var(--bark);background:var(--sand)}
+.qty-num{font-size:16px;font-weight:700;min-width:24px;text-align:center}
+
+/* ACTIONS */
+.action-row{display:flex;gap:10px;margin-bottom:16px}
+.add-cart-btn{flex:1;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:15px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s;letter-spacing:.3px}
+.add-cart-btn:hover{background:var(--umber)}
+.buy-now-btn{flex:1;background:var(--bark);color:#fff;border:none;border-radius:8px;padding:15px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s;letter-spacing:.3px}
+.buy-now-btn:hover{background:var(--umber)}
+.wish-action-btn{width:50px;height:50px;border-radius:8px;border:1.5px solid var(--border);background:var(--white);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.wish-action-btn:hover{border-color:var(--red);background:rgba(184,50,50,.05)}
+
+/* TERMS ROW */
+.terms-agree{display:flex;align-items:flex-start;gap:8px;margin-bottom:20px;padding:12px 14px;background:rgba(26,18,8,.03);border-radius:8px;border:1px solid var(--border);cursor:pointer}
+.tchk{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;transition:all .2s}
+.tchk.on{background:var(--green);border-color:var(--green)}
+.terms-text{font-size:11px;color:var(--muted);line-height:1.6}
+.terms-text a{color:var(--blue)}
+
+/* PACKAGING BOX */
+.packaging-box{background:linear-gradient(135deg,rgba(184,149,106,.08),rgba(122,79,45,.05));border:1px solid rgba(184,149,106,.3);border-radius:10px;padding:18px;margin-bottom:16px}
+.pkg-title{font-size:12px;font-weight:700;color:var(--umber);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.pkg-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.pkg-option{border:1.5px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:all .2s;background:var(--white)}
+.pkg-option:hover{border-color:var(--bark)}
+.pkg-option.active{border-color:var(--bark);background:rgba(184,149,106,.08)}
+.pkg-icon{font-size:22px;margin-bottom:6px}
+.pkg-name{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.pkg-desc{font-size:10px;color:var(--muted);line-height:1.5}
+.pkg-note{font-size:11px;color:var(--muted);line-height:1.7;padding-top:10px;border-top:1px solid var(--border)}
+
+/* SHIPPING INFO */
+.shipping-info{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:16px}
+.ship-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.ship-row:last-child{border-bottom:none}
+.ship-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.ship-info-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.ship-info-text{font-size:11px;color:var(--muted);line-height:1.6}
+.ship-zip-row{display:flex;gap:8px;margin-top:8px}
+.zip-input{flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:'Jost',sans-serif;outline:none}
+.zip-input:focus{border-color:var(--bark)}
+.zip-btn{background:var(--ink);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+
+/* SELLER BOX */
+.seller-box{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:16px}
+.seller-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.seller-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--bark),var(--umber));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
+.seller-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.seller-stats{display:flex;gap:14px;font-size:11px;color:var(--muted)}
+.seller-stat strong{color:var(--ink)}
+.contact-seller-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;transition:all .2s;width:100%}
+.contact-seller-btn:hover{border-color:var(--bark);color:var(--umber)}
+
+/* SPECS TABLE */
+.specs-section{margin-bottom:32px}
+.specs-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;margin-bottom:16px}
+.specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:10px;overflow:hidden}
+.spec-cell{background:var(--white);padding:12px 16px}
+.spec-cell:nth-child(odd){background:var(--cream)}
+.spec-key{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.spec-val{font-size:13px;font-weight:600;color:var(--ink)}
+
+/* TABS */
+.tabs-section{margin-bottom:40px}
+.tabs-nav{display:flex;border-bottom:2px solid var(--border);margin-bottom:24px;gap:0}
+.tab-btn{padding:12px 24px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;font-family:'Jost',sans-serif;transition:all .2s;letter-spacing:.3px}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--ink)}
+.tab-content{display:none}
+.tab-content.active{display:block;animation:fadeIn .3s ease}
+
+/* DESCRIPTION */
+.desc-text{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:16px;font-weight:300}
+.desc-text strong{color:var(--ink);font-weight:600}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.feature-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted);line-height:1.6}
+.feature-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* REVIEWS */
+.reviews-summary{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.big-rating{text-align:center}
+.big-num{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:700;line-height:1;color:var(--ink)}
+.big-stars{font-size:18px;color:var(--gold)}
+.big-count{font-size:11px;color:var(--muted);margin-top:4px}
+.rating-bars{display:flex;flex-direction:column;gap:6px}
+.rating-bar-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.rating-bar-label{color:var(--muted);width:28px;text-align:right;flex-shrink:0}
+.rating-bar-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.rating-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .5s ease}
+.rating-bar-count{color:var(--muted);width:24px;flex-shrink:0}
+.review-card{padding:20px 0;border-bottom:1px solid var(--border)}
+.review-card:last-child{border-bottom:none}
+.review-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.reviewer-info{display:flex;align-items:center;gap:10px}
+.reviewer-avatar{width:36px;height:36px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--umber);flex-shrink:0}
+.reviewer-name{font-size:13px;font-weight:700}
+.reviewer-meta{font-size:10px;color:var(--muted);margin-top:1px}
+.review-stars-sm{color:var(--gold);font-size:12px}
+.review-date{font-size:11px;color:var(--muted)}
+.review-title{font-size:13px;font-weight:700;margin-bottom:5px}
+.review-body{font-size:13px;color:var(--muted);line-height:1.7}
+.review-verified{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--green);font-weight:600;margin-top:8px}
+.review-helpful{font-size:11px;color:var(--muted);margin-top:8px}
+.helpful-btn{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:'Jost',sans-serif;margin-left:6px;transition:all .2s}
+.helpful-btn:hover{border-color:var(--bark);color:var(--umber)}
+
+/* POLICY TAB */
+.policy-section{margin-bottom:20px}
+.policy-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.policy-text{font-size:12px;color:var(--muted);line-height:1.8}
+.policy-list{list-style:none;margin-top:6px}
+.policy-list li{font-size:12px;color:var(--muted);padding:3px 0;display:flex;align-items:flex-start;gap:8px;line-height:1.6}
+.policy-list li::before{content:'·';color:var(--bark);font-weight:700;flex-shrink:0}
+
+/* RELATED PRODUCTS */
+.related-section{padding:64px 40px;background:var(--white);border-top:1px solid var(--border)}
+.section-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;max-width:1200px;margin-left:auto;margin-right:auto}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700}
+.see-all-btn{font-size:12px;font-weight:600;color:var(--umber);border:none;border-bottom:1px solid var(--bark);background:none;padding-bottom:2px;cursor:pointer;font-family:'Jost',sans-serif}
+.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1200px;margin:0 auto}
+.rel-card{border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;background:var(--cream);border:1px solid var(--border)}
+.rel-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(26,18,8,.09)}
+.rel-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden}
+.rel-img-inner{transition:transform .4s ease}
+.rel-card:hover .rel-img-inner{transform:scale(1.06)}
+.rel-body{padding:12px 14px}
+.rel-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;margin-bottom:3px;line-height:1.2}
+.rel-seller{font-size:10px;color:var(--muted);margin-bottom:6px}
+.rel-price-row{display:flex;justify-content:space-between;align-items:center}
+.rel-price{font-size:16px;font-weight:700}
+.rel-add{background:var(--ink);color:#fff;border:none;padding:6px 12px;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s}
+.rel-add:hover{background:var(--umber)}
+
+/* ROOM VISUALIZER */
+.vis-room{background:#d4c4b0;border-radius:12px;height:320px;position:relative;overflow:hidden;margin-bottom:16px}
+.vis-wall{position:absolute;top:0;left:0;right:0;height:55%;background:linear-gradient(180deg,#c8b89a,#b8a880)}
+.vis-floor{position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(180deg,#c0a060,#a88040)}
+.vis-sofa{position:absolute;bottom:44%;left:50%;transform:translateX(-50%);width:44%;height:52px;background:#3a2a18;border-radius:7px 7px 0 0;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:2px}
+.vis-table-el{position:absolute;bottom:38%;left:50%;transform:translateX(-50%);width:20%;height:16px;background:#5a3a18;border-radius:3px}
+.vis-rug-el{position:absolute;bottom:23%;left:50%;transform:translateX(-50%);width:42%;height:68px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 4px 20px rgba(0,0,0,.3);background:linear-gradient(135deg,#c4763a,#8b4010);transition:all .3s}
+
+/* STICKY ADD TO CART BAR */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;gap:16px;z-index:400;box-shadow:0 -4px 20px rgba(26,18,8,.08);transform:translateY(100%);transition:transform .3s ease}
+.sticky-bar.show{transform:translateY(0)}
+.sticky-img{width:44px;height:44px;border-radius:6px;background:linear-gradient(135deg,#c4763a,#8b4010);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.sticky-name{flex:1}
+.sticky-title{font-size:14px;font-weight:700;font-family:'Cormorant Garamond',serif}
+.sticky-price{font-size:13px;color:var(--muted)}
+.sticky-cart-btn{background:var(--ink);color:#fff;border:none;border-radius:7px;padding:10px 28px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s;white-space:nowrap}
+.sticky-cart-btn:hover{background:var(--umber)}
+
+/* CART DRAWER */
+.cart-overlay{position:fixed;inset:0;z-index:800;background:rgba(26,18,8,.5)}
+.cart-drawer{position:fixed;top:0;right:0;width:390px;height:100vh;background:var(--white);z-index:801;padding:24px;overflow-y:auto;animation:slideRight .3s ease;box-shadow:-4px 0 32px rgba(0,0,0,.12)}
+.cart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.cart-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700}
+.cart-close{background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.ci-img{width:58px;height:58px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.ci-info{flex:1}
+.ci-name{font-size:13px;font-weight:700;margin-bottom:2px;font-family:'Cormorant Garamond',serif}
+.ci-meta{font-size:10px;color:var(--muted);margin-bottom:3px}
+.ci-price{font-size:13px;font-weight:700}
+.ci-remove{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;align-self:flex-start;padding:2px}
+.promo-row{display:flex;gap:7px;margin:14px 0}
+.promo-in{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-family:'Jost',sans-serif;outline:none}
+.promo-in:focus{border-color:var(--bark)}
+.promo-btn{background:var(--ink);color:#fff;border:none;padding:9px 16px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif}
+.total-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;color:var(--muted)}
+.total-row.big{font-size:15px;font-weight:700;color:var(--ink);padding:10px 0;border-top:1px solid var(--border);margin-top:5px}
+.place-btn{width:100%;background:var(--ink);color:#fff;border:none;padding:13px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;margin-top:10px;transition:background .2s}
+.place-btn:hover{background:var(--umber)}
+.place-btn:disabled{background:#ccc;cursor:not-allowed}
+
+/* MARQUEE */
+.marquee-wrap{background:var(--bark);padding:10px 0;overflow:hidden}
+.marquee-track{display:flex;animation:marquee 30s linear infinite;width:max-content}
+.mitem{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;padding:0 24px;opacity:.85}
+.mdot{color:rgba(255,255,255,.35)}
+
+/* FOOTER */
+.newsletter-bar{background:var(--ink);padding:48px 40px;text-align:center}
+.nl-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:#fff;margin-bottom:6px}
+.nl-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:20px;font-weight:300}
+.nl-form{display:flex;gap:0;max-width:440px;margin:0 auto;background:rgba(255,255,255,.08);border-radius:7px;overflow:hidden;border:1px solid rgba(255,255,255,.12)}
+.nl-input{flex:1;padding:13px 18px;background:transparent;border:none;font-size:13px;font-family:'Jost',sans-serif;color:#fff;outline:none}
+.nl-input::placeholder{color:rgba(255,255,255,.35)}
+.nl-btn{background:var(--bark);color:#fff;border:none;padding:13px 24px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:.5px;transition:background .2s}
+.nl-btn:hover{background:var(--umber)}
+
+.trust-icons{background:var(--sand);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;justify-content:center;gap:56px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;color:var(--umber)}
+.trust-icon-big{font-size:22px}
+
+footer{background:var(--ink);color:rgba(255,255,255,.5);padding:52px 40px 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;margin-bottom:10px}
+.footer-brand span{color:var(--bark)}
+.footer-desc{font-size:12px;line-height:1.85;font-weight:300}
+.footer-col-title{font-size:10px;font-weight:700;color:#fff;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s;font-weight:300}
+.footer-links a:hover{color:var(--bark)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;font-size:11px}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{color:rgba(255,255,255,.35);text-decoration:none;font-size:10px}
+.footer-legal a:hover{color:rgba(255,255,255,.65)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,18,8,.75);z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .25s ease}
+.modal-box{background:var(--white);border-radius:14px;max-height:90vh;overflow-y:auto;animation:fadeUp .3s ease;width:100%}
+
+/* TOAST */
+.toast{position:fixed;top:76px;right:18px;background:var(--ink);color:#e8d8c0;padding:11px 18px;border-radius:7px;font-size:12px;font-weight:500;z-index:9999;animation:fadeUp .3s ease;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+
+/* POLICY PAGE */
+.policy-page{max-width:800px;margin:40px auto;padding:0 40px 80px}
+.policy-page-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;margin-bottom:6px}
+.policy-updated{font-size:12px;color:var(--muted);margin-bottom:32px}
+.policy-block{margin-bottom:28px}
+.policy-block-title{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.policy-block p{font-size:13px;color:var(--muted);line-height:1.85;margin-bottom:8px}
+.policy-block ul{list-style:none;margin-top:8px}
+.policy-block ul li{font-size:13px;color:var(--muted);padding:4px 0;display:flex;gap:8px;line-height:1.6}
+.policy-block ul li::before{content:'→';color:var(--bark);flex-shrink:0}
+.policy-highlight{background:rgba(184,149,106,.1);border:1px solid rgba(184,149,106,.25);border-radius:8px;padding:14px 16px;font-size:12px;color:var(--umber);line-height:1.7;margin-top:12px}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--sand)}
+::-webkit-scrollbar-thumb{background:var(--bark);border-radius:3px}
+
+/* ── HAMBURGER & MOBILE NAV ── */
+.nav-hamburger{display:none;background:none;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:18px;cursor:pointer;color:var(--ink)}
+.mobile-nav-menu{display:none;position:fixed;top:56px;left:0;right:0;background:var(--white);border-bottom:2px solid var(--border);z-index:499;padding:16px 20px;flex-direction:column;gap:0;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.mobile-nav-menu.open{display:flex}
+.mobile-nav-menu a{padding:13px 0;border-bottom:1px solid var(--border);font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;display:block}
+.mobile-nav-menu a:last-child{border-bottom:none}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:900px){
+  /* NAV */
+  nav{padding:0 16px;height:56px}
+  .nav-links{display:none}
+  .nav-hamburger{display:block}
+  .nav-btn{display:none}
+  .cart-btn{padding:7px 14px;font-size:11px}
+
+  /* TOPBAR */
+  .topbar{font-size:9px;padding:6px 10px;letter-spacing:.3px}
+
+  /* BREADCRUMB */
+  .breadcrumb{padding:12px 16px;font-size:11px;flex-wrap:wrap;gap:4px}
+
+  /* PRODUCT PAGE — stack vertically */
+  .product-page{grid-template-columns:1fr;gap:24px;padding:20px 16px 60px}
+  .img-section{position:static}
+  .main-img{aspect-ratio:4/3}
+  .main-img-inner{font-size:90px}
+  .product-title{font-size:30px}
+  .price-now{font-size:36px}
+
+  /* SIZE GRID */
+  .size-grid{gap:6px}
+  .size-btn{padding:7px 10px;font-size:11px}
+
+  /* PACKAGING */
+  .pkg-options{grid-template-columns:1fr 1fr}
+
+  /* SPECS + TABS SECTION */
+  .specs-section{margin-bottom:24px}
+  .specs-grid{grid-template-columns:1fr 1fr}
+
+  /* RELATED */
+  .related-section{padding:40px 16px}
+  .related-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .section-hdr{flex-direction:column;align-items:flex-start;gap:8px}
+
+  /* NEWSLETTER */
+  .newsletter-bar{padding:36px 16px}
+  .nl-form{max-width:100%}
+
+  /* TRUST ICONS */
+  .trust-icons{gap:20px;padding:16px;justify-content:flex-start;flex-wrap:wrap}
+
+  /* FOOTER */
+  footer{padding:36px 16px 20px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+  .footer-legal{flex-wrap:wrap;justify-content:center}
+
+  /* STICKY BAR */
+  .sticky-bar{padding:12px 16px;gap:10px}
+  .sticky-cart-btn{padding:10px 18px;font-size:12px}
+
+  /* CART DRAWER */
+  .cart-drawer{width:100vw;padding:20px 16px}
+
+  /* POLICY PAGE */
+  .policy-page{padding:0 16px 60px;margin:24px auto}
+  .policy-page-title{font-size:28px}
+
+  /* TABS */
+  .tab-btn{padding:10px 14px;font-size:12px}
+}
+
+@media(max-width:600px){
+  .product-page{padding:16px 12px 60px}
+  .product-title{font-size:26px}
+  .price-now{font-size:30px}
+  .thumb-row{grid-template-columns:repeat(4,1fr)}
+  .related-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .size-grid{gap:5px}
+  .pkg-options{grid-template-columns:1fr}
+  .specs-grid{grid-template-columns:1fr}
+  .reviews-summary{grid-template-columns:1fr;gap:16px}
+  .footer-grid{grid-template-columns:1fr}
+  .tab-btn{padding:8px 10px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast" style="display:none"></div>
+<div id="modal-container"></div>
+<div id="cart-overlay" style="display:none" class="cart-overlay" onclick="closeCart()"></div>
+<div id="cart-drawer" style="display:none" class="cart-drawer"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">🚚 FREE SHIPPING ON ALL ORDERS — No Minimum &nbsp;·&nbsp; Code <span>TUFTRA15</span> = 15% off first order &nbsp;·&nbsp; 30-Day Free Returns</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="tuftra-homepage-fixed.html">Tuf<span>tra</span></a>
+  <ul class="nav-links">
+    <li><a href="tuftra-homepage-fixed.html">Shop</a></li>
+    <li><a href="tuftra-homepage-fixed.html">Collections</a></li>
+    <li><a href="#" onclick="showView('policy')">Policies</a></li>
+    <li><a href="tuftra-page8.html">Sell on Tuftra</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="openSizeGuide()">📏 Size Guide</button>
+    <button class="nav-btn">👤 My Account</button>
+    <button class="cart-btn" onclick="window.location='tuftra-page6.html'">🛒 Cart <span class="cart-count" id="cart-count">0</span></button>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" id="hamburger-btn">☰</button>
+  </div>
+</nav>
+<!-- MOBILE NAV MENU -->
+<div class="mobile-nav-menu" id="mobile-nav-menu">
+  <a href="tuftra-homepage-fixed.html">🛍️ Shop</a>
+  <a href="#" onclick="closeMobileNav()">🏷️ Collections</a>
+  <a href="#" onclick="showView('policy');closeMobileNav()">📋 Policies</a>
+  <a href="#" onclick="openSizeGuide();closeMobileNav()">📏 Size Guide</a>
+  <a href="tuftra-page4.html">👤 My Account</a>
+</div>
+
+<!-- PRODUCT VIEW -->
+<div id="view-product">
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="tuftra-homepage-fixed.html">Home</a> › <a href="tuftra-homepage-fixed.html">Shop</a> › <a href="tuftra-homepage-fixed.html">Bohemian</a> › <span></span>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="mitem">Free Shipping All Orders</span><span class="mdot"> · </span><span class="mitem">Hand Knotted Wool</span><span class="mdot"> · </span><span class="mitem">30-Day Returns</span><span class="mdot"> · </span><span class="mitem">Verified Seller</span><span class="mdot"> · </span><span class="mitem">Secure Payment</span><span class="mdot"> · </span><span class="mitem">Code TUFTRA15</span><span class="mdot"> · </span>
+    <span class="mitem">Free Shipping All Orders</span><span class="mdot"> · </span><span class="mitem">Hand Knotted Wool</span><span class="mdot"> · </span><span class="mitem">30-Day Returns</span><span class="mdot"> · </span><span class="mitem">Verified Seller</span><span class="mdot"> · </span><span class="mitem">Secure Payment</span><span class="mdot"> · </span><span class="mitem">Code TUFTRA15</span><span class="mdot"> · </span>
+  </div>
+</div>
+
+<!-- MAIN PRODUCT -->
+<div class="product-page">
+
+  <!-- LEFT: IMAGES -->
+  <div class="img-section a1">
+    <div class="main-img" id="main-img">
+      <div class="main-img-inner" id="main-icon">◈</div>
+      <div class="main-img-badges">
+        <span class="img-badge ib-hand">Handmade</span>
+        <span class="img-badge ib-sale">On Sale</span>
+        <span class="img-badge ib-best">Bestseller</span>
+      </div>
+      <div class="discount-circle"><span class="disc-num">24%</span><span class="disc-off">OFF</span></div>
+      <div class="ship-tag-main" id="ship-tag-main">🌀 Ships Rolled</div>
+    </div>
+    <div class="thumb-row">
+      <div class="thumb thumb-1 active" onclick="selectThumb(this,'◈','linear-gradient(135deg,#c4763a,#8b4010)')">◈</div>
+      <div class="thumb thumb-2" onclick="selectThumb(this,'◈','linear-gradient(160deg,#8b4010,#c4763a)')">◈</div>
+      <div class="thumb thumb-3" onclick="selectThumb(this,'◈','linear-gradient(45deg,#c4763a88,#f0d8b0)')">◈</div>
+      <div class="thumb thumb-4" onclick="selectThumb(this,'◈','linear-gradient(135deg,#d4a060,#c4763a)')">◈</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: INFO -->
+  <div class="info-section a2">
+    <div class="info-top">
+      <div class="seller-chip" onclick="showToast('Viewing Your Store store...')">by </div>
+      <div class="verified-chip">✅ Verified Seller</div>
+    </div>
+    <h1 class="product-title"></h1>
+    <div class="rating-bar">
+      <span class="stars">★★★★★</span>
+      <span class="rating-num">4.8</span>
+      <span class="review-link" onclick="openTab('reviews')">(124 reviews)</span>
+      <span style="color:var(--border)">·</span>
+      <span class="in-stock">✅ In Stock</span>
+    </div>
+
+    <!-- PRICE -->
+    <div class="price-section">
+      <div class="price-now">$189</div>
+      <div class="price-meta">
+        <span class="price-was">$249</span>
+        <span class="price-save">Save $60 (24% off)</span>
+        <span class="free-ship-badge">🚚 Free Shipping</span>
+      </div>
+    </div>
+
+    <!-- COLOR -->
+    <div class="selector-section">
+      <div class="selector-label">Color: <strong style="color:var(--ink)" id="selected-color">Terracotta</strong></div>
+      <div class="color-selector">
+        <div class="color-swatch active" style="background:#c4763a" title="Terracotta" onclick="selectColor(this,'Terracotta')"></div>
+        <div class="color-swatch" style="background:#2c3e6b" title="Navy" onclick="selectColor(this,'Navy')"></div>
+        <div class="color-swatch" style="background:#4a7c59" title="Forest Green" onclick="selectColor(this,'Forest Green')"></div>
+        <div class="color-swatch" style="background:#888898" title="Charcoal Grey" onclick="selectColor(this,'Charcoal Grey')"></div>
+        <div class="color-swatch" style="background:#8b2020" title="Burgundy" onclick="selectColor(this,'Burgundy')"></div>
+        <div class="color-swatch" style="background:#d4b896" title="Sand Beige" onclick="selectColor(this,'Sand Beige')"></div>
+      </div>
+    </div>
+
+    <!-- SIZE -->
+    <div class="selector-section">
+      <div class="selector-label">
+        Size: <strong style="color:var(--ink)" id="selected-size">5' × 8'</strong>
+        <span class="size-guide-link" onclick="openSizeGuide()">📏 Size Guide</span>
+      </div>
+      <div class="size-grid">
+        <button class="size-btn" onclick="selectSize(this,'2x4')">2' × 4'</button>
+        <button class="size-btn" onclick="selectSize(this,'3x5')">3' × 5'</button>
+        <button class="size-btn" onclick="selectSize(this,'4x6')">4' × 6'</button>
+        <button class="size-btn active" onclick="selectSize(this,'5x8')">5' × 8'</button>
+        <button class="size-btn" onclick="selectSize(this,'6x9')">6' × 9'</button>
+        <button class="size-btn" onclick="selectSize(this,'8x10')">8' × 10'</button>
+        <button class="size-btn" onclick="selectSize(this,'9x12')">9' × 12'</button>
+        <button class="size-btn oos" title="Out of Stock">10' × 14'</button>
+        <button class="size-btn" onclick="selectSize(this,'runner')">Runner 2.5' × 8'</button>
+        <button class="size-btn" onclick="selectSize(this,'round')">Round 6' × 6'</button>
+      </div>
+    </div>
+
+    <!-- WEAVE -->
+    <div class="selector-section">
+      <div class="selector-label">Weave Type</div>
+      <div class="weave-grid">
+        <button class="weave-btn active" onclick="selectWeave(this)">Hand Knotted</button>
+        <button class="weave-btn" onclick="selectWeave(this)">Hand Tufted</button>
+        <button class="weave-btn" onclick="selectWeave(this)">Hand Woven</button>
+        <button class="weave-btn" onclick="selectWeave(this)">Machine Woven</button>
+      </div>
+    </div>
+
+    <!-- QUANTITY -->
+    <div class="selector-section">
+      <div class="selector-label">Quantity</div>
+      <div class="qty-wrap">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-num" id="qty">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+        <span style="font-size:11px;color:var(--muted);margin-left:4px">Only 7 left in stock</span>
+      </div>
+    </div>
+
+    <!-- PACKAGING -->
+    <div class="packaging-box">
+      <div class="pkg-title">📦 Choose Packaging</div>
+      <div class="pkg-options">
+        <div class="pkg-option active" onclick="selectPkg(this,'rolled')">
+          <div class="pkg-icon">🌀</div>
+          <div class="pkg-name">Rolled in Tube</div>
+          <div class="pkg-desc">Protective cardboard tube. Best for wool & silk rugs. Let flat for 24hrs on arrival.</div>
+        </div>
+        <div class="pkg-option" onclick="selectPkg(this,'folded')">
+          <div class="pkg-icon">📦</div>
+          <div class="pkg-name">Flat Folded Box</div>
+          <div class="pkg-desc">Reinforced flat box. Ideal for smaller rugs. Creases disappear in a few days.</div>
+        </div>
+      </div>
+      <div class="pkg-note">🚚 <strong>Shipped by seller</strong> via FedEx or UPS · Tracking number provided within 48hrs of dispatch · Estimated delivery: <strong>3–7 business days</strong></div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="terms-agree" onclick="toggleTerms()">
+      <div class="tchk" id="terms-chk"></div>
+      <div class="terms-text">I have read and agree to Tuftra's <a href="#" onclick="showView('policy')">Buyer Terms & Conditions</a>. I understand that payment is processed securely via Stripe and held by Tuftra until delivery is confirmed.</div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="action-row">
+      <button class="add-cart-btn" onclick="window.location='tuftra-page6.html'">Add to Cart 🛒</button>
+      <button class="buy-now-btn" onclick="window.location='tuftra-page6.html'">Buy Now ⚡</button>
+      <button class="wish-action-btn" id="wish-btn" onclick="toggleWish()">🤍</button>
+    </div>
+
+    <!-- SHIPPING INFO -->
+    <div class="shipping-info">
+      <div class="ship-row">
+        <span class="ship-icon">🚚</span>
+        <div>
+          <div class="ship-info-title">Free Shipping — All Orders</div>
+          <div class="ship-info-text">No minimum required. Ships via FedEx, UPS, or USPS. Handled entirely by the seller.</div>
+          <div class="ship-zip-row">
+            <input class="zip-input" placeholder="Enter ZIP code for estimate" id="zip-input" maxlength="5">
+            <button class="zip-btn" onclick="estimateDelivery()">Estimate</button>
+          </div>
+          <div id="zip-result" style="font-size:11px;color:var(--green);margin-top:6px;font-weight:600;display:none"></div>
+        </div>
+      </div>
+      <div class="ship-row">
+        <span class="ship-icon">🔄</span>
+        <div>
+          <div class="ship-info-title">30-Day Easy Returns</div>
+          <div class="ship-info-text">Not happy? Return within 30 days. Item must be unused and in original packaging. Contact support@tuftra.com to start.</div>
+        </div>
+      </div>
+      <div class="ship-row">
+        <span class="ship-icon">🔒</span>
+        <div>
+          <div class="ship-info-title">Secure Payment via Stripe</div>
+          <div class="ship-info-text">Your payment is held safely by Tuftra until your order is delivered. Seller is paid only after confirmed delivery.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELLER BOX -->
+    <div class="seller-box">
+      <div class="seller-header">
+        <div class="seller-avatar">AW</div>
+        <div>
+          <div class="seller-name"></div>
+          <div class="seller-stats">
+            <span>⭐ <strong>4.9</strong> Seller Rating</span>
+            <span>📦 <strong>312</strong> Orders</span>
+            <span>⏱️ Ships in <strong>1–2 days</strong></span>
+          </div>
+        </div>
+      </div>
+      <button class="contact-seller-btn" onclick="showToast('Message sent to Your Store! They typically reply within 2 hours.')">💬 Message Seller</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- SPECS + TABS -->
+<div style="max-width:1200px;margin:0 auto;padding:0 40px 40px">
+
+  <!-- SPECS -->
+  <div class="specs-section">
+    <div class="specs-title serif">Product Specifications</div>
+    <div class="specs-grid">
+      <div class="spec-cell"><div class="spec-key">Shape</div><div class="spec-val">Rectangle</div></div>
+      <div class="spec-cell"><div class="spec-key">Size</div><div class="spec-val">5' × 8' ft</div></div>
+      <div class="spec-cell"><div class="spec-key">Material</div><div class="spec-val">Hand-knotted Wool</div></div>
+      <div class="spec-cell"><div class="spec-key">Weave</div><div class="spec-val">Hand Knotted</div></div>
+      <div class="spec-cell"><div class="spec-key">Pattern</div><div class="spec-val">Medallion</div></div>
+      <div class="spec-cell"><div class="spec-key">Style</div><div class="spec-val">Bohemian</div></div>
+      <div class="spec-cell"><div class="spec-key">Primary Color</div><div class="spec-val">Terracotta</div></div>
+      <div class="spec-cell"><div class="spec-key">Best Room</div><div class="spec-val">Living Room</div></div>
+      <div class="spec-cell"><div class="spec-key">Pile Height</div><div class="spec-val">Medium (0.5")</div></div>
+      <div class="spec-cell"><div class="spec-key">Weight</div><div class="spec-val">~8.5 lbs</div></div>
+      <div class="spec-cell"><div class="spec-key">Backing</div><div class="spec-val">Cotton Canvas</div></div>
+      <div class="spec-cell"><div class="spec-key">Care</div><div class="spec-val">Spot Clean / Prof. Clean</div></div>
+      <div class="spec-cell"><div class="spec-key">Origin</div><div class="spec-val">Handcrafted in Morocco</div></div>
+      <div class="spec-cell"><div class="spec-key">Seller</div><div class="spec-val"></div></div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-section">
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="openTab('desc')">Description</button>
+      <button class="tab-btn" onclick="openTab('reviews')">Reviews (124)</button>
+      <button class="tab-btn" onclick="openTab('shipping')">Shipping & Returns</button>
+      <button class="tab-btn" onclick="openTab('visualizer')">🏠 Room Visualizer</button>
+    </div>
+
+    <!-- DESCRIPTION TAB -->
+    <div class="tab-content active" id="tab-desc">
+      <p class="desc-text">The <strong></strong> is a stunning hand-knotted wool rug inspired by centuries of North African craftsmanship. Each rug is individually crafted by skilled artisans in Morocco, making every piece uniquely yours. The intricate medallion center pattern radiates warmth and character, bringing timeless Bohemian elegance to any space.</p>
+      <p class="desc-text">The rich terracotta tones are achieved using natural, non-toxic dyes that maintain their vibrancy for years. This rug is designed to anchor living rooms, dining spaces, and bedrooms — grounding your decor with both texture and story.</p>
+      <ul class="feature-list">
+        <li>100% hand-knotted by skilled Moroccan artisans — no two are exactly alike</li>
+        <li>Natural wool pile — soft underfoot, durable enough for high-traffic areas</li>
+        <li>Non-toxic, eco-friendly dyes — safe for children and pets</li>
+        <li>Reversible for extended lifespan — flip to refresh the look</li>
+        <li>Pairs beautifully with wood floors, exposed brick, and neutral furniture</li>
+        <li>Recommended rug pad: non-slip latex backing (sold separately)</li>
+        <li>Professional cleaning recommended — spot clean for minor spills</li>
+      </ul>
+    </div>
+
+    <!-- REVIEWS TAB -->
+    <div class="tab-content" id="tab-reviews">
+      <div class="reviews-summary">
+        <div class="big-rating">
+          <div class="big-num">4.8</div>
+          <div class="big-stars">★★★★★</div>
+          <div class="big-count">124 reviews</div>
+        </div>
+        <div class="rating-bars">
+          <div class="rating-bar-row"><span class="rating-bar-label">5★</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:78%"></div></div><span class="rating-bar-count">97</span></div>
+          <div class="rating-bar-row"><span class="rating-bar-label">4★</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:14%"></div></div><span class="rating-bar-count">17</span></div>
+          <div class="rating-bar-row"><span class="rating-bar-label">3★</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:5%"></div></div><span class="rating-bar-count">6</span></div>
+          <div class="rating-bar-row"><span class="rating-bar-label">2★</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:2%"></div></div><span class="rating-bar-count">3</span></div>
+          <div class="rating-bar-row"><span class="rating-bar-label">1★</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:1%"></div></div><span class="rating-bar-count">1</span></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">SM</div>
+            <div>
+              <div class="reviewer-name">Sarah M.</div>
+              <div class="reviewer-meta"><span class="review-stars-sm">★★★★★</span> · Apr 24, 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-title">Absolutely stunning — exceeded expectations!</div>
+        <div class="review-body">This rug transformed my living room completely. The colors are even more vibrant in person. It arrived rolled in a protective tube, in perfect condition. Unrolled beautifully after 24 hours. Highly recommend!</div>
+        <div class="review-verified">✅ Verified Purchase</div>
+        <div class="review-helpful">Helpful? <button class="helpful-btn" onclick="this.textContent='👍 Thanks!'">👍 Yes (18)</button></div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">JT</div>
+            <div>
+              <div class="reviewer-name">James T.</div>
+              <div class="reviewer-meta"><span class="review-stars-sm">★★★★★</span> · Apr 18, 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-title">Worth every penny</div>
+        <div class="review-body">I was hesitant to spend this much on a rug online, but the quality is exceptional. The wool is thick and plush. Customer service was great when I had a question about sizing. Will definitely buy from Tuftra again.</div>
+        <div class="review-verified">✅ Verified Purchase</div>
+        <div class="review-helpful">Helpful? <button class="helpful-btn" onclick="this.textContent='👍 Thanks!'">👍 Yes (12)</button></div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">ER</div>
+            <div>
+              <div class="reviewer-name">Emily R.</div>
+              <div class="reviewer-meta"><span class="review-stars-sm">★★★★☆</span> · Apr 10, 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-title">Beautiful rug, slight color variation</div>
+        <div class="review-body">The rug is gorgeous and very well made. The only thing is the red tones are slightly more orange than in the photos on my screen — but honestly it works even better with my furniture! Delivery was fast.</div>
+        <div class="review-verified">✅ Verified Purchase</div>
+        <div class="review-helpful">Helpful? <button class="helpful-btn" onclick="this.textContent='👍 Thanks!'">👍 Yes (7)</button></div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">MK</div>
+            <div>
+              <div class="reviewer-name"></div>
+              <div class="reviewer-meta"><span class="review-stars-sm">★★★★★</span> · Mar 29, 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-title">Perfect centerpiece for my home office</div>
+        <div class="review-body">Used the room visualizer on the site before buying — such a helpful feature! The rug is exactly as shown. Great craftsmanship, soft and durable. Shipped within 2 days and arrived well packaged.</div>
+        <div class="review-verified">✅ Verified Purchase</div>
+        <div class="review-helpful">Helpful? <button class="helpful-btn" onclick="this.textContent='👍 Thanks!'">👍 Yes (9)</button></div>
+      </div>
+    </div>
+
+    <!-- SHIPPING TAB -->
+    <div class="tab-content" id="tab-shipping">
+      <div class="policy-section">
+        <div class="policy-title">🚚 Shipping & Delivery</div>
+        <div class="policy-text">All orders on Tuftra are shipped directly by our verified sellers. Tuftra does not hold inventory — your seller packs and ships your rug with care.</div>
+        <ul class="policy-list">
+          <li>Free shipping on all orders — no minimum required</li>
+          <li>Orders ship within 1–2 business days of placement</li>
+          <li>Tracking number provided within 48 hours of dispatch via email</li>
+          <li>Shipped via FedEx, UPS, or USPS — seller's choice</li>
+          <li>Estimated delivery: 3–7 business days within the USA</li>
+          <li>Large rugs (8×10 ft+) may ship via freight — seller will notify you</li>
+        </ul>
+        <div class="policy-highlight">📦 <strong>Packaging:</strong> Your rug will arrive either rolled in a protective cardboard tube 🌀 or flat-folded in a reinforced box 📦 — based on your selection at checkout.</div>
+      </div>
+      <div class="policy-section">
+        <div class="policy-title">🔄 Returns & Exchange Policy</div>
+        <div class="policy-text">At Tuftra, your satisfaction is our priority. If you're unhappy with your purchase, we offer a flexible return and exchange policy.</div>
+        <ul class="policy-list">
+          <li>Return or exchange within 30 days of delivery</li>
+          <li>Item must be unused and in original packaging</li>
+          <li>Contact support@tuftra.com to initiate the process</li>
+          <li>For damaged or wrong items — Tuftra covers return shipping cost</li>
+          <li>For change of mind returns — buyer covers return shipping</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <div class="policy-title">💰 Refund Policy</div>
+        <ul class="policy-list">
+          <li>Full refund within 30 days of purchase for eligible returns</li>
+          <li>Refund processed to original payment method within 5–7 business days</li>
+          <li>Partial refunds may apply for items with signs of use</li>
+        </ul>
+        <div class="policy-highlight">📧 Questions? Contact us at <strong>support@tuftra.com</strong> — we respond within 24 hours.</div>
+      </div>
+    </div>
+
+    <!-- VISUALIZER TAB -->
+    <div class="tab-content" id="tab-visualizer">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:20px">See how the <strong></strong> looks in a living room setting. Select a size below to see the scale change.</p>
+      <div class="vis-room">
+        <div class="vis-wall"></div>
+        <div class="vis-floor"></div>
+        <div class="vis-sofa">S O F A</div>
+        <div class="vis-table-el"></div>
+        <div class="vis-rug-el" id="vis-rug">◈</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+        <button class="size-btn" onclick="setVisSize('small','Small')">3' × 5' Small</button>
+        <button class="size-btn active" onclick="setVisSize('medium','Medium')">5' × 8' Medium</button>
+        <button class="size-btn" onclick="setVisSize('large','Large')">8' × 10' Large</button>
+      </div>
+      <button class="add-cart-btn" style="max-width:280px" onclick="window.location='tuftra-page6.html'">Looks Great — Add to Cart 🛒</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="related-section">
+  <div class="section-hdr">
+    <div>
+      <div class="section-title serif">You May Also Like</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">More handcrafted rugs from our collection</div>
+    </div>
+    <button class="see-all-btn">View All Rugs →</button>
+  </div>
+  <div class="related-grid">
+    <div class="rel-card">
+      <div class="rel-img" style="background:linear-gradient(135deg,#2c3e6b,#1a2545)"><div class="rel-img-inner" style="font-size:48px;opacity:.65">✦</div></div>
+      <div class="rel-body">
+        <div class="rel-name"></div>
+        <div class="rel-seller">by </div>
+        <div class="rel-price-row">
+          <div><span class="rel-price">$329</span><span style="font-size:10px;color:var(--muted);text-decoration:line-through;margin-left:5px">$420</span></div>
+          <button class="rel-add" onclick="showToast('Added to cart! 🛒')">+ Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="rel-card">
+      <div class="rel-img" style="background:linear-gradient(135deg,#8b2020,#5a1010)"><div class="rel-img-inner" style="font-size:48px;opacity:.65">◆</div></div>
+      <div class="rel-body">
+        <div class="rel-name"></div>
+        <div class="rel-seller">by </div>
+        <div class="rel-price-row">
+          <div><span class="rel-price">$149</span><span style="font-size:10px;color:var(--muted);text-decoration:line-through;margin-left:5px">$199</span></div>
+          <button class="rel-add" onclick="showToast('Added to cart! 🛒')">+ Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="rel-card">
+      <div class="rel-img" style="background:linear-gradient(135deg,#4a7c59,#2a4f38)"><div class="rel-img-inner" style="font-size:48px;opacity:.65">◉</div></div>
+      <div class="rel-body">
+        <div class="rel-name"></div>
+        <div class="rel-seller">by </div>
+        <div class="rel-price-row">
+          <div><span class="rel-price">$199</span></div>
+          <button class="rel-add" onclick="showToast('Added to cart! 🛒')">+ Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="rel-card">
+      <div class="rel-img" style="background:linear-gradient(135deg,#c8a030,#8b6010)"><div class="rel-img-inner" style="font-size:48px;opacity:.65">✿</div></div>
+      <div class="rel-body">
+        <div class="rel-name"></div>
+        <div class="rel-seller">by </div>
+        <div class="rel-price-row">
+          <div><span class="rel-price">$599</span><span style="font-size:10px;color:var(--muted);text-decoration:line-through;margin-left:5px">$780</span></div>
+          <button class="rel-add" onclick="showToast('Added to cart! 🛒')">+ Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end view-product -->
+
+<!-- POLICY VIEW -->
+<div id="view-policy" style="display:none">
+  <div class="policy-page">
+    <div style="margin-bottom:24px"><button onclick="showView('product')" style="background:none;border:none;color:var(--bark);font-size:13px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif">← Back to Product</button></div>
+    <div class="policy-page-title serif">Returns & Exchange Policy</div>
+    <div class="policy-updated">Last updated: April 2025</div>
+    <div class="policy-block">
+      <div class="policy-block-title">Our Commitment</div>
+      <p>At Tuftra, your satisfaction is our priority. We connect you with verified artisan sellers and stand behind every purchase. If you're unhappy with your rug for any reason, we're here to make it right.</p>
+    </div>
+    <div class="policy-block">
+      <div class="policy-block-title">🔄 Exchange Policy</div>
+      <ul>
+        <li>Exchange within 30 days of delivery</li>
+        <li>Item must be unused and in original packaging</li>
+        <li>Contact us at support@tuftra.com to start the process</li>
+        <li>Customer covers return shipping unless item is wrong or defective</li>
+        <li>Exchange processed within 3–5 business days of receiving return</li>
+      </ul>
+    </div>
+    <div class="policy-block">
+      <div class="policy-block-title">↩️ Return Policy</div>
+      <ul>
+        <li>Return within 30 days of delivery</li>
+        <li>Item must be unused and in original packaging</li>
+        <li>Contact us at support@tuftra.com to initiate return</li>
+        <li>Customer covers return shipping unless item is wrong or defective</li>
+        <li>Items showing signs of use may not be eligible for return</li>
+      </ul>
+    </div>
+    <div class="policy-block">
+      <div class="policy-block-title">💰 Refund Policy</div>
+      <ul>
+        <li>Full refund within 30 days of purchase for eligible returns</li>
+        <li>Refund issued to original payment method</li>
+        <li>Processing time: 5–7 business days after return received</li>
+        <li>Customer covers return shipping unless item is wrong or defective</li>
+      </ul>
+    </div>
+    <div class="policy-block">
+      <div class="policy-block-title">🚚 Shipping Policy</div>
+      <p>All orders include free shipping — no minimum required. Inventory and shipping are handled entirely by our verified sellers. Tuftra holds your payment and releases it to the seller only after confirmed delivery.</p>
+      <ul>
+        <li>Ships within 1–2 business days</li>
+        <li>Tracking provided within 48 hours of dispatch</li>
+        <li>Delivered via FedEx, UPS, or USPS</li>
+        <li>Estimated 3–7 business days within the USA</li>
+      </ul>
+    </div>
+    <div class="policy-block">
+      <div class="policy-block-title">📞 Contact & Support</div>
+      <p>For any questions or concerns, reach out to our customer service team. We're here to assist you.</p>
+      <div class="policy-highlight">📧 Email: <strong>support@tuftra.com</strong> · Response within 24 hours<br>We are open Monday–Friday, 9am–6pm EST</div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-bar">
+  <div class="nl-title serif">Get Exclusive Deals & New Arrivals First</div>
+  <div class="nl-sub">Join 12,000+ rug lovers. No spam — only the good stuff.</div>
+  <div class="nl-form">
+    <input class="nl-input" placeholder="Your email address" id="nl-email">
+    <button class="nl-btn" onclick="subscribeNewsletter()">Subscribe</button>
+  </div>
+</div>
+
+<!-- TRUST ICONS -->
+<div class="trust-icons">
+  <div class="trust-item"><span class="trust-icon-big">🚚</span> Free Shipping — All Orders</div>
+  <div class="trust-item"><span class="trust-icon-big">💬</span> Quick Support — 24hr Response</div>
+  <div class="trust-item"><span class="trust-icon-big">🔄</span> Easy 30-Day Returns</div>
+  <div class="trust-item"><span class="trust-icon-big">🔒</span> Secure Stripe Payment</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Tuf<span>tra</span></div>
+      <div class="footer-desc">A curated marketplace for handcrafted rugs from verified artisan sellers across the USA. We hold your payment until delivery — shop with total confidence.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Information</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Rug Care Guide</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Our Policies</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="showView('policy')">Returns & Exchange</a></li>
+        <li><a href="#">Shipping & Delivery</a></li>
+        <li><a href="#">Privacy & Cookie Policy</a></li>
+        <li><a href="#">Buyer Terms</a></li>
+        <li><a href="#">Seller Terms</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Sellers</div>
+      <ul class="footer-links">
+        <li><a href="#">Sell on Tuftra</a></li>
+        <li><a href="#">Seller Dashboard</a></li>
+        <li><a href="#">Payout Info</a></li>
+        <li><a href="#">Seller Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Tuftra. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#" onclick="showView('policy')">Returns Policy</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-img">◈</div>
+  <div class="sticky-name">
+    <div class="sticky-title"></div>
+    <div class="sticky-price">$189 <span style="text-decoration:line-through;color:var(--muted);font-size:11px">$249</span> · 🚚 Free Shipping</div>
+  </div>
+  <button class="sticky-cart-btn" onclick="window.location='tuftra-page6.html'">Add to Cart 🛒</button>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────────
+let cart=[];
+let termsAgreed=false;
+let inWishlist=false;
+let selectedPkg='rolled';
+let qty=1;
+let promoOn=false;
+let cartAgreed=false;
+let cartPlaced=false;
+
+// ── VIEWS ──────────────────────────────────────────────────────────
+function showView(v){
+  document.getElementById('view-product').style.display=v==='product'?'block':'none';
+  document.getElementById('view-policy').style.display=v==='policy'?'block':'none';
+  window.scrollTo(0,0);
+}
+
+// ── TABS ───────────────────────────────────────────────────────────
+function openTab(id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  const idx=['desc','reviews','shipping','visualizer'].indexOf(id);
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  document.getElementById('tab-'+id).scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ── SELECTORS ──────────────────────────────────────────────────────
+function selectThumb(el,icon,bg){
+  document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('main-icon').textContent=icon;
+  document.getElementById('main-img').style.background=bg;
+}
+
+function selectColor(el,name){
+  document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('selected-color').textContent=name;
+}
+
+function selectSize(el,size){
+  document.querySelectorAll('.size-btn:not(.oos)').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const map={'2x4':"2' × 4'",'3x5':"3' × 5'",'4x6':"4' × 6'",'5x8':"5' × 8'",'6x9':"6' × 9'",'8x10':"8' × 10'",'9x12':"9' × 12'",'runner':"Runner 2.5' × 8'",'round':"Round 6' × 6'"};
+  document.getElementById('selected-size').textContent=map[size]||size;
+}
+
+function selectWeave(el){
+  document.querySelectorAll('.weave-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function selectPkg(el,type){
+  document.querySelectorAll('.pkg-option').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  selectedPkg=type;
+  document.getElementById('ship-tag-main').textContent=type==='rolled'?'🌀 Ships Rolled':'📦 Ships Folded';
+}
+
+function changeQty(d){
+  qty=Math.max(1,Math.min(7,qty+d));
+  document.getElementById('qty').textContent=qty;
+}
+
+// ── TERMS ──────────────────────────────────────────────────────────
+function toggleTerms(){
+  termsAgreed=!termsAgreed;
+  const chk=document.getElementById('terms-chk');
+  chk.classList.toggle('on',termsAgreed);
+  chk.textContent=termsAgreed?'✓':'';
+}
+
+// ── WISHLIST ───────────────────────────────────────────────────────
+function toggleWish(){
+  inWishlist=!inWishlist;
+  document.getElementById('wish-btn').textContent=inWishlist?'❤️':'🤍';
+  showToast(inWishlist?'Added to wishlist ❤️':'Removed from wishlist');
+}
+
+// ── ZIP ESTIMATE ───────────────────────────────────────────────────
+function estimateDelivery(){
+  const zip=document.getElementById('zip-input').value;
+  if(zip.length<5){showToast('Please enter a valid 5-digit ZIP code');return;}
+  const res=document.getElementById('zip-result');
+  res.style.display='block';
+  res.textContent='📦 Estimated delivery: May 1–3, 2025 (Free Shipping)';
+}
+
+// ── VISUALIZER ─────────────────────────────────────────────────────
+function setVisSize(size,label){
+  document.querySelectorAll('#tab-visualizer .size-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  const rug=document.getElementById('vis-rug');
+  if(size==='small'){rug.style.width='28%';rug.style.height='48px';}
+  else if(size==='medium'){rug.style.width='42%';rug.style.height='68px';}
+  else{rug.style.width='58%';rug.style.height='88px';}
+}
+
+// ── SIZE GUIDE ─────────────────────────────────────────────────────
+function openSizeGuide(){
+  document.getElementById('modal-container').innerHTML=`
+  <div class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" style="max-width:500px;padding:28px" onclick="event.stopPropagation()">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div class="serif" style="font-size:24px;font-weight:700">📏 Rug Size Guide</div>
+        <button onclick="closeModal()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer">✕</button>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:18px">Enter your room dimensions to get the perfect rug size.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div><label style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Room Width (ft)</label><input type="number" id="sg-w" placeholder="e.g. 14" oninput="calcSize()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'Jost',sans-serif;outline:none"></div>
+        <div><label style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Room Length (ft)</label><input type="number" id="sg-l" placeholder="e.g. 16" oninput="calcSize()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'Jost',sans-serif;outline:none"></div>
+      </div>
+      <div id="sg-result" style="display:none;background:#eaf4ee;border:1px solid rgba(42,106,64,.25);border-radius:9px;padding:16px;text-align:center;margin-bottom:16px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Recommended Size</div>
+        <div id="sg-size" style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--green)">—</div>
+        <div id="sg-note" style="font-size:11px;color:var(--muted);margin-top:4px">—</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        ${[["2'×4'","Bathroom, entryway mat"],["3'×5'","Small accent, bedside"],["4'×6'","Small bedroom, under coffee table"],["5'×8'","Standard living room ← Popular"],["6'×9'","Large living room"],["8'×10'","Open plan, dining room"],["9'×12'","Grand living room"],["Runner","Hallway, kitchen, stairway"]].map(([s,u],i)=>`<tr style="background:${i%2===0?'var(--cream)':'transparent'}"><td style="padding:5px 8px;font-weight:600">${s}</td><td style="padding:5px 8px;color:var(--muted)">${u}</td></tr>`).join('')}
+      </table>
+      <div style="background:var(--cream);border-radius:7px;padding:10px 13px;margin-top:14px;font-size:11px;color:var(--muted);line-height:1.7">💡 <strong style="color:var(--ink)">Pro tip:</strong> Leave 18–24 inches of bare floor on all sides for the best look.</div>
+    </div>
+  </div>`;
+}
+
+function calcSize(){
+  const w=parseFloat(document.getElementById('sg-w').value),l=parseFloat(document.getElementById('sg-l').value);
+  if(!w||!l)return;
+  let size,note;
+  if(w<=10&&l<=12){size="3'×5' or 4'×6'";note="Accent rug — perfect for small spaces";}
+  else if(w<=14&&l<=16){size="5'×8'";note="This rug! Perfect for your room size ✅";}
+  else if(w<=16&&l<=18){size="6'×9' or 8'×10'";note="Great for large living rooms";}
+  else{size="9'×12' or larger";note="Go big — anchors the room beautifully";}
+  document.getElementById('sg-result').style.display='block';
+  document.getElementById('sg-size').textContent=size;
+  document.getElementById('sg-note').textContent=note;
+}
+
+function closeModal(){document.getElementById('modal-container').innerHTML='';}
+
+// ── CART ───────────────────────────────────────────────────────────
+function addToCart(){
+  if(!termsAgreed){showToast('Please agree to Buyer Terms first ☝️');document.querySelector('.terms-agree').scrollIntoView({behavior:'smooth',block:'center'});return;}
+  const existing=cart.find(x=>x.name===''&&x.pkg===selectedPkg);
+  if(existing){existing.qty+=qty;}
+  else{cart.push({name:'',price:189,qty,pkg:selectedPkg,bg:'linear-gradient(135deg,#c4763a,#8b4010)',icon:'◈'});}
+  updateCartCount();
+  showToast(`Added to cart! 🛒 (${selectedPkg==='rolled'?'Rolled':'Folded'} packaging)`);
+}
+
+function updateCartCount(){
+  const total=cart.reduce((a,x)=>a+x.qty,0);
+  document.getElementById('cart-count').textContent=total;
+}
+
+function buyNow(){
+  addToCart();
+  setTimeout(openCart,300);
+}
+
+function openCart(){
+  document.getElementById('cart-overlay').style.display='block';
+  document.getElementById('cart-drawer').style.display='block';
+  renderCart();
+}
+
+function closeCart(){
+  document.getElementById('cart-overlay').style.display='none';
+  document.getElementById('cart-drawer').style.display='none';
+}
+
+function removeFromCart(i){cart.splice(i,1);updateCartCount();renderCart();}
+
+function renderCart(){
+  const sub=cart.reduce((a,r)=>a+r.price*r.qty,0);
+  const disc=promoOn?sub*.15:0;
+  const total=(sub-disc).toFixed(2);
+  document.getElementById('cart-drawer').innerHTML=`
+    <div class="cart-hdr"><div class="cart-title serif">Your Cart (${cart.length})</div><button class="cart-close" onclick="closeCart()">✕</button></div>
+    ${cart.length===0?`<div style="text-align:center;padding:56px 0;color:var(--muted);font-size:14px">Your cart is empty 🛒<br><br><button onclick="closeCart()" style="background:var(--ink);color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Jost',sans-serif">Continue Shopping</button></div>`:
+    `${cart.map((r,i)=>`<div class="cart-item">
+      <div class="ci-img" style="background:${r.bg}">${r.icon}</div>
+      <div class="ci-info"><div class="ci-name">${r.name}</div><div class="ci-meta">Qty: ${r.qty} · ${r.pkg==='rolled'?'🌀 Rolled in tube':'📦 Flat folded'}</div><div class="ci-price">$${(r.price*r.qty).toFixed(2)}</div></div>
+      <button class="ci-remove" onclick="removeFromCart(${i})">✕</button>
+    </div>`).join('')}
+    <div class="promo-row">
+      <input class="promo-in" id="promo-in" placeholder="Promo code — try TUFTRA15" ${promoOn?"disabled value='TUFTRA15 ✅'":""}>
+      <button class="promo-btn" onclick="applyPromo()" ${promoOn?'disabled':''}>Apply</button>
+    </div>
+    ${promoOn?`<div style="color:var(--green);font-size:11px;font-weight:600;margin-bottom:8px">✅ 15% discount applied!</div>`:''}
+    <div style="margin:14px 0">
+      <div class="total-row"><span>Subtotal</span><span>$${sub.toFixed(2)}</span></div>
+      ${promoOn?`<div class="total-row" style="color:var(--green)"><span>Discount (15%)</span><span>−$${disc.toFixed(2)}</span></div>`:''}
+      <div class="total-row"><span>Shipping</span><span style="color:var(--green);font-weight:600">FREE 🎉</span></div>
+      <div class="total-row big"><span>Total</span><span>$${total}</span></div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px;cursor:pointer;padding:10px;background:var(--cream);border-radius:7px;border:1px solid var(--border)" onclick="cartAgreed=!cartAgreed;renderCart()">
+      <div style="width:14px;height:14px;border-radius:3px;border:1.5px solid ${cartAgreed?'var(--green)':'var(--border)'};background:${cartAgreed?'var(--green)':'transparent'};flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff">${cartAgreed?'✓':''}</div>
+      <span style="font-size:10px;color:var(--muted);line-height:1.5">I agree to Tuftra's Buyer Terms & Conditions. Payment via Stripe.</span>
+    </div>
+    ${cartPlaced
+      ?`<div style="background:#eaf4ee;border:1px solid rgba(42,106,64,.25);border-radius:8px;padding:16px;text-align:center"><div style="font-size:22px;margin-bottom:5px">🎉</div><div style="font-weight:700;color:var(--green)">Order Placed!</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Confirmation email sent. Seller will ship within 1–2 days.</div></div>`
+      :`<button class="place-btn" ${cartAgreed&&cart.length>0?'':'disabled'} onclick="placeOrder()">Place Order — Pay Securely via Stripe 🔒</button>`}
+    `}
+  `;
+}
+
+function applyPromo(){
+  const v=document.getElementById('promo-in').value.toUpperCase();
+  if(v==='TUFTRA15'){promoOn=true;showToast('15% off applied! 🎉');renderCart();}
+  else showToast('Invalid promo code');
+}
+
+function placeOrder(){
+  cartPlaced=true;cart=[];
+  updateCartCount();
+  renderCart();
+  setTimeout(()=>{cartPlaced=false;closeCart();},3500);
+}
+
+// ── NEWSLETTER ─────────────────────────────────────────────────────
+function subscribeNewsletter(){
+  const e=document.getElementById('nl-email').value;
+  if(!e||!e.includes('@')){showToast('Please enter a valid email address');return;}
+  document.getElementById('nl-email').value='';
+  showToast('🎉 Subscribed! Welcome to Tuftra family!');
+}
+
+// ── MOBILE NAV ─────────────────────────────────────────────────────
+function toggleMobileNav(){
+  const menu=document.getElementById('mobile-nav-menu');
+  const btn=document.getElementById('hamburger-btn');
+  menu.classList.toggle('open');
+  btn.textContent=menu.classList.contains('open')?'✕':'☰';
+}
+function closeMobileNav(){
+  const menu=document.getElementById('mobile-nav-menu');
+  const btn=document.getElementById('hamburger-btn');
+  menu.classList.remove('open');
+  btn.textContent='☰';
+}
+
+// ── STICKY BAR ─────────────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  const bar=document.getElementById('sticky-bar');
+  if(window.scrollY>500) bar.classList.add('show');
+  else bar.classList.remove('show');
+});
+
+// ── TOAST ──────────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.style.display='none',2600);
+}
+</script>
+</body>
+</html>
